@@ -42,6 +42,8 @@
                                         <td><?php echo e($item->avance); ?>%</td>
                                         <td><?php if($item->archivo): ?> <a href="<?php echo e(url('storage').'/'.$item->archivo); ?>" target="_blank">Documento</a> <?php else: ?> Ninguno <?php endif; ?></td>
                                         <td class="no-sort no-click text-right" id="bread-actions">
+                                            <a href="#" class="btn btn-sm btn-success view"> <i class="voyager-list"></i> <span>Fases</span></a>
+                                            <a href="#" class="btn btn-sm btn-dark view"> <i class="voyager-list"></i> <span>Observaciones</span></a>
                                             <a href="<?php echo e(route('proyectos.show', ['id' => $item->id])); ?>" class="btn btn-sm btn-warning view"> <i class="voyager-eye"></i> <span>Ver</span></a>
                                             <a href="<?php echo e(route('proyectos.edit', ['id' => $item->id])); ?>" class="btn btn-sm btn-primary edit"> <i class="voyager-edit"></i> <span>Editar</span></a>
                                             <a href="#" data-toggle="modal" data-target="#modal_delete" data-id="<?php echo e($item->id); ?>" class="btn btn-sm btn-danger delete"> <i class="voyager-trash"></i> <span>Borrar</span></a>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-03-2021 a las 01:07:25
+-- Tiempo de generación: 17-03-2021 a las 03:00:40
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.3.22
 
@@ -156,7 +156,7 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (42, 6, 'created_at', 'timestamp', 'Creado', 0, 1, 1, 0, 0, 0, '{}', 5),
 (43, 6, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 6),
 (44, 6, 'deleted_at', 'timestamp', 'Deleted At', 0, 0, 0, 0, 0, 0, '{}', 7),
-(45, 7, 'id', 'text', 'Id', 1, 1, 1, 0, 0, 0, '{}', 1),
+(45, 7, 'id', 'text', 'Id', 1, 0, 0, 0, 0, 0, '{}', 1),
 (46, 7, 'nombre', 'text', 'Nombre', 0, 1, 1, 1, 1, 1, '{\"validation\":{\"rule\":\"required|max:100\",\"messages\":{\"required\":\"El campo :attribute es requerido.\",\"max\":\"El campo :attribute debe tener al menos :max.\"}}}', 2),
 (47, 7, 'etiqueta', 'select_dropdown', 'Etiqueta', 0, 1, 1, 1, 1, 1, '{\"options\":{\"primary\":\"Azul\",\"success\":\"Verde\",\"info\":\"Celeste\",\"light\":\"Blanca\",\"dark\":\"Oscura\",\"warning\":\"Amarilla\",\"danger\":\"Roja\"}}', 3),
 (48, 7, 'created_at', 'timestamp', 'Creado', 0, 1, 1, 0, 0, 0, '{}', 4),
@@ -185,7 +185,7 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (72, 8, 'cargo_id', 'text', 'Cargo Id', 0, 1, 1, 1, 1, 1, '{}', 4),
 (73, 8, 'persona_belongsto_cargo_relationship', 'relationship', 'cargos', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Cargo\",\"table\":\"cargos\",\"type\":\"belongsTo\",\"column\":\"cargo_id\",\"key\":\"id\",\"label\":\"nombre\",\"pivot_table\":\"areas\",\"pivot\":\"0\",\"taggable\":\"0\"}', 2),
 (74, 4, 'direccion', 'text_area', 'Dirección', 0, 1, 1, 1, 1, 1, '{}', 5),
-(75, 12, 'id', 'text', 'Id', 1, 1, 1, 0, 0, 0, '{}', 1),
+(75, 12, 'id', 'text', 'Id', 1, 0, 0, 0, 0, 0, '{}', 1),
 (76, 12, 'nombre', 'text', 'Nombre', 0, 1, 1, 1, 1, 1, '{\"validation\":{\"rule\":\"required|max:100\",\"messages\":{\"required\":\"El campo :attribute es requerido.\",\"max\":\"El campo :attribute debe tener al menos :max.\"}}}', 2),
 (77, 12, 'descripcion', 'text_area', 'Descripción', 0, 1, 1, 1, 1, 1, '{}', 3),
 (78, 12, 'created_at', 'timestamp', 'Creado', 0, 1, 1, 0, 0, 0, '{}', 4),
@@ -200,7 +200,8 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (89, 13, 'departamento_belongsto_persona_relationship', 'relationship', 'personas', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Persona\",\"table\":\"personas\",\"type\":\"belongsTo\",\"column\":\"persona_id\",\"key\":\"id\",\"label\":\"nombre\",\"pivot_table\":\"areas\",\"pivot\":\"0\",\"taggable\":\"0\"}', 5),
 (90, 13, 'persona_id', 'text', 'Persona Id', 0, 1, 1, 1, 1, 1, '{}', 4),
 (91, 6, 'area_belongsto_departamento_relationship', 'relationship', 'departamentos', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Departamento\",\"table\":\"departamentos\",\"type\":\"belongsTo\",\"column\":\"departamento_id\",\"key\":\"id\",\"label\":\"nombre\",\"pivot_table\":\"areas\",\"pivot\":\"0\",\"taggable\":\"0\"}', 4),
-(92, 6, 'departamento_id', 'text', 'Departamento Id', 0, 1, 1, 1, 1, 1, '{}', 8);
+(92, 6, 'departamento_id', 'text', 'Departamento Id', 0, 1, 1, 1, 1, 1, '{}', 8),
+(93, 7, 'detalle', 'text_area', 'Detalle', 0, 1, 1, 1, 1, 1, '{}', 4);
 
 -- --------------------------------------------------------
 
@@ -237,11 +238,11 @@ INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `displa
 (4, 'entidades', 'entidades', 'Instituto de Investigación', 'Institutos de Investigación', 'voyager-home', 'App\\Entidade', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-09-05 06:13:44', '2019-10-04 17:03:04'),
 (5, 'facultades', 'facultades', 'Facultad', 'Facultades', 'voyager-shop', 'App\\Facultade', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-09-05 06:19:52', '2019-09-12 04:39:20'),
 (6, 'areas', 'areas', 'Línea de investigación', 'Líneas de investigación', 'voyager-data', 'App\\Area', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-09-05 06:27:36', '2021-03-13 00:03:11'),
-(7, 'proyectos_estados', 'proyectos-estados', 'Estado de proyecto', 'Estados de proyecto', 'voyager-params', 'App\\ProyectosEstado', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-09-05 06:33:03', '2019-09-12 04:40:07'),
+(7, 'proyectos_estados', 'proyectos-estados', 'Estado de proyecto', 'Estados de proyecto', 'voyager-params', 'App\\ProyectosEstado', NULL, NULL, NULL, 1, 0, '{\"order_column\":\"nombre\",\"order_display_column\":\"nombre\",\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-09-05 06:33:03', '2021-03-17 01:34:16'),
 (8, 'personas', 'personas', 'Persona', 'Personas', 'voyager-person', 'App\\Persona', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-09-05 06:42:11', '2021-03-13 00:06:29'),
 (10, 'permissions', 'permissions', 'Permission', 'Permissions', 'voyager-certificate', 'App\\Permission', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-09-12 05:11:22', '2019-09-12 05:29:11'),
 (11, 'cargos', 'cargos', 'Cargo', 'Cargos', 'voyager-certificate', 'App\\Cargo', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2019-10-04 16:32:45', '2019-10-04 16:32:45'),
-(12, 'proyectos_tipos', 'proyectos-tipos', 'Tipo de Proyecto', 'Tipos de Proyecto', 'voyager-list', 'App\\ProyectosTipo', NULL, NULL, NULL, 1, 1, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2019-10-23 13:49:45', '2019-10-23 13:49:45'),
+(12, 'proyectos_tipos', 'proyectos-tipos', 'Tipo de Proyecto', 'Tipos de Proyecto', 'voyager-list', 'App\\ProyectosTipo', NULL, NULL, NULL, 1, 1, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-10-23 13:49:45', '2021-03-17 01:32:45'),
 (13, 'departamentos', 'departamentos', 'Departamento', 'Departamentos', 'voyager-group', 'App\\Departamento', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2021-03-12 23:54:15', '2021-03-13 00:04:40');
 
 -- --------------------------------------------------------
@@ -717,6 +718,10 @@ CREATE TABLE `proyectos` (
   `avance` int(11) DEFAULT NULL,
   `observaciones` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `archivo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `monto` decimal(10,2) DEFAULT NULL,
+  `productos` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `inicio` date DEFAULT NULL,
+  `fin` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -726,20 +731,53 @@ CREATE TABLE `proyectos` (
 -- Volcado de datos para la tabla `proyectos`
 --
 
-INSERT INTO `proyectos` (`id`, `proyecto_tipo_id`, `nombre`, `responsable`, `anio`, `participantes`, `estado_actual`, `area_id`, `entidad_id`, `avance`, `observaciones`, `archivo`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(4, 1, 'Titulo del poyecto', 1, 2019, '2,3', 1, '1', NULL, NULL, '<h1 style=\"text-align: center;\">Observaciones</h1>', NULL, '2019-09-12 15:00:14', '2019-09-19 16:00:20', '2019-09-19 16:00:20'),
-(5, 1, 'Proyecto de prueba 2', 1, 2018, '2,3', 1, '2', NULL, NULL, '<h1>Observaciones de prueba</h1>', NULL, '2019-09-12 15:14:28', '2019-09-19 16:03:01', '2019-09-19 16:03:01'),
-(6, 1, 'Proyecto de pueba', 1, 2015, '1,2', 1, '2', NULL, 10, NULL, NULL, '2019-09-13 04:50:48', '2019-09-20 05:05:55', '2019-09-20 05:05:55'),
-(7, 1, 'Proyecto de prueba 3', 3, 2019, '1,2', 2, '2', NULL, 20, NULL, 'proyectos/September2019/b1WE4gprt9vqeUcOSpW3.pdf', '2019-09-13 05:33:56', '2019-10-22 13:22:38', '2019-10-22 13:22:38'),
-(8, 1, 'Proyecto de prueba 3', 2, 2018, '3', 2, '1', NULL, 25, NULL, 'proyectos/September2019/GYkrawO5A5qC5nZRXkMz.pdf', '2019-09-13 05:36:29', '2019-10-22 13:22:33', '2019-10-22 13:22:33'),
-(9, 1, 'proyecto de prueba', 1, 2019, '1,2', 1, '2', NULL, 12, '<p>actually you can use raw form like your question. but i dont recomended it. dan itulah salah satu alasan agan belajar framework, simple, dan cepat. so kenapa pake raw form kalo ada yang lebih mudah. hehe. proud to be indonesian.</p>\r\n<p>reference (laravel blade form)[<a href=\"http://laravel-recipes.com/recipes/124/opening-a-new-html-form]\" rel=\"nofollow\">http://laravel-recipes.com/recipes/124/opening-a-new-html-form]</a></p>', 'proyectos/September2019/LmH4iHNO1ZyqbzXbATyt.pdf', '2019-09-19 06:39:21', '2019-10-22 13:21:48', '2019-10-22 13:21:48'),
-(10, 1, 'Arroz rojo', 3, 2019, '3,4', 1, '1', NULL, 10, '<p>Se pretende llevar acabo bajo riego</p>', 'proyectos/September2019/nPzvTVLxe79qRmxksIi2.jpeg', '2019-09-25 11:16:12', '2019-10-22 13:21:43', '2019-10-22 13:21:43'),
-(11, 1, 'Contribución del Área Protegida Municipal IbareMamoré y del Municipio de Trinidad a la Meta Aichi 1', 14, 2019, '17', 7, '7', NULL, 100, '<p><strong>RECONOCIMIENTOS</strong></p>\r\n<p><strong>Menci&oacute;n especial - III Congreso Nacional de Bot&aacute;nica, Sucre&nbsp; 2015</strong></p>', '', '2019-10-22 17:08:11', '2019-10-22 17:08:11', NULL),
-(12, 1, 'Línea base estudio forestal Área Protegida Municipal IbareMamoré   CIBIOMA UABJB, WWF.', 14, 2019, '17', 7, '6', NULL, 100, '<p><strong>RECONOCIMIENTO</strong></p>\r\n<p><strong>Ganador Fexpo Ciencia 2015- UABJB, Trinidad</strong></p>', '', '2019-10-22 17:14:44', '2019-10-22 17:14:44', NULL),
-(13, 1, 'Línea base estudio Agroforestal Área Protegida Municipal IbareMamoré  CIBIOMA UABJB, WWF.', 14, 2019, '17', 7, '6', NULL, 100, '<p><strong>RECONOCIMIENTO</strong></p>\r\n<p><strong>Ganador Feria Nacional Cient&iacute;fica Buenas Ideas- CEUB, 2018, Cochabamba</strong></p>', '', '2019-10-22 17:30:46', '2019-10-22 17:30:46', NULL),
-(14, 1, 'Flavours, Culture and Biodiversity: Past and Present in Amazonian Wetlands and Forests” WCS- CIBIOMA UABJB. The consortium integrates European and Bolivian leaders in archaeology, sociology, anthropology, botany, ecology/paleoecology, remote sensing and vegetation dynamics of lowland South America', 14, 2019, '17', 7, '7', NULL, 100, '<p><strong>Reconocimiento</strong></p>\r\n<p><strong>Ganador Fexpo Ciencia 2019- UABJB, Trinidad</strong></p>', '', '2019-10-22 17:40:43', '2019-10-22 17:40:43', NULL),
-(15, 1, 'Contribución económica y ambiental de los sistemas agro-forestales a la economía familiar de indígenas en las comunidades de la provincia mojos, Beni.   CIBIOMA UABJB-CIPCA.', 14, 2018, '17', 7, '6', NULL, 100, '<p><strong>Modalidad de graduaci&oacute;n:</strong></p>\r\n<p>Trabajo Dirigido</p>', '', '2019-10-22 17:45:08', '2019-10-22 17:45:08', NULL),
-(16, 1, 'Prácticas agroecológicas para mejorar los rendimiento y calidad del grano de cacao (Theobroma cacao L.) silvestre y cultivado en la provincia Mojos- Beni.  CIBIOMA UABJB-', 14, 2018, '17', 7, '8', NULL, 100, NULL, '', '2019-10-22 17:56:10', '2019-10-22 17:56:10', NULL);
+INSERT INTO `proyectos` (`id`, `proyecto_tipo_id`, `nombre`, `responsable`, `anio`, `participantes`, `estado_actual`, `area_id`, `entidad_id`, `avance`, `observaciones`, `archivo`, `monto`, `productos`, `inicio`, `fin`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(4, 1, 'Titulo del poyecto', 1, 2019, '2,3', 1, '1', NULL, NULL, '<h1 style=\"text-align: center;\">Observaciones</h1>', NULL, NULL, NULL, NULL, NULL, '2019-09-12 15:00:14', '2019-09-19 16:00:20', '2019-09-19 16:00:20'),
+(5, 1, 'Proyecto de prueba 2', 1, 2018, '2,3', 1, '2', NULL, NULL, '<h1>Observaciones de prueba</h1>', NULL, NULL, NULL, NULL, NULL, '2019-09-12 15:14:28', '2019-09-19 16:03:01', '2019-09-19 16:03:01'),
+(6, 1, 'Proyecto de pueba', 1, 2015, '1,2', 1, '2', NULL, 10, NULL, NULL, NULL, NULL, NULL, NULL, '2019-09-13 04:50:48', '2019-09-20 05:05:55', '2019-09-20 05:05:55'),
+(7, 1, 'Proyecto de prueba 3', 3, 2019, '1,2', 2, '2', NULL, 20, NULL, 'proyectos/September2019/b1WE4gprt9vqeUcOSpW3.pdf', NULL, NULL, NULL, NULL, '2019-09-13 05:33:56', '2019-10-22 13:22:38', '2019-10-22 13:22:38'),
+(8, 1, 'Proyecto de prueba 3', 2, 2018, '3', 2, '1', NULL, 25, NULL, 'proyectos/September2019/GYkrawO5A5qC5nZRXkMz.pdf', NULL, NULL, NULL, NULL, '2019-09-13 05:36:29', '2019-10-22 13:22:33', '2019-10-22 13:22:33'),
+(9, 1, 'proyecto de prueba', 1, 2019, '1,2', 1, '2', NULL, 12, '<p>actually you can use raw form like your question. but i dont recomended it. dan itulah salah satu alasan agan belajar framework, simple, dan cepat. so kenapa pake raw form kalo ada yang lebih mudah. hehe. proud to be indonesian.</p>\r\n<p>reference (laravel blade form)[<a href=\"http://laravel-recipes.com/recipes/124/opening-a-new-html-form]\" rel=\"nofollow\">http://laravel-recipes.com/recipes/124/opening-a-new-html-form]</a></p>', 'proyectos/September2019/LmH4iHNO1ZyqbzXbATyt.pdf', NULL, NULL, NULL, NULL, '2019-09-19 06:39:21', '2019-10-22 13:21:48', '2019-10-22 13:21:48'),
+(10, 1, 'Arroz rojo', 3, 2019, '3,4', 1, '1', NULL, 10, '<p>Se pretende llevar acabo bajo riego</p>', 'proyectos/September2019/nPzvTVLxe79qRmxksIi2.jpeg', NULL, NULL, NULL, NULL, '2019-09-25 11:16:12', '2019-10-22 13:21:43', '2019-10-22 13:21:43'),
+(11, 1, 'Contribución del Área Protegida Municipal IbareMamoré y del Municipio de Trinidad a la Meta Aichi 1', 14, 2019, '17', 7, '7', NULL, 100, '<p><strong>RECONOCIMIENTOS</strong></p>\r\n<p><strong>Menci&oacute;n especial - III Congreso Nacional de Bot&aacute;nica, Sucre&nbsp; 2015</strong></p>', '', NULL, NULL, NULL, NULL, '2019-10-22 17:08:11', '2019-10-22 17:08:11', NULL),
+(12, 1, 'Línea base estudio forestal Área Protegida Municipal IbareMamoré   CIBIOMA UABJB, WWF.', 14, 2019, '17', 7, '6', NULL, 100, '<p><strong>RECONOCIMIENTO</strong></p>\r\n<p><strong>Ganador Fexpo Ciencia 2015- UABJB, Trinidad</strong></p>', '', NULL, NULL, NULL, NULL, '2019-10-22 17:14:44', '2019-10-22 17:14:44', NULL),
+(13, 1, 'Línea base estudio Agroforestal Área Protegida Municipal IbareMamoré  CIBIOMA UABJB, WWF.', 14, 2019, '17', 7, '6', NULL, 100, '<p><strong>RECONOCIMIENTO</strong></p>\r\n<p><strong>Ganador Feria Nacional Cient&iacute;fica Buenas Ideas- CEUB, 2018, Cochabamba</strong></p>', '', NULL, NULL, NULL, NULL, '2019-10-22 17:30:46', '2019-10-22 17:30:46', NULL),
+(14, 1, 'Flavours, Culture and Biodiversity: Past and Present in Amazonian Wetlands and Forests” WCS- CIBIOMA UABJB. The consortium integrates European and Bolivian leaders in archaeology, sociology, anthropology, botany, ecology/paleoecology, remote sensing and vegetation dynamics of lowland South America', 14, 2019, '17', 7, '7', NULL, 100, '<p><strong>Reconocimiento</strong></p>\r\n<p><strong>Ganador Fexpo Ciencia 2019- UABJB, Trinidad</strong></p>', '', NULL, NULL, NULL, NULL, '2019-10-22 17:40:43', '2019-10-22 17:40:43', NULL),
+(15, 1, 'Contribución económica y ambiental de los sistemas agro-forestales a la economía familiar de indígenas en las comunidades de la provincia mojos, Beni.   CIBIOMA UABJB-CIPCA.', 14, 2018, '17', 7, '6', NULL, 100, '<p><strong>Modalidad de graduaci&oacute;n:</strong></p>\r\n<p>Trabajo Dirigido</p>', '', NULL, NULL, NULL, NULL, '2019-10-22 17:45:08', '2019-10-22 17:45:08', NULL),
+(16, 1, 'Prácticas agroecológicas para mejorar los rendimiento y calidad del grano de cacao (Theobroma cacao L.) silvestre y cultivado en la provincia Mojos- Beni.  CIBIOMA UABJB-', 14, NULL, '17', 7, '8', '3', 100, NULL, '', '545455.00', 'Productos de prueba', '2021-03-17', '2021-04-11', '2019-10-22 17:56:10', '2021-03-17 01:03:20', NULL),
+(17, 1, 'Título de prueba', 14, NULL, '15,16', 3, '6', '2', 0, NULL, '', '120000.00', 'Productos de prueba', '2019-10-01', '2021-03-18', '2021-03-17 01:19:43', '2021-03-17 01:19:43', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `proyectos_archivos`
+--
+
+CREATE TABLE `proyectos_archivos` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `proyecto_detalle_id` int(11) DEFAULT NULL,
+  `titulo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tipo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `archivo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `proyectos_detalles`
+--
+
+CREATE TABLE `proyectos_detalles` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `proyecto_id` int(11) DEFAULT NULL,
+  `proyectos_estado_id` int(11) DEFAULT NULL,
+  `monto_ejecutado` decimal(10,2) DEFAULT NULL,
+  `observaciones` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -751,6 +789,7 @@ CREATE TABLE `proyectos_estados` (
   `id` int(10) UNSIGNED NOT NULL,
   `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `etiqueta` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `detalle` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -760,14 +799,29 @@ CREATE TABLE `proyectos_estados` (
 -- Volcado de datos para la tabla `proyectos_estados`
 --
 
-INSERT INTO `proyectos_estados` (`id`, `nombre`, `etiqueta`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Fase 1', 'primary', '2019-09-12 07:20:16', '2019-10-22 14:04:26', '2019-10-22 14:04:26'),
-(2, 'Fase 2', 'success', '2019-09-12 07:20:33', '2019-10-22 14:04:35', '2019-10-22 14:04:35'),
-(3, 'Fase 1 - Inicio', 'primary', '2019-10-22 14:30:54', '2019-10-22 14:33:02', NULL),
-(4, 'Fase 2 - Planificación', 'success', '2019-10-22 14:33:54', '2019-10-22 14:33:54', NULL),
-(5, 'Fase 3 - Ejecución', 'warning', '2019-10-22 14:34:46', '2019-10-22 14:34:46', NULL),
-(6, 'Fase 4 - Seguimiento y Control', 'info', '2019-10-22 14:39:16', '2019-10-22 14:39:16', NULL),
-(7, 'Fase 5 -  Evaluación y Cierre', 'light', '2019-10-22 14:40:44', '2019-10-22 14:40:44', NULL);
+INSERT INTO `proyectos_estados` (`id`, `nombre`, `etiqueta`, `detalle`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Fase 1', 'primary', NULL, '2019-09-12 07:20:16', '2019-10-22 14:04:26', '2019-10-22 14:04:26'),
+(2, 'Fase 2', 'success', NULL, '2019-09-12 07:20:33', '2019-10-22 14:04:35', '2019-10-22 14:04:35'),
+(3, 'Fase 1 - Inicio', 'primary', NULL, '2019-10-22 14:30:54', '2019-10-22 14:33:02', NULL),
+(4, 'Fase 2 - Planificación', 'success', 'se requiere documentos, actas, planillas y ubicación', '2019-10-22 14:33:54', '2021-03-17 01:35:04', NULL),
+(5, 'Fase 3 - Ejecución', 'warning', NULL, '2019-10-22 14:34:46', '2019-10-22 14:34:46', NULL),
+(6, 'Fase 4 - Seguimiento y Control', 'info', NULL, '2019-10-22 14:39:16', '2019-10-22 14:39:16', NULL),
+(7, 'Fase 5 -  Evaluación y Cierre', 'light', NULL, '2019-10-22 14:40:44', '2019-10-22 14:40:44', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `proyectos_observaciones`
+--
+
+CREATE TABLE `proyectos_observaciones` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `titulo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `detalle` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1006,9 +1060,27 @@ ALTER TABLE `proyectos`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `proyectos_archivos`
+--
+ALTER TABLE `proyectos_archivos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `proyectos_detalles`
+--
+ALTER TABLE `proyectos_detalles`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `proyectos_estados`
 --
 ALTER TABLE `proyectos_estados`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `proyectos_observaciones`
+--
+ALTER TABLE `proyectos_observaciones`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1074,7 +1146,7 @@ ALTER TABLE `cargos`
 -- AUTO_INCREMENT de la tabla `data_rows`
 --
 ALTER TABLE `data_rows`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
 -- AUTO_INCREMENT de la tabla `data_types`
@@ -1134,13 +1206,31 @@ ALTER TABLE `personas`
 -- AUTO_INCREMENT de la tabla `proyectos`
 --
 ALTER TABLE `proyectos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT de la tabla `proyectos_archivos`
+--
+ALTER TABLE `proyectos_archivos`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `proyectos_detalles`
+--
+ALTER TABLE `proyectos_detalles`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `proyectos_estados`
 --
 ALTER TABLE `proyectos_estados`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de la tabla `proyectos_observaciones`
+--
+ALTER TABLE `proyectos_observaciones`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `proyectos_tipos`

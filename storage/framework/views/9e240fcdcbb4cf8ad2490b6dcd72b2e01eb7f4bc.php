@@ -68,41 +68,23 @@
                                         </div>
                                    </div>
                                 </div>
+                                
                                 <div class="col-md-6">
-                                   <div class="form-group">
-                                        <label>Año</label>
-                                        <input type="number" value="2019" name="anio" value="<?php echo e($proyecto->anio ?? date('Y')); ?>" class="form-control" required="">
-                                   </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                   <div class="form-group">
-                                        <label>Participantes</label>
-                                        <div class="input-group">
-                                            <select name="personas[]" class="form-control select2" id="select-personas" multiple="" required="">
-                                                <?php $__currentLoopData = $personas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <option value="<?php echo e($item->id); ?>"><?php echo e($item->nombre); ?> <?php echo e($item->apellidos); ?></option>
-                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                            </select>
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-primary" data-toggle="modal" data-target="#modal_persona" type="button" style="margin-top:0px">
-                                                <span class="voyager-plus" aria-hidden="true"></span> Nuevo</button>
-                                            </span>
-                                        </div>
-                                   </div>
-                                </div>
-                                <div class="col-md-6">
-                                   <div class="form-group">
-                                        <label>Estado</label>
-                                        <select name="estado_id" class="form-control select2" id="select-estado_id" required="">
-                                            <option disabled selected value="">Seleccione una opción</option>
-                                            <?php $__currentLoopData = $estados; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($item->id); ?>"><?php echo e($item->nombre); ?></option>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        </select>
-                                   </div>
-                                </div>
+                                    <div class="form-group">
+                                         <label>Participantes</label>
+                                         <div class="input-group">
+                                             <select name="personas[]" class="form-control select2" id="select-personas" multiple="" required="">
+                                                 <?php $__currentLoopData = $personas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                 <option value="<?php echo e($item->id); ?>"><?php echo e($item->nombre); ?> <?php echo e($item->apellidos); ?></option>
+                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                             </select>
+                                             <span class="input-group-btn">
+                                                 <button class="btn btn-primary" data-toggle="modal" data-target="#modal_persona" type="button" style="margin-top:0px">
+                                                 <span class="voyager-plus" aria-hidden="true"></span> Nuevo</button>
+                                             </span>
+                                         </div>
+                                    </div>
+                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
@@ -124,12 +106,51 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Inversión Bs.</label>
+                                        <input type="number" name="monto" step="0.1" min="0" value="<?php echo e($proyecto->monto ?? ''); ?>" class="form-control" required="">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Productos esperados</label>
+                                        <input type="text" name="productos" value="<?php echo e($proyecto->productos ?? ''); ?>" class="form-control" required="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Inicio</label>
+                                        <input type="date" name="inicio" value="<?php echo e($proyecto->inicio ?? ''); ?>" class="form-control" required="">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Fin</label>
+                                        <input type="date" name="fin" value="<?php echo e($proyecto->fin ?? ''); ?>" class="form-control" required="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
                                    <div class="form-group">
                                         <label>Archivo</label>
                                         <input type="file" name="archivo" accept="application/pdf">
                                    </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                         <label>Estado</label>
+                                         <select name="estado_id" class="form-control select2" id="select-estado_id" required="">
+                                             <option disabled selected value="">Seleccione una opción</option>
+                                             <?php $__currentLoopData = $estados; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                             <option value="<?php echo e($item->id); ?>"><?php echo e($item->nombre); ?></option>
+                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                         </select>
+                                    </div>
+                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">

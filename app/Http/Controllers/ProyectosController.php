@@ -95,7 +95,11 @@ class ProyectosController extends Controller
                         'entidad_id' => substr($entidad_id, 0, -1),
                         'avance' => $request->avance,
                         'archivo' => $archivo,
-                        'observaciones' => $request->observaciones
+                        'observaciones' => $request->observaciones,
+                        'monto' => $request->monto,
+                        'productos' => $request->productos,
+                        'inicio' => $request->inicio,
+                        'fin' => $request->fin,
                     ]);
         if($proyecto){
             return redirect()->route('proyectos.index')->with(['message' => 'Proyecto guardado exitosamente.', 'alert-type' => 'success']);
@@ -192,6 +196,10 @@ class ProyectosController extends Controller
         $proyecto->avance = $request->avance;
         if($archivo) $proyecto->archivo = $archivo;
         $proyecto->observaciones = $request->observaciones;
+        $proyecto->monto = $request->monto;
+        $proyecto->productos = $request->productos;
+        $proyecto->inicio = $request->inicio;
+        $proyecto->fin = $request->fin;
 
         $proyecto->save();
         
