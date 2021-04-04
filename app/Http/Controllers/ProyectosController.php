@@ -150,9 +150,14 @@ class ProyectosController extends Controller
 
         $proyecto_detalles = DB::table('proyectos_detalles as pd')
                         ->join('proyectos_estados as pe', 'pe.id', 'pd.proyectos_estado_id')
-                        ->select('pd.*', 'pe.nombre as estado_nombre', 'pe.etiqueta as estado_etiqueta', 'pe.icono as estado_icono')
+                        ->select('pd.*', 'pe.nombre as estado_nombre', 'pe.etiqueta as estado_etiqueta', 'pe.icono as estado_icono', 'pd.updated_at as detalle_observaciones', 'pd.updated_at as archivos')
                         ->where('pd.proyecto_id', $id)->get();
-                           
+        $cont = 0;
+        foreach ($proyecto_detalles as $value) {
+            $proyecto_detalles[$cont]->detalle_observaciones = ProyectosObservacione::join('users as u', 'u.id', 'user_id')->where('proyectos_detalle_id', $value->id)->get();
+            $proyecto_detalles[$cont]->archivos = ProyectosArchivo::where('proyecto_detalle_id', $value->id)->get();
+            $cont++;
+        }                           
         return view('proyectos/proyectos_view', compact('proyecto', 'personas', 'areas', 'entidades', 'proyecto_detalles'));
     }
 
@@ -265,8 +270,10 @@ class ProyectosController extends Controller
 
     public function store_observaciones(Request $request){
         try {
+            $proyectos_detalle = ProyectosDetalle::where('proyecto_id', $request->id)->orderBy('id', 'DESC')->first();
             ProyectosObservacione::create([
                 'user_id' => Auth::user()->id,
+                'proyectos_detalle_id' => $proyectos_detalle->id,
                 'proyecto_id' => $request->id,
                 'titulo' => $request->titulo,
                 'detalle' => $request->detalle

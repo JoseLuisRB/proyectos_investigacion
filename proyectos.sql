@@ -1,14 +1,21 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.3
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost:3306
--- Tiempo de generación: 04-04-2021 a las 08:53:27
--- Versión del servidor: 5.7.26
--- Versión de PHP: 7.4.2
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 04-04-2021 a las 19:40:38
+-- Versión del servidor: 10.4.14-MariaDB
+-- Versión de PHP: 7.3.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Base de datos: `proyectos`
@@ -23,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `areas` (
   `id` int(10) UNSIGNED NOT NULL,
   `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `descripcion` text COLLATE utf8mb4_unicode_ci,
+  `descripcion` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -58,7 +65,7 @@ INSERT INTO `areas` (`id`, `nombre`, `descripcion`, `created_at`, `updated_at`, 
 CREATE TABLE `cargos` (
   `id` int(10) UNSIGNED NOT NULL,
   `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `descripcion` text COLLATE utf8mb4_unicode_ci,
+  `descripcion` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -90,14 +97,14 @@ CREATE TABLE `data_rows` (
   `field` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `display_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `required` tinyint(1) NOT NULL DEFAULT '0',
-  `browse` tinyint(1) NOT NULL DEFAULT '1',
-  `read` tinyint(1) NOT NULL DEFAULT '1',
-  `edit` tinyint(1) NOT NULL DEFAULT '1',
-  `add` tinyint(1) NOT NULL DEFAULT '1',
-  `delete` tinyint(1) NOT NULL DEFAULT '1',
-  `details` text COLLATE utf8mb4_unicode_ci,
-  `order` int(11) NOT NULL DEFAULT '1'
+  `required` tinyint(1) NOT NULL DEFAULT 0,
+  `browse` tinyint(1) NOT NULL DEFAULT 1,
+  `read` tinyint(1) NOT NULL DEFAULT 1,
+  `edit` tinyint(1) NOT NULL DEFAULT 1,
+  `add` tinyint(1) NOT NULL DEFAULT 1,
+  `delete` tinyint(1) NOT NULL DEFAULT 1,
+  `details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -214,9 +221,9 @@ CREATE TABLE `data_types` (
   `policy_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `controller` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `generate_permissions` tinyint(1) NOT NULL DEFAULT '0',
-  `server_side` tinyint(4) NOT NULL DEFAULT '0',
-  `details` text COLLATE utf8mb4_unicode_ci,
+  `generate_permissions` tinyint(1) NOT NULL DEFAULT 0,
+  `server_side` tinyint(4) NOT NULL DEFAULT 0,
+  `details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -248,7 +255,7 @@ INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `displa
 CREATE TABLE `departamentos` (
   `id` int(10) UNSIGNED NOT NULL,
   `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `descripcion` text COLLATE utf8mb4_unicode_ci,
+  `descripcion` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `persona_id` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -271,9 +278,9 @@ INSERT INTO `departamentos` (`id`, `nombre`, `descripcion`, `persona_id`, `creat
 CREATE TABLE `entidades` (
   `id` int(10) UNSIGNED NOT NULL,
   `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `descripcion` text COLLATE utf8mb4_unicode_ci,
+  `descripcion` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `logo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `direccion` text COLLATE utf8mb4_unicode_ci,
+  `direccion` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `facultad_id` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -308,7 +315,7 @@ CREATE TABLE `facultades` (
   `id` int(10) UNSIGNED NOT NULL,
   `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sigla` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `descripcion` text COLLATE utf8mb4_unicode_ci,
+  `descripcion` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `logo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -368,7 +375,7 @@ CREATE TABLE `menu_items` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `route` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `parameters` text COLLATE utf8mb4_unicode_ci
+  `parameters` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -702,7 +709,7 @@ INSERT INTO `personas` (`id`, `cargo_id`, `nombre`, `ci`, `movil`, `email`, `fot
 CREATE TABLE `proyectos` (
   `id` int(10) UNSIGNED NOT NULL,
   `proyecto_tipo_id` int(11) DEFAULT NULL,
-  `nombre` text COLLATE utf8mb4_unicode_ci,
+  `nombre` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `responsable` int(11) DEFAULT NULL,
   `anio` int(11) DEFAULT NULL,
   `participantes` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -710,7 +717,7 @@ CREATE TABLE `proyectos` (
   `area_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `entidad_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `avance` int(11) DEFAULT NULL,
-  `observaciones` text COLLATE utf8mb4_unicode_ci,
+  `observaciones` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `archivo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `monto` decimal(10,2) DEFAULT NULL,
   `productos` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -740,7 +747,8 @@ INSERT INTO `proyectos` (`id`, `proyecto_tipo_id`, `nombre`, `responsable`, `ani
 (15, 1, 'Contribución económica y ambiental de los sistemas agro-forestales a la economía familiar de indígenas en las comunidades de la provincia mojos, Beni.   CIBIOMA UABJB-CIPCA.', 14, 2018, '17', 7, '6', NULL, 100, '<p><strong>Modalidad de graduaci&oacute;n:</strong></p>\r\n<p>Trabajo Dirigido</p>', '', NULL, NULL, NULL, NULL, '2019-10-22 17:45:08', '2019-10-22 17:45:08', NULL),
 (16, 1, 'Prácticas agroecológicas para mejorar los rendimiento y calidad del grano de cacao (Theobroma cacao L.) silvestre y cultivado en la provincia Mojos- Beni.  CIBIOMA UABJB-', 14, NULL, '17', 4, '8', '3', 10, NULL, '', '545455.00', 'Productos de prueba', '2021-03-17', '2021-04-11', '2019-10-22 17:56:10', '2021-04-04 06:09:56', NULL),
 (17, 1, 'Título de prueba nn', 14, NULL, '15,16', 7, '6', '2', 30, NULL, '', '120000.00', 'Productos de prueba', '2019-10-01', '2021-03-18', '2021-03-17 01:19:43', '2021-04-04 06:49:02', NULL),
-(18, 1, 'investigación de prueba !!!!', 15, NULL, '15,16', 4, '5', '2', 10, NULL, NULL, '20000.00', 'ninguna', '2021-04-04', '2021-09-26', '2021-04-04 06:51:39', '2021-04-04 07:02:27', NULL);
+(18, 1, 'investigación de prueba !!!!', 15, NULL, '15,16', 4, '5', '2', 10, NULL, NULL, '20000.00', 'ninguna', '2021-04-04', '2021-09-26', '2021-04-04 06:51:39', '2021-04-04 07:02:27', NULL),
+(19, 2, 'proyecto de grado n1', 16, NULL, '17', 5, '6', '5', 15, NULL, NULL, '20000.00', 'Productos de prueba', '2021-05-01', '2022-01-01', '2021-04-04 15:37:43', '2021-04-04 17:39:14', NULL);
 
 -- --------------------------------------------------------
 
@@ -765,7 +773,10 @@ CREATE TABLE `proyectos_archivos` (
 
 INSERT INTO `proyectos_archivos` (`id`, `proyecto_detalle_id`, `titulo`, `tipo`, `archivo`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 5, 'c4611_sample_explain.pdf', 'pdf', 'proyectos/April2021/cJNrmI04Fl8iKpJRM6EC.pdf', '2021-04-04 06:49:02', '2021-04-04 06:49:02', NULL),
-(2, 6, 'c4611_sample_explain.pdf', 'pdf', 'proyectos/April2021/QE9sutVogZB6cWlVh8Qu.pdf', '2021-04-04 06:51:39', '2021-04-04 06:51:39', NULL);
+(2, 6, 'c4611_sample_explain.pdf', 'pdf', 'proyectos/April2021/QE9sutVogZB6cWlVh8Qu.pdf', '2021-04-04 06:51:39', '2021-04-04 06:51:39', NULL),
+(3, 8, 'Factura(1).pdf', 'pdf', 'proyectos/April2021/pHmEx9TYXS6iIG8ERUYp.pdf', '2021-04-04 15:37:43', '2021-04-04 15:37:43', NULL),
+(4, 9, 'TESIS - ANÁLISIS DE LOS FACTORES QUE INCIDEN EN LOS ACCIDENTES DE TRÁNSITO DEL SERVICIO DE TRANSPORTACIÓN PÚBLICA INTERPROVINCIAL EN EL ECUADOR.pdf', 'pdf', 'proyectos/April2021/IDMOjD9zflNFGi3EtEkY.pdf', '2021-04-04 15:40:18', '2021-04-04 15:40:18', NULL),
+(5, 10, 'planillacalificaciones(1).pdf', 'pdf', 'proyectos/April2021/ljuGSypANFPxU7f1FPl4.pdf', '2021-04-04 17:39:14', '2021-04-04 17:39:14', NULL);
 
 -- --------------------------------------------------------
 
@@ -779,7 +790,7 @@ CREATE TABLE `proyectos_detalles` (
   `proyectos_estado_id` int(11) DEFAULT NULL,
   `monto_ejecutado` decimal(10,2) DEFAULT NULL,
   `avance` int(11) DEFAULT NULL,
-  `observaciones` text COLLATE utf8mb4_unicode_ci,
+  `observaciones` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -795,7 +806,10 @@ INSERT INTO `proyectos_detalles` (`id`, `proyecto_id`, `proyectos_estado_id`, `m
 (4, 17, 6, '30.00', 40, 'bnbnbnbnbnbn', '2021-04-04 06:48:15', '2021-04-04 06:48:15'),
 (5, 17, 7, '1200.00', 30, 'nbnbnbnbnbn', '2021-04-04 06:49:02', '2021-04-04 06:49:02'),
 (6, 18, 3, '0.00', 0, 'Inicialización del proyecto', '2021-04-04 06:51:39', '2021-04-04 06:51:39'),
-(7, 18, 4, '1000.00', 10, 'ninguna', '2021-04-04 07:02:27', '2021-04-04 07:02:27');
+(7, 18, 4, '1000.00', 10, 'ninguna', '2021-04-04 07:02:27', '2021-04-04 07:02:27'),
+(8, 19, 3, '0.00', 0, 'Inicialización del proyecto', '2021-04-04 15:37:43', '2021-04-04 15:37:43'),
+(9, 19, 4, '1000.00', 12, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '2021-04-04 15:40:18', '2021-04-04 15:40:18'),
+(10, 19, 5, '2000.00', 15, 'Prácticas agroecológicas para mejorar los rendimiento y calidad del grano de cacao (Theobroma cacao L.) silvestre y cultivado en la provincia Mojos- Beni. CIBIOMA UABJB-', '2021-04-04 17:39:14', '2021-04-04 17:39:14');
 
 -- --------------------------------------------------------
 
@@ -808,7 +822,7 @@ CREATE TABLE `proyectos_estados` (
   `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `etiqueta` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `icono` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `detalle` text COLLATE utf8mb4_unicode_ci,
+  `detalle` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -836,9 +850,10 @@ INSERT INTO `proyectos_estados` (`id`, `nombre`, `etiqueta`, `icono`, `detalle`,
 CREATE TABLE `proyectos_observaciones` (
   `id` int(10) UNSIGNED NOT NULL,
   `proyecto_id` int(11) DEFAULT NULL,
+  `proyectos_detalle_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `titulo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `detalle` text COLLATE utf8mb4_unicode_ci,
+  `detalle` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -848,11 +863,17 @@ CREATE TABLE `proyectos_observaciones` (
 -- Volcado de datos para la tabla `proyectos_observaciones`
 --
 
-INSERT INTO `proyectos_observaciones` (`id`, `proyecto_id`, `user_id`, `titulo`, `detalle`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 17, 1, NULL, 'nnn', '2021-04-04 06:22:55', '2021-04-04 06:22:55', NULL),
-(2, 17, 1, NULL, 'nnnnnn', '2021-04-04 06:23:17', '2021-04-04 06:23:17', NULL),
-(3, 17, 1, 'título', 'nnnnnn', '2021-04-04 06:23:54', '2021-04-04 06:23:54', NULL),
-(4, 18, 1, 'título', 'mmmmmmmmmmm', '2021-04-04 06:55:30', '2021-04-04 06:55:30', NULL);
+INSERT INTO `proyectos_observaciones` (`id`, `proyecto_id`, `proyectos_detalle_id`, `user_id`, `titulo`, `detalle`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 17, NULL, 1, NULL, 'nnn', '2021-04-04 06:22:55', '2021-04-04 06:22:55', NULL),
+(2, 17, NULL, 1, NULL, 'nnnnnn', '2021-04-04 06:23:17', '2021-04-04 06:23:17', NULL),
+(3, 17, NULL, 1, 'título', 'nnnnnn', '2021-04-04 06:23:54', '2021-04-04 06:23:54', NULL),
+(4, 18, NULL, 1, 'título', 'mmmmmmmmmmm', '2021-04-04 06:55:30', '2021-04-04 06:55:30', NULL),
+(5, 19, NULL, 1, 'titulo', 'descripción', '2021-04-04 15:38:16', '2021-04-04 15:38:16', NULL),
+(6, 19, NULL, 1, 'titulo', 'sfsfdfsfdfsd', '2021-04-04 15:56:16', '2021-04-04 15:56:16', NULL),
+(7, 19, 9, 1, 'titulo', 'nbbvnvnvnv', '2021-04-04 15:58:00', '2021-04-04 15:58:00', NULL),
+(8, 19, 9, 1, 'titulo 2', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic.', '2021-04-04 17:11:58', '2021-04-04 17:11:58', NULL),
+(9, 19, 9, 1, 'Lorem Ipsum is simply dummy text of', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an', '2021-04-04 17:12:29', '2021-04-04 17:12:29', NULL),
+(10, 19, 10, 1, 'titulo 2', 'Prácticas agroecológicas para mejorar los rendimiento y calidad del grano de cacao (Theobroma cacao L.) silvestre y cultivado en la provincia Mojos- Beni. CIBIOMA UABJB-', '2021-04-04 17:39:53', '2021-04-04 17:39:53', NULL);
 
 -- --------------------------------------------------------
 
@@ -863,7 +884,7 @@ INSERT INTO `proyectos_observaciones` (`id`, `proyecto_id`, `user_id`, `titulo`,
 CREATE TABLE `proyectos_tipos` (
   `id` int(10) UNSIGNED NOT NULL,
   `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `descripcion` text COLLATE utf8mb4_unicode_ci,
+  `descripcion` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -909,10 +930,10 @@ CREATE TABLE `settings` (
   `id` int(10) UNSIGNED NOT NULL,
   `key` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `display_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` text COLLATE utf8mb4_unicode_ci,
-  `details` text COLLATE utf8mb4_unicode_ci,
+  `value` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `order` int(11) NOT NULL DEFAULT '1',
+  `order` int(11) NOT NULL DEFAULT 1,
   `group` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -964,7 +985,7 @@ CREATE TABLE `users` (
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `settings` text COLLATE utf8mb4_unicode_ci,
+  `settings` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1237,19 +1258,19 @@ ALTER TABLE `personas`
 -- AUTO_INCREMENT de la tabla `proyectos`
 --
 ALTER TABLE `proyectos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `proyectos_archivos`
 --
 ALTER TABLE `proyectos_archivos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `proyectos_detalles`
 --
 ALTER TABLE `proyectos_detalles`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `proyectos_estados`
@@ -1261,7 +1282,7 @@ ALTER TABLE `proyectos_estados`
 -- AUTO_INCREMENT de la tabla `proyectos_observaciones`
 --
 ALTER TABLE `proyectos_observaciones`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `proyectos_tipos`
@@ -1328,3 +1349,8 @@ ALTER TABLE `users`
 ALTER TABLE `user_roles`
   ADD CONSTRAINT `user_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `user_roles_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

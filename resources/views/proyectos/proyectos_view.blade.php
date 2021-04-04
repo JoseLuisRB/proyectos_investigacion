@@ -230,29 +230,19 @@
                                         <div class="timeline-body">
                                             <p>{{ $item->observaciones }}</p>
                                             <hr>
-                                            <h4>Monto de ejecución: {{ $item->monto_ejecutado }} Bs.</h4>
+                                            <b>Archivo</b><br>
+                                            @foreach ($item->archivos as $archivo)
+                                                <a href="{{ asset('storage/'.$archivo->archivo) }}" target="_blank">{{ $archivo->titulo }}</a>
+                                            @endforeach
+                                            <hr>
+                                            <h4>Monto de ejecución: {{ $item->monto_ejecutado }} Bs. <button class="btn btn-success btn-sm pull-right btn-observacion" data-observacion="{{ $item->detalle_observaciones }}" data-toggle="modal" data-target="#observacionesModal">Ver Observaciones <i class="voyager-eye"></i> </button></h4>
                                         </div>
                                     </div>
                                 </li>
                                 @php
                                     $class = $class == '' ? 'timeline-inverted' : '';
-                                    // dd($class);
                                 @endphp
                             @endforeach
-                            
-                            {{-- <li class="timeline-inverted">
-                                <div class="timeline-badge warning"><i class="glyphicon glyphicon-credit-card"></i></div>
-                                <div class="timeline-panel">
-                                    <div class="timeline-heading">
-                                        <h4 class="timeline-title">Mussum ipsum cacilds</h4>
-                                        <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 11 hours ago via Twitter</small></p>
-                                    </div>
-                                    <div class="timeline-body">
-                                        <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo.
-                                        Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p>
-                                    </div>
-                                </div>
-                            </li> --}}
                         </ul>
                     </div>
                 </div>
@@ -260,6 +250,23 @@
         </div>
     </div>
 
+    <div class="modal modal-success fade" id="observacionesModal" tabindex="-1" role="dialog" aria-labelledby="observacionesModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title"><i class="voyager-eye"></i> Observaciones</h4>
+            </div>
+            <div class="modal-body">
+                <ul class="timeline" id="timeline-observacion">
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+        </div>
+    </div>
 
 @stop
 
@@ -416,9 +423,37 @@
 @endsection
 
 @section('javascript')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/es-do.min.js"></script>
     <script>
         $(document).ready(function(){
-
+            $('.btn-observacion').click(function(){
+                let data = $(this).data('observacion');
+                console.log(data)
+                $('#timeline-observacion').empty();
+                let clase = '';
+                data.map(item => {
+                    var date = new Date(item.created_at);
+                    let fecha = moment(date).format('MMMM, DD [de] YYYY, H:mm');
+                    $('#timeline-observacion').append(`
+                        <li class="${clase}">
+                            <div class="timeline-badge primary"><i class="glyphicon glyphicon-list-alt"></i></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4 class="timeline-title">${item.titulo}</h4>
+                                    <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> ${fecha} </small></p>
+                                </div>
+                                <div class="timeline-body">
+                                    <p style="margin-bottom:10px"> ${item.detalle} </p>
+                                    <hr style="margin:0px">
+                                    <small>Realizado por: <b>${item.name}</b></small>
+                                </div>
+                            </div>
+                        </li>
+                    `);
+                    clase = clase == '' ? 'timeline-inverted' : '';
+                })
+            });
         });
     </script>
 @stop

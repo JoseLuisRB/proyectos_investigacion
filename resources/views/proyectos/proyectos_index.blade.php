@@ -30,7 +30,6 @@
                                         <th>Nombre</th>
                                         <th>Estado actual</th>
                                         <th>Avance</th>
-                                        <th>Archivo</th>
                                         <th class="actions text-right">Acciones</th>
                                     </tr>
                                 </thead>
@@ -42,7 +41,6 @@
                                         <td>{{ $item->nombre }}</td>
                                         <td>{{ $item->estado }}</td>
                                         <td>{{ $item->avance }}%</td>
-                                        <td>@if($item->archivo) <a href="{{ url('storage').'/'.$item->archivo }}" target="_blank">Documento</a> @else Ninguno @endif</td>
                                         <td class="no-sort no-click text-right" id="bread-actions">
                                             <a href="#" class="btn btn-sm btn-success btn-fase view" data-toggle="modal" data-target="#fasesModal" data-id="{{ $item->id }}"> <i class="voyager-list"></i> <span>Fases</span></a>
                                             <a href="#" class="btn btn-sm btn-dark btn-observaciones view" data-toggle="modal" data-target="#detallesModal" data-id="{{ $item->id }}"> <i class="voyager-list"></i> <span>Observaciones</span></a>
@@ -96,7 +94,7 @@
                             <label>Porcentaje de avance</label>
                             <div class="input-group">
                                 <input type="number" min="1" step="1" name="avance" class="form-control" required>
-                                <span class="input-group-addon" id="basic-addon1">Bs.</span>
+                                <span class="input-group-addon" id="basic-addon1">%</span>
                             </div>
                         </div>
                     </div>
