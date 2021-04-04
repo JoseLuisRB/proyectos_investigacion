@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+
 use App\Persona;
 use App\Cargo;
 use App\ProyectosTipo;
@@ -12,6 +14,9 @@ use App\ProyectosEstado;
 use App\Proyecto;
 use App\Area;
 use App\Entidade;
+use App\ProyectosDetalle;
+use App\ProyectosObservacione;
+use App\ProyectosArchivo;
 
 class ProyectosController extends Controller
 {
@@ -29,7 +34,8 @@ class ProyectosController extends Controller
                         ->where('p.deleted_at', NULL)
                         ->orderBy('p.id', 'DESC')->get();
         // dd($registros);
-        return view('proyectos/proyectos_index', compact('registros'));
+        $estados_proyectos = ProyectosEstado::where('deleted_at', NULL)->get();
+        return view('proyectos/proyectos_index', compact('registros', 'estados_proyectos'));
     }
 
     /**
@@ -43,11 +49,10 @@ class ProyectosController extends Controller
         $action = 'store';
         $personas = Persona::all()->where('deleted_at', NULL);
         $cargos = Cargo::all()->where('deleted_at', NULL);
-        $estados = ProyectosEstado::all()->where('deleted_at', NULL);
         $areas = Area::all()->where('deleted_at', NULL);
         $tipos = ProyectosTipo::all()->where('deleted_at', NULL);
         $entidades = Entidade::all()->where('deleted_at', NULL);
-        return view('proyectos/proyectos_edit-add', compact('titulo', 'action', 'personas', 'cargos', 'estados', 'tipos', 'areas', 'entidades'));
+        return view('proyectos/proyectos_edit-add', compact('titulo', 'action', 'personas', 'cargos', 'tipos', 'areas', 'entidades'));
     }
 
     /**
@@ -58,55 +63,72 @@ class ProyectosController extends Controller
      */
     public function store(Request $request)
     {
-        // Formatear tipo de datos de array a string separeados por comas
-        $participantes = '';
-        foreach ($request->personas as $item) {
-            $participantes .= $item.',';
-        }
+        DB::beginTransaction();
+        try {
+            // Formatear tipo de datos de array a string separeados por comas
+            $participantes = '';
+            foreach ($request->personas as $item) {
+                $participantes .= $item.',';
+            }
 
-        $entidad_id = '';
-        foreach ($request->entidad_id as $item) {
-            $entidad_id .= $item.',';
-        }
+            $entidad_id = '';
+            foreach ($request->entidad_id as $item) {
+                $entidad_id .= $item.',';
+            }
 
-        $area_id = '';
-        foreach ($request->area_id as $item) {
-            $area_id .= $item.',';
-        }
-        // ===============================================
+            $area_id = '';
+            foreach ($request->area_id as $item) {
+                $area_id .= $item.',';
+            }
+            // ===============================================
 
-        $archivo = '';
-        if ($request->hasFile('archivo')) {
-            $file = $request->file('archivo');
-            $filename = str_random(20).'.'.$file->getClientOriginalExtension();
-            $path = 'proyectos/'.date('F').date('Y').'/'.$filename;
-            \Storage::disk('local')->put('public/'.$path,  \File::get($file));
-            $archivo = $path;
-        }
+            $estado = ProyectosEstado::where('deleted_at', NULL)->first();
 
-        $proyecto = Proyecto::create([
-                        'nombre' => $request->nombre,
-                        'responsable' => $request->responsable,
-                        'anio' => $request->anio,
-                        'participantes' => substr($participantes, 0, -1),
-                        'estado_actual' => $request->estado_id,
-                        'area_id' => substr($area_id, 0, -1),
-                        'proyecto_tipo_id' => $request->proyecto_tipo_id,
-                        'entidad_id' => substr($entidad_id, 0, -1),
-                        'avance' => $request->avance,
-                        'archivo' => $archivo,
-                        'observaciones' => $request->observaciones,
-                        'monto' => $request->monto,
-                        'productos' => $request->productos,
-                        'inicio' => $request->inicio,
-                        'fin' => $request->fin,
-                    ]);
-        if($proyecto){
+            $proyecto = Proyecto::create([
+                'nombre' => $request->nombre,
+                'responsable' => $request->responsable,
+                'anio' => $request->anio,
+                'participantes' => substr($participantes, 0, -1),
+                'estado_actual' => $estado->id,
+                'area_id' => substr($area_id, 0, -1),
+                'proyecto_tipo_id' => $request->proyecto_tipo_id,
+                'entidad_id' => substr($entidad_id, 0, -1),
+                'avance' => 0,
+                'observaciones' => $request->observaciones,
+                'monto' => $request->monto,
+                'productos' => $request->productos,
+                'inicio' => $request->inicio,
+                'fin' => $request->fin,
+            ]);
+
+            $proyectos_detalle = ProyectosDetalle::create([
+                'proyecto_id' => $proyecto->id,
+                'proyectos_estado_id' => $estado->id,
+                'monto_ejecutado' => 0,
+                'avance' => 0,
+                'observaciones' => 'Inicialización del proyecto'
+            ]);
+
+            if ($request->hasFile('archivo')) {
+                $file = $request->file('archivo');
+                $filename = str_random(20).'.'.$file->getClientOriginalExtension();
+                $path = 'proyectos/'.date('F').date('Y').'/'.$filename;
+                \Storage::disk('local')->put('public/'.$path,  \File::get($file));
+
+                ProyectosArchivo::create([
+                    'proyecto_detalle_id' => $proyectos_detalle->id,
+                    'titulo' => $file->getClientOriginalName(),
+                    'tipo' => $file->getClientOriginalExtension(),
+                    'archivo' => $path
+                ]);
+            }
+
+            DB::commit();
             return redirect()->route('proyectos.index')->with(['message' => 'Proyecto guardado exitosamente.', 'alert-type' => 'success']);
-        }else{
-            return redirect()->route('proyectos.index')->with(['message' => 'Ocurrio un error al guardar el proyecto.', 'alert-type' => 'success']);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->route('proyectos.index')->with(['message' => 'Ocurrio un error al guardar el proyecto.', 'alert-type' => 'error']);
         }
-
     }
 
     /**
@@ -125,8 +147,13 @@ class ProyectosController extends Controller
         $personas = Persona::all()->where('deleted_at', NULL);
         $areas = Area::all()->where('deleted_at', NULL);
         $entidades = Entidade::all()->where('deleted_at', NULL);
-                                
-        return view('proyectos/proyectos_view', compact('proyecto', 'personas', 'areas', 'entidades'));
+
+        $proyecto_detalles = DB::table('proyectos_detalles as pd')
+                        ->join('proyectos_estados as pe', 'pe.id', 'pd.proyectos_estado_id')
+                        ->select('pd.*', 'pe.nombre as estado_nombre', 'pe.etiqueta as estado_etiqueta', 'pe.icono as estado_icono')
+                        ->where('pd.proyecto_id', $id)->get();
+                           
+        return view('proyectos/proyectos_view', compact('proyecto', 'personas', 'areas', 'entidades', 'proyecto_detalles'));
     }
 
     /**
@@ -175,26 +202,14 @@ class ProyectosController extends Controller
         }
         // ===============================================
 
-        $archivo = '';
-        if ($request->hasFile('archivo')) {
-            $file = $request->file('archivo');
-            $filename = str_random(20).'.'.$file->getClientOriginalExtension();
-            $path = 'proyectos/'.date('F').date('Y').'/'.$filename;
-            \Storage::disk('local')->put('public/'.$path,  \File::get($file));
-            $archivo = $path;
-        }
-
         $proyecto = Proyecto::findOrFail($id);
 
         $proyecto->nombre = $request->nombre;
         $proyecto->responsable = $request->responsable;
         $proyecto->anio = $request->anio;
         $proyecto->participantes = substr($participantes, 0, -1);
-        $proyecto->estado_actual = $request->estado_id;
         $proyecto->entidad_id = substr($entidad_id, 0, -1);
         $proyecto->area_id = substr($area_id, 0, -1);
-        $proyecto->avance = $request->avance;
-        if($archivo) $proyecto->archivo = $archivo;
         $proyecto->observaciones = $request->observaciones;
         $proyecto->monto = $request->monto;
         $proyecto->productos = $request->productos;
@@ -206,8 +221,63 @@ class ProyectosController extends Controller
         if($proyecto){
             return redirect()->route('proyectos.index')->with(['message' => 'Datos de proyecto actulizados exitosamente.', 'alert-type' => 'success']);
         }else{
-            return redirect()->route('proyectos.index')->with(['message' => 'Ocurrio un error al actualizar los datos del proyecto.', 'alert-type' => 'success']);
+            return redirect()->route('proyectos.index')->with(['message' => 'Ocurrio un error al actualizar los datos del proyecto.', 'alert-type' => 'error']);
         }
+    }
+
+    public function store_detalle(Request $request){
+        try {
+            $proyecto = Proyecto::findOrFail($request->id);
+            $proyecto->avance = $request->avance;
+            $proyecto->estado_actual = $request->proyectos_estado_id;
+            $proyecto->save();
+
+            $proyectos_detalle = ProyectosDetalle::create([
+                'proyecto_id' => $proyecto->id,
+                'proyectos_estado_id' => $request->proyectos_estado_id,
+                'monto_ejecutado' => $request->monto_ejecutado,
+                'observaciones' => $request->observaciones,
+                'avance' => $request->avance
+            ]);
+
+            if ($request->hasFile('archivo')) {
+                $file = $request->file('archivo');
+                $filename = str_random(20).'.'.$file->getClientOriginalExtension();
+                $path = 'proyectos/'.date('F').date('Y').'/'.$filename;
+                \Storage::disk('local')->put('public/'.$path,  \File::get($file));
+
+                ProyectosArchivo::create([
+                    'proyecto_detalle_id' => $proyectos_detalle->id,
+                    'titulo' => $file->getClientOriginalName(),
+                    'tipo' => $file->getClientOriginalExtension(),
+                    'archivo' => $path
+                ]);
+            }
+
+            DB::commit();
+            return redirect()->route('proyectos.index')->with(['message' => 'Avance guardado exitosamente.', 'alert-type' => 'success']);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->route('proyectos.index')->with(['message' => 'Ocurrio un error al guardar el avance.', 'alert-type' => 'error']);
+        }
+
+    }
+
+    public function store_observaciones(Request $request){
+        try {
+            ProyectosObservacione::create([
+                'user_id' => Auth::user()->id,
+                'proyecto_id' => $request->id,
+                'titulo' => $request->titulo,
+                'detalle' => $request->detalle
+            ]);
+            DB::commit();
+            return redirect()->route('proyectos.index')->with(['message' => 'Observación guardado exitosamente.', 'alert-type' => 'success']);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->route('proyectos.index')->with(['message' => 'Ocurrio un error al guardar la observación.', 'alert-type' => 'error']);
+        }
+
     }
 
     /**
@@ -225,7 +295,7 @@ class ProyectosController extends Controller
         if($proyecto){
             return redirect()->route('proyectos.index')->with(['message' => 'Proyecto eliminado exitosamente.', 'alert-type' => 'success']);
         }else{
-            return redirect()->route('proyectos.index')->with(['message' => 'Ocurrio un error al eliminar el proyecto.', 'alert-type' => 'success']);
+            return redirect()->route('proyectos.index')->with(['message' => 'Ocurrio un error al eliminar el proyecto.', 'alert-type' => 'error']);
         }
     }
 

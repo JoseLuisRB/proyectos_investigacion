@@ -10,4 +10,8 @@ class ProyectosEstado extends Model
 {
     use SoftDeletes;
     protected $dates = ['deleted_at'];
+
+    protected $fillable = [
+        'nombre', 'etiqueta', 'detalle'
+    ];
 }

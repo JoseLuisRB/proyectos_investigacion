@@ -105,23 +105,12 @@
                                    </div>
                                 </div>
                                 <div class="col-md-6">
-                                   <div class="form-group">
-                                        <label>Porcentaje de avance</label>
-                                        <input type="number" min="0" step="1" class="form-control" name="avance" value="{{ $proyecto->avance ?? '' }}" required="">
-                                   </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Inversión Bs.</label>
-                                        <input type="number" name="monto" step="0.1" min="0" value="{{ $proyecto->monto ?? '' }}" class="form-control" required="">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Productos esperados</label>
-                                        <input type="text" name="productos" value="{{ $proyecto->productos ?? '' }}" class="form-control" required="">
+                                        <label>Inversión</label>
+                                        <div class="input-group">
+                                            <input type="number" name="monto" step="0.1" min="0" value="{{ $proyecto->monto ?? '' }}" class="form-control" required="">
+                                            <span class="input-group-addon">Bs.</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -140,23 +129,20 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">
-                                   <div class="form-group">
-                                        <label>Archivo</label>
-                                        <input type="file" name="archivo" accept="application/pdf">
-                                   </div>
+                                <div class="@if($action == 'store') col-md-6 @else col-md-12 @endif">
+                                    <div class="form-group">
+                                        <label>Productos esperados</label>
+                                        <input type="text" name="productos" value="{{ $proyecto->productos ?? '' }}" class="form-control" required="">
+                                    </div>
                                 </div>
+                                @if($action == 'store')
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                         <label>Estado</label>
-                                         <select name="estado_id" class="form-control select2" id="select-estado_id" required="">
-                                             <option disabled selected value="">Seleccione una opción</option>
-                                             @foreach($estados as $item)
-                                             <option value="{{ $item->id }}">{{ $item->nombre }}</option>
-                                             @endforeach
-                                         </select>
+                                         <label>Archivo</label>
+                                         <input type="file" name="archivo" accept="application/pdf" >
                                     </div>
                                  </div>
+                                 @endif
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -245,7 +231,6 @@
         $(document).ready(function(){
             @isset($proyecto->id)
                 $('#select-responsable').val({{ $proyecto->responsable }}).trigger('change.select2');
-                $('#select-estado_id').val({{ $proyecto->estado_actual }}).trigger('change.select2');
                 $('#select-area_id').val([{{ $proyecto->area_id }}]).trigger('change.select2');
                 $('#select-entidad_id').val([{{ $proyecto->entidad_id }}]).trigger('change.select2');
                 $('#select-proyecto_tipo_id').val([{{ $proyecto->proyecto_tipo_id }}]).trigger('change.select2');

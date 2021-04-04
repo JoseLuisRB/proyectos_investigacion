@@ -1,21 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.9.3
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 17-03-2021 a las 03:00:40
--- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.3.22
+-- Servidor: localhost:3306
+-- Tiempo de generación: 04-04-2021 a las 08:53:27
+-- Versión del servidor: 5.7.26
+-- Versión de PHP: 7.4.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Base de datos: `proyectos`
@@ -30,7 +23,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `areas` (
   `id` int(10) UNSIGNED NOT NULL,
   `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `descripcion` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -65,7 +58,7 @@ INSERT INTO `areas` (`id`, `nombre`, `descripcion`, `created_at`, `updated_at`, 
 CREATE TABLE `cargos` (
   `id` int(10) UNSIGNED NOT NULL,
   `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `descripcion` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -97,14 +90,14 @@ CREATE TABLE `data_rows` (
   `field` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `display_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `required` tinyint(1) NOT NULL DEFAULT 0,
-  `browse` tinyint(1) NOT NULL DEFAULT 1,
-  `read` tinyint(1) NOT NULL DEFAULT 1,
-  `edit` tinyint(1) NOT NULL DEFAULT 1,
-  `add` tinyint(1) NOT NULL DEFAULT 1,
-  `delete` tinyint(1) NOT NULL DEFAULT 1,
-  `details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `order` int(11) NOT NULL DEFAULT 1
+  `required` tinyint(1) NOT NULL DEFAULT '0',
+  `browse` tinyint(1) NOT NULL DEFAULT '1',
+  `read` tinyint(1) NOT NULL DEFAULT '1',
+  `edit` tinyint(1) NOT NULL DEFAULT '1',
+  `add` tinyint(1) NOT NULL DEFAULT '1',
+  `delete` tinyint(1) NOT NULL DEFAULT '1',
+  `details` text COLLATE utf8mb4_unicode_ci,
+  `order` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -159,9 +152,9 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (45, 7, 'id', 'text', 'Id', 1, 0, 0, 0, 0, 0, '{}', 1),
 (46, 7, 'nombre', 'text', 'Nombre', 0, 1, 1, 1, 1, 1, '{\"validation\":{\"rule\":\"required|max:100\",\"messages\":{\"required\":\"El campo :attribute es requerido.\",\"max\":\"El campo :attribute debe tener al menos :max.\"}}}', 2),
 (47, 7, 'etiqueta', 'select_dropdown', 'Etiqueta', 0, 1, 1, 1, 1, 1, '{\"options\":{\"primary\":\"Azul\",\"success\":\"Verde\",\"info\":\"Celeste\",\"light\":\"Blanca\",\"dark\":\"Oscura\",\"warning\":\"Amarilla\",\"danger\":\"Roja\"}}', 3),
-(48, 7, 'created_at', 'timestamp', 'Creado', 0, 1, 1, 0, 0, 0, '{}', 4),
-(49, 7, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 5),
-(50, 7, 'deleted_at', 'timestamp', 'Deleted At', 0, 0, 0, 0, 0, 0, '{}', 6),
+(48, 7, 'created_at', 'timestamp', 'Creado', 0, 1, 1, 0, 0, 0, '{}', 5),
+(49, 7, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 7),
+(50, 7, 'deleted_at', 'timestamp', 'Deleted At', 0, 0, 0, 0, 0, 0, '{}', 8),
 (51, 8, 'id', 'text', 'Id', 1, 1, 1, 0, 0, 0, '{}', 1),
 (52, 8, 'nombre', 'text', 'Nombre completo', 0, 1, 1, 1, 1, 1, '{\"display\":{\"width\":\"6\"},\"validation\":{\"rule\":\"required|max:100\",\"messages\":{\"required\":\"El campo :attribute es requerido.\",\"max\":\"El campo :attribute debe tener al menos :max.\"}}}', 3),
 (54, 8, 'ci', 'text', 'CI', 0, 1, 1, 1, 1, 1, '{\"display\":{\"width\":\"6\"},\"validation\":{\"rule\":\"required|max:15\",\"messages\":{\"required\":\"El campo :attribute es requerido.\",\"max\":\"El campo :attribute debe tener al menos :max.\"}}}', 6),
@@ -201,7 +194,8 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (90, 13, 'persona_id', 'text', 'Persona Id', 0, 1, 1, 1, 1, 1, '{}', 4),
 (91, 6, 'area_belongsto_departamento_relationship', 'relationship', 'departamentos', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Departamento\",\"table\":\"departamentos\",\"type\":\"belongsTo\",\"column\":\"departamento_id\",\"key\":\"id\",\"label\":\"nombre\",\"pivot_table\":\"areas\",\"pivot\":\"0\",\"taggable\":\"0\"}', 4),
 (92, 6, 'departamento_id', 'text', 'Departamento Id', 0, 1, 1, 1, 1, 1, '{}', 8),
-(93, 7, 'detalle', 'text_area', 'Detalle', 0, 1, 1, 1, 1, 1, '{}', 4);
+(93, 7, 'detalle', 'text_area', 'Detalle', 0, 1, 1, 1, 1, 1, '{}', 6),
+(94, 7, 'icono', 'select_dropdown', 'Icono', 0, 1, 1, 1, 1, 1, '{\"options\":{\"glyphicon-check\":\"Check\",\"glyphicon-credit-card\":\"Card\",\"glyphicon-floppy-disk\":\"Save\",\"glyphicon-cog\":\"Settings\",\"glyphicon-thumbs-up\":\"Ok\",\"glyphicon-search\":\"Search\",\"glyphicon-eye-open\":\"Eye\",\"glyphicon-globe\":\"Globe\",\"glyphicon-send\":\"Send\",\"glyphicon-blackboard\":\"Blackboard\",\"glyphicon-book\":\"Book\"}}', 4);
 
 -- --------------------------------------------------------
 
@@ -220,9 +214,9 @@ CREATE TABLE `data_types` (
   `policy_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `controller` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `generate_permissions` tinyint(1) NOT NULL DEFAULT 0,
-  `server_side` tinyint(4) NOT NULL DEFAULT 0,
-  `details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `generate_permissions` tinyint(1) NOT NULL DEFAULT '0',
+  `server_side` tinyint(4) NOT NULL DEFAULT '0',
+  `details` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -238,7 +232,7 @@ INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `displa
 (4, 'entidades', 'entidades', 'Instituto de Investigación', 'Institutos de Investigación', 'voyager-home', 'App\\Entidade', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-09-05 06:13:44', '2019-10-04 17:03:04'),
 (5, 'facultades', 'facultades', 'Facultad', 'Facultades', 'voyager-shop', 'App\\Facultade', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-09-05 06:19:52', '2019-09-12 04:39:20'),
 (6, 'areas', 'areas', 'Línea de investigación', 'Líneas de investigación', 'voyager-data', 'App\\Area', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-09-05 06:27:36', '2021-03-13 00:03:11'),
-(7, 'proyectos_estados', 'proyectos-estados', 'Estado de proyecto', 'Estados de proyecto', 'voyager-params', 'App\\ProyectosEstado', NULL, NULL, NULL, 1, 0, '{\"order_column\":\"nombre\",\"order_display_column\":\"nombre\",\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-09-05 06:33:03', '2021-03-17 01:34:16'),
+(7, 'proyectos_estados', 'proyectos-estados', 'Estado de proyecto', 'Estados de proyecto', 'voyager-params', 'App\\ProyectosEstado', NULL, NULL, NULL, 1, 0, '{\"order_column\":\"nombre\",\"order_display_column\":\"nombre\",\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-09-05 06:33:03', '2021-04-04 08:04:31'),
 (8, 'personas', 'personas', 'Persona', 'Personas', 'voyager-person', 'App\\Persona', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-09-05 06:42:11', '2021-03-13 00:06:29'),
 (10, 'permissions', 'permissions', 'Permission', 'Permissions', 'voyager-certificate', 'App\\Permission', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-09-12 05:11:22', '2019-09-12 05:29:11'),
 (11, 'cargos', 'cargos', 'Cargo', 'Cargos', 'voyager-certificate', 'App\\Cargo', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2019-10-04 16:32:45', '2019-10-04 16:32:45'),
@@ -254,7 +248,7 @@ INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `displa
 CREATE TABLE `departamentos` (
   `id` int(10) UNSIGNED NOT NULL,
   `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `descripcion` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci,
   `persona_id` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -277,9 +271,9 @@ INSERT INTO `departamentos` (`id`, `nombre`, `descripcion`, `persona_id`, `creat
 CREATE TABLE `entidades` (
   `id` int(10) UNSIGNED NOT NULL,
   `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `descripcion` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci,
   `logo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `direccion` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `direccion` text COLLATE utf8mb4_unicode_ci,
   `facultad_id` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -314,7 +308,7 @@ CREATE TABLE `facultades` (
   `id` int(10) UNSIGNED NOT NULL,
   `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sigla` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `descripcion` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci,
   `logo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -374,7 +368,7 @@ CREATE TABLE `menu_items` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `route` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `parameters` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `parameters` text COLLATE utf8mb4_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -708,7 +702,7 @@ INSERT INTO `personas` (`id`, `cargo_id`, `nombre`, `ci`, `movil`, `email`, `fot
 CREATE TABLE `proyectos` (
   `id` int(10) UNSIGNED NOT NULL,
   `proyecto_tipo_id` int(11) DEFAULT NULL,
-  `nombre` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nombre` text COLLATE utf8mb4_unicode_ci,
   `responsable` int(11) DEFAULT NULL,
   `anio` int(11) DEFAULT NULL,
   `participantes` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -716,7 +710,7 @@ CREATE TABLE `proyectos` (
   `area_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `entidad_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `avance` int(11) DEFAULT NULL,
-  `observaciones` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `observaciones` text COLLATE utf8mb4_unicode_ci,
   `archivo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `monto` decimal(10,2) DEFAULT NULL,
   `productos` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -744,8 +738,9 @@ INSERT INTO `proyectos` (`id`, `proyecto_tipo_id`, `nombre`, `responsable`, `ani
 (13, 1, 'Línea base estudio Agroforestal Área Protegida Municipal IbareMamoré  CIBIOMA UABJB, WWF.', 14, 2019, '17', 7, '6', NULL, 100, '<p><strong>RECONOCIMIENTO</strong></p>\r\n<p><strong>Ganador Feria Nacional Cient&iacute;fica Buenas Ideas- CEUB, 2018, Cochabamba</strong></p>', '', NULL, NULL, NULL, NULL, '2019-10-22 17:30:46', '2019-10-22 17:30:46', NULL),
 (14, 1, 'Flavours, Culture and Biodiversity: Past and Present in Amazonian Wetlands and Forests” WCS- CIBIOMA UABJB. The consortium integrates European and Bolivian leaders in archaeology, sociology, anthropology, botany, ecology/paleoecology, remote sensing and vegetation dynamics of lowland South America', 14, 2019, '17', 7, '7', NULL, 100, '<p><strong>Reconocimiento</strong></p>\r\n<p><strong>Ganador Fexpo Ciencia 2019- UABJB, Trinidad</strong></p>', '', NULL, NULL, NULL, NULL, '2019-10-22 17:40:43', '2019-10-22 17:40:43', NULL),
 (15, 1, 'Contribución económica y ambiental de los sistemas agro-forestales a la economía familiar de indígenas en las comunidades de la provincia mojos, Beni.   CIBIOMA UABJB-CIPCA.', 14, 2018, '17', 7, '6', NULL, 100, '<p><strong>Modalidad de graduaci&oacute;n:</strong></p>\r\n<p>Trabajo Dirigido</p>', '', NULL, NULL, NULL, NULL, '2019-10-22 17:45:08', '2019-10-22 17:45:08', NULL),
-(16, 1, 'Prácticas agroecológicas para mejorar los rendimiento y calidad del grano de cacao (Theobroma cacao L.) silvestre y cultivado en la provincia Mojos- Beni.  CIBIOMA UABJB-', 14, NULL, '17', 7, '8', '3', 100, NULL, '', '545455.00', 'Productos de prueba', '2021-03-17', '2021-04-11', '2019-10-22 17:56:10', '2021-03-17 01:03:20', NULL),
-(17, 1, 'Título de prueba', 14, NULL, '15,16', 3, '6', '2', 0, NULL, '', '120000.00', 'Productos de prueba', '2019-10-01', '2021-03-18', '2021-03-17 01:19:43', '2021-03-17 01:19:43', NULL);
+(16, 1, 'Prácticas agroecológicas para mejorar los rendimiento y calidad del grano de cacao (Theobroma cacao L.) silvestre y cultivado en la provincia Mojos- Beni.  CIBIOMA UABJB-', 14, NULL, '17', 4, '8', '3', 10, NULL, '', '545455.00', 'Productos de prueba', '2021-03-17', '2021-04-11', '2019-10-22 17:56:10', '2021-04-04 06:09:56', NULL),
+(17, 1, 'Título de prueba nn', 14, NULL, '15,16', 7, '6', '2', 30, NULL, '', '120000.00', 'Productos de prueba', '2019-10-01', '2021-03-18', '2021-03-17 01:19:43', '2021-04-04 06:49:02', NULL),
+(18, 1, 'investigación de prueba !!!!', 15, NULL, '15,16', 4, '5', '2', 10, NULL, NULL, '20000.00', 'ninguna', '2021-04-04', '2021-09-26', '2021-04-04 06:51:39', '2021-04-04 07:02:27', NULL);
 
 -- --------------------------------------------------------
 
@@ -760,8 +755,17 @@ CREATE TABLE `proyectos_archivos` (
   `tipo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `archivo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `proyectos_archivos`
+--
+
+INSERT INTO `proyectos_archivos` (`id`, `proyecto_detalle_id`, `titulo`, `tipo`, `archivo`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 5, 'c4611_sample_explain.pdf', 'pdf', 'proyectos/April2021/cJNrmI04Fl8iKpJRM6EC.pdf', '2021-04-04 06:49:02', '2021-04-04 06:49:02', NULL),
+(2, 6, 'c4611_sample_explain.pdf', 'pdf', 'proyectos/April2021/QE9sutVogZB6cWlVh8Qu.pdf', '2021-04-04 06:51:39', '2021-04-04 06:51:39', NULL);
 
 -- --------------------------------------------------------
 
@@ -774,10 +778,24 @@ CREATE TABLE `proyectos_detalles` (
   `proyecto_id` int(11) DEFAULT NULL,
   `proyectos_estado_id` int(11) DEFAULT NULL,
   `monto_ejecutado` decimal(10,2) DEFAULT NULL,
-  `observaciones` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `avance` int(11) DEFAULT NULL,
+  `observaciones` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `proyectos_detalles`
+--
+
+INSERT INTO `proyectos_detalles` (`id`, `proyecto_id`, `proyectos_estado_id`, `monto_ejecutado`, `avance`, `observaciones`, `created_at`, `updated_at`) VALUES
+(1, 17, 7, '12.00', 21, 'nn', '2021-04-04 06:08:49', '2021-04-04 06:08:49'),
+(2, 16, 4, '1000.00', 10, 'nn', '2021-04-04 06:09:56', '2021-04-04 06:09:56'),
+(3, 17, 5, '40.00', 20, 'nnnnnn', '2021-04-04 06:46:53', '2021-04-04 06:46:53'),
+(4, 17, 6, '30.00', 40, 'bnbnbnbnbnbn', '2021-04-04 06:48:15', '2021-04-04 06:48:15'),
+(5, 17, 7, '1200.00', 30, 'nbnbnbnbnbn', '2021-04-04 06:49:02', '2021-04-04 06:49:02'),
+(6, 18, 3, '0.00', 0, 'Inicialización del proyecto', '2021-04-04 06:51:39', '2021-04-04 06:51:39'),
+(7, 18, 4, '1000.00', 10, 'ninguna', '2021-04-04 07:02:27', '2021-04-04 07:02:27');
 
 -- --------------------------------------------------------
 
@@ -789,7 +807,8 @@ CREATE TABLE `proyectos_estados` (
   `id` int(10) UNSIGNED NOT NULL,
   `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `etiqueta` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `detalle` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `icono` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `detalle` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -799,14 +818,14 @@ CREATE TABLE `proyectos_estados` (
 -- Volcado de datos para la tabla `proyectos_estados`
 --
 
-INSERT INTO `proyectos_estados` (`id`, `nombre`, `etiqueta`, `detalle`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Fase 1', 'primary', NULL, '2019-09-12 07:20:16', '2019-10-22 14:04:26', '2019-10-22 14:04:26'),
-(2, 'Fase 2', 'success', NULL, '2019-09-12 07:20:33', '2019-10-22 14:04:35', '2019-10-22 14:04:35'),
-(3, 'Fase 1 - Inicio', 'primary', NULL, '2019-10-22 14:30:54', '2019-10-22 14:33:02', NULL),
-(4, 'Fase 2 - Planificación', 'success', 'se requiere documentos, actas, planillas y ubicación', '2019-10-22 14:33:54', '2021-03-17 01:35:04', NULL),
-(5, 'Fase 3 - Ejecución', 'warning', NULL, '2019-10-22 14:34:46', '2019-10-22 14:34:46', NULL),
-(6, 'Fase 4 - Seguimiento y Control', 'info', NULL, '2019-10-22 14:39:16', '2019-10-22 14:39:16', NULL),
-(7, 'Fase 5 -  Evaluación y Cierre', 'light', NULL, '2019-10-22 14:40:44', '2019-10-22 14:40:44', NULL);
+INSERT INTO `proyectos_estados` (`id`, `nombre`, `etiqueta`, `icono`, `detalle`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Fase 1', 'primary', NULL, NULL, '2019-09-12 07:20:16', '2019-10-22 14:04:26', '2019-10-22 14:04:26'),
+(2, 'Fase 2', 'success', NULL, NULL, '2019-09-12 07:20:33', '2019-10-22 14:04:35', '2019-10-22 14:04:35'),
+(3, 'Fase 1 - Inicio', 'primary', 'glyphicon-check', NULL, '2019-10-22 14:30:54', '2021-04-04 08:14:36', NULL),
+(4, 'Fase 2 - Planificación', 'success', 'glyphicon-credit-card', 'se requiere documentos, actas, planillas y ubicación', '2019-10-22 14:33:54', '2021-04-04 08:14:42', NULL),
+(5, 'Fase 3 - Ejecución', 'warning', 'glyphicon-cog', NULL, '2019-10-22 14:34:46', '2021-04-04 08:14:50', NULL),
+(6, 'Fase 4 - Seguimiento y Control', 'info', 'glyphicon-globe', NULL, '2019-10-22 14:39:16', '2021-04-04 08:15:00', NULL),
+(7, 'Fase 5 -  Evaluación y Cierre', 'light', 'glyphicon-thumbs-up', NULL, '2019-10-22 14:40:44', '2021-04-04 08:15:07', NULL);
 
 -- --------------------------------------------------------
 
@@ -816,12 +835,24 @@ INSERT INTO `proyectos_estados` (`id`, `nombre`, `etiqueta`, `detalle`, `created
 
 CREATE TABLE `proyectos_observaciones` (
   `id` int(10) UNSIGNED NOT NULL,
+  `proyecto_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `titulo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `detalle` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `detalle` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `proyectos_observaciones`
+--
+
+INSERT INTO `proyectos_observaciones` (`id`, `proyecto_id`, `user_id`, `titulo`, `detalle`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 17, 1, NULL, 'nnn', '2021-04-04 06:22:55', '2021-04-04 06:22:55', NULL),
+(2, 17, 1, NULL, 'nnnnnn', '2021-04-04 06:23:17', '2021-04-04 06:23:17', NULL),
+(3, 17, 1, 'título', 'nnnnnn', '2021-04-04 06:23:54', '2021-04-04 06:23:54', NULL),
+(4, 18, 1, 'título', 'mmmmmmmmmmm', '2021-04-04 06:55:30', '2021-04-04 06:55:30', NULL);
 
 -- --------------------------------------------------------
 
@@ -832,7 +863,7 @@ CREATE TABLE `proyectos_observaciones` (
 CREATE TABLE `proyectos_tipos` (
   `id` int(10) UNSIGNED NOT NULL,
   `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `descripcion` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -878,10 +909,10 @@ CREATE TABLE `settings` (
   `id` int(10) UNSIGNED NOT NULL,
   `key` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `display_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `value` text COLLATE utf8mb4_unicode_ci,
+  `details` text COLLATE utf8mb4_unicode_ci,
   `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `order` int(11) NOT NULL DEFAULT 1,
+  `order` int(11) NOT NULL DEFAULT '1',
   `group` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -933,7 +964,7 @@ CREATE TABLE `users` (
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `settings` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `settings` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1146,7 +1177,7 @@ ALTER TABLE `cargos`
 -- AUTO_INCREMENT de la tabla `data_rows`
 --
 ALTER TABLE `data_rows`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT de la tabla `data_types`
@@ -1206,19 +1237,19 @@ ALTER TABLE `personas`
 -- AUTO_INCREMENT de la tabla `proyectos`
 --
 ALTER TABLE `proyectos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `proyectos_archivos`
 --
 ALTER TABLE `proyectos_archivos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `proyectos_detalles`
 --
 ALTER TABLE `proyectos_detalles`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `proyectos_estados`
@@ -1230,7 +1261,7 @@ ALTER TABLE `proyectos_estados`
 -- AUTO_INCREMENT de la tabla `proyectos_observaciones`
 --
 ALTER TABLE `proyectos_observaciones`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `proyectos_tipos`
@@ -1297,8 +1328,3 @@ ALTER TABLE `users`
 ALTER TABLE `user_roles`
   ADD CONSTRAINT `user_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `user_roles_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
