@@ -30,10 +30,17 @@ class ProyectosController extends Controller
         $registros = DB::table('proyectos as p')
                         ->join('proyectos_estados as e', 'e.id', 'p.estado_actual')
                         ->join('areas as a', 'a.id', 'p.area_id')
-                        ->select('p.*', 'e.nombre as estado', 'a.nombre as area')
+                        ->select('p.*', 'e.nombre as estado', 'a.nombre as area', 'p.deleted_at as detalles')
                         ->where('p.deleted_at', NULL)
                         ->orderBy('p.id', 'DESC')->get();
+        $cont = 0;
+        foreach ($registros as $value) {
+            $registros[$cont]->detalles = ProyectosDetalle::where('proyecto_id', $value->id)->get();
+            $cont++;
+        }
+
         // dd($registros);
+
         $estados_proyectos = ProyectosEstado::where('deleted_at', NULL)->get();
         return view('proyectos/proyectos_index', compact('registros', 'estados_proyectos'));
     }
@@ -147,18 +154,20 @@ class ProyectosController extends Controller
         $personas = Persona::all()->where('deleted_at', NULL);
         $areas = Area::all()->where('deleted_at', NULL);
         $entidades = Entidade::all()->where('deleted_at', NULL);
+        $estados = ProyectosEstado::where('deleted_at', NULL)->get();
 
         $proyecto_detalles = DB::table('proyectos_detalles as pd')
+                        ->join('proyectos as p', 'p.id', 'pd.proyecto_id')
                         ->join('proyectos_estados as pe', 'pe.id', 'pd.proyectos_estado_id')
-                        ->select('pd.*', 'pe.nombre as estado_nombre', 'pe.etiqueta as estado_etiqueta', 'pe.icono as estado_icono', 'pd.updated_at as detalle_observaciones', 'pd.updated_at as archivos')
+                        ->select('pd.*', 'pe.id as estado_id', 'pe.nombre as estado_nombre', 'pe.etiqueta as estado_etiqueta', 'pe.icono as estado_icono', 'pd.updated_at as detalle_observaciones', 'pd.updated_at as archivos', 'p.created_at as fecha_proyecto')
                         ->where('pd.proyecto_id', $id)->get();
         $cont = 0;
         foreach ($proyecto_detalles as $value) {
             $proyecto_detalles[$cont]->detalle_observaciones = ProyectosObservacione::join('users as u', 'u.id', 'user_id')->where('proyectos_detalle_id', $value->id)->get();
             $proyecto_detalles[$cont]->archivos = ProyectosArchivo::where('proyecto_detalle_id', $value->id)->get();
             $cont++;
-        }                           
-        return view('proyectos/proyectos_view', compact('proyecto', 'personas', 'areas', 'entidades', 'proyecto_detalles'));
+        }
+        return view('proyectos/proyectos_view', compact('proyecto', 'personas', 'areas', 'entidades', 'proyecto_detalles', 'estados'));
     }
 
     /**

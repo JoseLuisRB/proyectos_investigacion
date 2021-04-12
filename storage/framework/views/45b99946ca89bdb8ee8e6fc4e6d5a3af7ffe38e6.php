@@ -203,7 +203,7 @@
             <div class="col-md-12">
                 <div class="panel panel-bordered">
                     <div class="panel-body">
-                        <div class="page-header">
+                        <div class="page-header" style="margin-top: 0px">
                             <h3 id="timeline" class="text-center">Seguimiento del proyecto</h3>
                         </div>
                         <ul class="timeline">
@@ -235,6 +235,19 @@
                                 ?>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-bordered">
+                    <div class="panel-body">
+                        <div class="page-header" style="margin-top: 0px">
+                            <h3 class="text-center">Gráfico de fases</h3>
+                        </div>
+                        <canvas id="myChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -416,6 +429,9 @@
 <?php $__env->startSection('javascript'); ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/es-do.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.1.0/chart.min.js" integrity="sha512-RGbSeD/jDcZBWNsI1VCvdjcDULuSfWTtIva2ek5FtteXeSjLfXac4kqkDRHVGf1TwsXCAqPTF7/EYITD0/CTqw==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js" integrity="sha512-LGXaggshOkD/at6PFNcp2V2unf9LzFq6LE+sChH7ceMTDP0g2kn6Vxwgg7wkPP7AAtX+lmPqPdxB47A0Nz0cMQ==" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function(){
             $('.btn-observacion').click(function(){
@@ -445,6 +461,115 @@
                     clase = clase == '' ? 'timeline-inverted' : '';
                 })
             });
+
+            let colores = [
+                {
+                    principal: 'rgba(255, 99, 132, 0.5)',
+                    secundario: 'rgb(255, 99, 132)',
+                },
+                {
+                    principal: 'rgba(255, 159, 64, 0.5)',
+                    secundario: 'rgb(255, 159, 64)',
+                },
+                {
+                    principal: 'rgba(255, 205, 86, 0.5)',
+                    secundario: 'rgb(255, 205, 86)',
+                },
+                {
+                    principal: 'rgba(75, 192, 192, 0.5)',
+                    secundario: 'rgb(75, 192, 192)',
+                },
+                {
+                    principal: 'rgba(54, 162, 235, 0.5)',
+                    secundario: 'rgb(54, 162, 235)',
+                },
+                {
+                    principal: 'rgba(153, 102, 255, 0.5)',
+                    secundario: 'rgb(153, 102, 255)',
+                },
+                {
+                    principal: 'rgba(201, 203, 207, 0.5)',
+                    secundario: 'rgb(201, 203, 207)',
+                },
+                {
+                    principal: 'rgba(106, 105, 105, 0.5)',
+                    secundario: 'rgb(106, 105, 105)',
+                }
+            ];
+
+            let estados = <?php echo json_encode($estados, 15, 512) ?>;
+            let detalles = <?php echo json_encode($proyecto_detalles, 15, 512) ?>;
+
+            let borderColor = [];
+            let backgroundColor = [];
+            let labels = [];
+            let dias_diff = [];
+            estados.map((label, index) => {
+                borderColor.push(colores[index].principal);
+                backgroundColor.push(colores[index].secundario);
+                labels.push(label.nombre);
+
+                let dias = 0;
+                detalles.map(item => {
+                    if(item.estado_id == label.id){
+                        if(detalles.length <= detalles.length +1){
+                            try {
+                                let a = moment(item.created_at);
+                                let b = moment(detalles[index+1].created_at);
+                                dias = b.diff(a, 'days');
+                            } catch (error) {
+                                
+                            }
+                        }
+                    }
+                });
+                dias_diff.push(dias);
+            });
+
+            const data = {
+                labels,
+                datasets: [{
+                    label: '',
+                    data: dias_diff,
+                    backgroundColor,
+                    borderColor,
+                    borderWidth: 3
+                }]
+            };
+            const config = {
+                type: 'bar',
+                data: data,
+                options: {
+                    indexAxis: 'y',
+                    // Elements options apply to all of the options unless overridden in a dataset
+                    // In this case, we are setting the border of each horizontal bar to be 2px wide
+                    elements: {
+                        bar: {
+                            borderWidth: 2,
+                        }
+                    },
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        },
+                        title: {
+                            display: false,
+                            text: 'Chart.js Horizontal Bar Chart'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                },
+            };
+
+            var myChart = new Chart(
+                document.getElementById('myChart'),
+                config
+            );
         });
     </script>
 <?php $__env->stopSection(); ?>

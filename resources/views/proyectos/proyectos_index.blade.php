@@ -42,7 +42,7 @@
                                         <td>{{ $item->estado }}</td>
                                         <td>{{ $item->avance }}%</td>
                                         <td class="no-sort no-click text-right" id="bread-actions">
-                                            <a href="#" class="btn btn-sm btn-success btn-fase view" data-toggle="modal" data-target="#fasesModal" data-id="{{ $item->id }}"> <i class="voyager-list"></i> <span>Fases</span></a>
+                                            <a href="#" class="btn btn-sm btn-success btn-fase view" data-toggle="modal" data-target="#fasesModal" data-id="{{ $item->id }}" data-detalles="{{ $item->detalles }}" data-monto="{{ $item->monto }}" data-monto="{{ $item->monto }}"> <i class="voyager-list"></i> <span>Fases</span></a>
                                             <a href="#" class="btn btn-sm btn-dark btn-observaciones view" data-toggle="modal" data-target="#detallesModal" data-id="{{ $item->id }}"> <i class="voyager-list"></i> <span>Observaciones</span></a>
                                             <a href="{{ route('proyectos.show', ['id' => $item->id]) }}" class="btn btn-sm btn-warning view"> <i class="voyager-eye"></i> <span>Ver</span></a>
                                             <a href="{{ route('proyectos.edit', ['id' => $item->id]) }}" class="btn btn-sm btn-primary edit"> <i class="voyager-edit"></i> <span>Editar</span></a>
@@ -75,23 +75,24 @@
                     <input type="hidden" name="id">
                     <div class="form-group">
                         <label>Fase</label>
-                        <select name="proyectos_estado_id" class="form-control" required>
-                            <option value="">Selecciona un fase del proyecto</option>
+                        <select name="proyectos_estado_id" id="proyectos_estado_id" class="form-control" required>
+                            {{-- <option value="">Selecciona un fase del proyecto</option>
                             @foreach ($estados_proyectos as $item)
                             <option value="{{ $item->id }}">{{ $item->nombre }}</option>
-                            @endforeach
+                            @endforeach --}}
                         </select>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <label>Monto ejecutado</label>
+                            <label>Monto a ejecutar</label>
                             <div class="input-group">
-                                <input type="number" min="1" step="1" name="monto_ejecutado" class="form-control" required>
+                                <input type="number" min="1" step="1" name="monto_ejecutado" id="input-monto_ejecutado" class="form-control" required>
                                 <span class="input-group-addon" id="basic-addon1">Bs.</span>
                             </div>
+                            <label class="label-monto"></label>
                         </div>
                         <div class="form-group col-md-6">
-                            <label>Porcentaje de avance</label>
+                            <label>Porcentaje de avance <b class="label-avance"></b></label>
                             <div class="input-group">
                                 <input type="number" min="1" step="1" name="avance" class="form-control" required>
                                 <span class="input-group-addon" id="basic-addon1">%</span>
@@ -179,6 +180,30 @@
 
             $('.btn-fase').click(function(){
                 $('#form-fases input[name="id"]').val($(this).data('id'));
+                let detalles = $(this).data('detalles');
+                let monto = parseFloat($(this).data('monto'));
+                let porcentaje = detalles[detalles.length-1].avance;
+                let proyectos_estado_id = detalles[detalles.length-1].proyectos_estado_id;
+                let monto_ejecutado = 0;
+
+                detalles.map(item => {
+                    monto_ejecutado += parseFloat(item.monto_ejecutado)
+                });
+
+                $('.label-monto').text(`${(monto-monto_ejecutado).toFixed(2)} Bs. de ${(monto).toFixed(2)} Bs.`);
+                $('#input-monto_ejecutado').prop('max', (monto-monto_ejecutado));
+                $('.label-avance').text(` (${porcentaje}%)`);
+
+                let estado = @json($estados_proyectos);
+                let options = '';
+                let activo = '';
+                estado.map(item => {
+                    if(item.id > proyectos_estado_id){
+                        options += `<option value="${item.id }" ${activo}>${item.nombre}</option>`;
+                        activo = 'disabled';
+                    }
+                });
+                $('#proyectos_estado_id').html(options);
             });
 
             $('.btn-observaciones').click(function(){
