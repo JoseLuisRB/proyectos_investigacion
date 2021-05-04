@@ -94,7 +94,7 @@
 
 			datos.map((reg) => {
 				data.push(reg.cantidad);
-				labels.push(reg.nombre);
+				labels.push(`${reg.cantidad} ${reg.nombre}`);
 				colors.push(bgColors[Math.floor(Math.random() * 15)]);
 			});
 
@@ -109,7 +109,11 @@
 					labels: labels
 				},
 				options: {
-					responsive: true
+					responsive: true,
+					legend:{
+						position: 'right'
+					}
+					
 				}
 			};
 

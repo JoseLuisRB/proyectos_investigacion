@@ -22,20 +22,31 @@
                                 <div class="col-md-6">
                                    <div class="form-group">
                                         <label>Tipo de investigación</label>
-                                        <select name="proyecto_tipo_id" class="form-control select2" id="select-proyecto_tipo_id" required="">
+                                        <select name="proyecto_tipo_id" class="form-control select2" id="select-proyecto_tipo_id">
                                             <option disabled selected value="">Seleccione una opción</option>
                                             <?php $__currentLoopData = $tipos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($item->id); ?>"><?php echo e($item->nombre); ?></option>
+                                            <option <?php if(isset($proyecto->id)): ?> disabled <?php endif; ?> value="<?php echo e($item->id); ?>" data-tipo="<?php echo e($item->tipo); ?>"><?php echo e($item->nombre); ?></option>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
                                    </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 div-inv">
                                     <div class="form-group">
-                                         <label>Instituto</label>
-                                         <select name="entidad_id[]" class="form-control select2" id="select-entidad_id" multiple="" required="">
+                                         <label>Instituto o centro</label>
+                                         <select name="entidad_id[]" class="form-control select2" id="select-entidad_id" multiple="">
                                             <option disabled value="">Seleccione una opción</option>
                                             <?php $__currentLoopData = $entidades; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($item->id); ?>"><?php echo e($item->nombre); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </select>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6 div-grado">
+                                    <div class="form-group">
+                                         <label>Carreras</label>
+                                         <select name="carrera_id" class="form-control select2" id="select-carrera_id">
+                                            <option disabled selected value="">Seleccione una carrera</option>
+                                            <?php $__currentLoopData = $carreras; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($item->id); ?>"><?php echo e($item->nombre); ?></option>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
@@ -45,7 +56,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                    <div class="form-group">
-                                        <label>Titulo de la investigación</label>
+                                        <label>Título</label>
                                         <textarea name="nombre" class="form-control" required="" rows="3"><?php echo e($proyecto->nombre ?? ''); ?></textarea>
                                    </div>
                                 </div>
@@ -53,7 +64,8 @@
                             <div class="row">
                                 <div class="col-md-6">
                                    <div class="form-group">
-                                        <label>Responsable o Tutor</label>
+                                        <label class="div-grado">Tutor</label>
+                                        <label class="div-inv">Responsable</label>
                                         <div class="input-group">
                                             <select name="responsable" class="form-control select2" id="select-responsable" required="">
                                                 <option disabled selected value="">Seleccione una opción</option>
@@ -68,29 +80,29 @@
                                         </div>
                                    </div>
                                 </div>
-                                
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                         <label>Participantes</label>
-                                         <div class="input-group">
-                                             <select name="personas[]" class="form-control select2" id="select-personas" multiple="" required="">
-                                                 <?php $__currentLoopData = $personas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                 <option value="<?php echo e($item->id); ?>"><?php echo e($item->nombre); ?> <?php echo e($item->apellidos); ?></option>
-                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                             </select>
-                                             <span class="input-group-btn">
-                                                 <button class="btn btn-primary" data-toggle="modal" data-target="#modal_persona" type="button" style="margin-top:0px">
-                                                 <span class="voyager-plus" aria-hidden="true"></span> Nuevo</button>
-                                             </span>
-                                         </div>
+                                        <label class="div-grado">Autor</label>
+                                        <label class="div-inv">Participantes</label>
+                                        <div class="input-group">
+                                            <select name="personas[]" class="form-control select2" id="select-personas" multiple="" required="">
+                                                <?php $__currentLoopData = $personas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($item->id); ?>"><?php echo e($item->nombre); ?> <?php echo e($item->apellidos); ?></option>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            </select>
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-primary" data-toggle="modal" data-target="#modal_persona" type="button" style="margin-top:0px">
+                                                <span class="voyager-plus" aria-hidden="true"></span> Nuevo</button>
+                                            </span>
+                                        </div>
                                     </div>
                                  </div>
                             </div>
-                            <div class="row">
+                            <div class="row div-inv">
                                 <div class="col-md-6">
                                    <div class="form-group">
                                         <label>Área de investigación</label>
-                                        <select name="area_id[]" class="form-control select2" id="select-area_id" multiple required="">
+                                        <select name="area_id[]" class="form-control select2" id="select-area_id" multiple >
                                             <option disabled value="">Seleccione una opción</option>
                                             <?php $__currentLoopData = $areas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($item->id); ?>"><?php echo e($item->nombre); ?></option>
@@ -102,7 +114,7 @@
                                     <div class="form-group">
                                         <label>Inversión</label>
                                         <div class="input-group">
-                                            <input type="number" name="monto" step="0.1" min="0" value="<?php echo e($proyecto->monto ?? ''); ?>" class="form-control" required="">
+                                            <input type="number" name="monto" step="0.1" min="0" value="<?php echo e($proyecto->monto ?? ''); ?>" class="form-control">
                                             <span class="input-group-addon">Bs.</span>
                                         </div>
                                     </div>
@@ -111,22 +123,21 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Inicio</label>
+                                        <label class="div-grado">Fecha</label>
+                                        <label class="div-inv">Fecha de inicio</label>
                                         <input type="date" name="inicio" value="<?php echo e($proyecto->inicio ?? ''); ?>" class="form-control" required="">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 div-inv">
                                     <div class="form-group">
-                                        <label>Fin</label>
-                                        <input type="date" name="fin" value="<?php echo e($proyecto->fin ?? ''); ?>" class="form-control" required="">
+                                        <label>Fecha de finalización</label>
+                                        <input type="date" name="fin" value="<?php echo e($proyecto->fin ?? ''); ?>" class="form-control" >
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="<?php if($action == 'store'): ?> col-md-6 <?php else: ?> col-md-12 <?php endif; ?>">
+                                <div class="<?php if($action == 'store'): ?> col-md-6 <?php else: ?> col-md-12 <?php endif; ?> div-inv">
                                     <div class="form-group">
                                         <label>Productos esperados</label>
-                                        <input type="text" name="productos" value="<?php echo e($proyecto->productos ?? ''); ?>" class="form-control" required="">
+                                        <input type="text" name="productos" value="<?php echo e($proyecto->productos ?? ''); ?>" class="form-control" >
                                     </div>
                                 </div>
                                 <?php if($action == 'store'): ?>
@@ -157,7 +168,7 @@
     </div>
 
     <!-- Modal nueva persona -->
-    <form id="form-submit" action="" method="POST">
+    <form id="form-submit" action="<?php echo e(route('agregar_persona')); ?>" method="POST">
         <?php echo csrf_field(); ?>
         <div class="modal modal-primary fade" tabindex="-1" id="modal_persona" role="dialog">
             <div class="modal-dialog">
@@ -170,39 +181,32 @@
                         <div class="form-group">
                             <label>Cargo</label>
                             <select name="cargo_id" class="form-control select2">
-                                <option selected value="">Ninguno</option>
                                 <?php $__currentLoopData = $cargos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($item->id); ?>"><?php echo e($item->nombre); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="">Nombre</label>
-                            <input type="text" name="nombre" class="form-control" require>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Apellidos</label>
-                            <input type="text" name="apellidos" class="form-control" require>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Cédula de Identidad</label>
-                            <input type="text" name="ci" class="form-control" require>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Movil</label>
-                            <input type="number" name="movil" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="">E-mail</label>
-                            <input type="text" name="email" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="">Fotografía</label>
-                            <input type="file" name="foto" class="form-control">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="">Nombre completo</label>
+                                <input type="text" name="nombre" class="form-control" require>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="">Cédula de Identidad</label>
+                                <input type="text" name="ci" class="form-control" require>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="">Movil</label>
+                                <input type="number" name="movil" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="">E-mail</label>
+                                <input type="text" name="email" class="form-control">
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
                         <input type="submit" class="btn btn-primary" value="Guardar">
                     </div>
                 </div>
@@ -223,12 +227,27 @@
 <?php $__env->startSection('javascript'); ?>
     <script>
         $(document).ready(function(){
+            $('.div-inv').fadeOut('fast');
+
+            $('#select-proyecto_tipo_id').change(function(){
+                let tipo =  $('#select-proyecto_tipo_id option:selected').data('tipo');
+                hide(tipo);
+            });
+
             <?php if(isset($proyecto->id)): ?>
                 $('#select-responsable').val(<?php echo e($proyecto->responsable); ?>).trigger('change.select2');
                 $('#select-area_id').val([<?php echo e($proyecto->area_id); ?>]).trigger('change.select2');
                 $('#select-entidad_id').val([<?php echo e($proyecto->entidad_id); ?>]).trigger('change.select2');
+                $('#select-carrera_id').val([<?php echo e($proyecto->carrera_id); ?>]).trigger('change.select2');
                 $('#select-proyecto_tipo_id').val([<?php echo e($proyecto->proyecto_tipo_id); ?>]).trigger('change.select2');
                 $('#select-personas').val([<?php echo e($proyecto->participantes); ?>]).trigger('change.select2');
+                
+                let carrera = '<?php echo e($proyecto->carrera_id); ?>'
+                if(carrera){
+                    hide('grado académico');
+                }else{
+                    hide('investigación');
+                }
             <?php endif; ?>
 
             $('#form-submit').on('submit', function(e){
@@ -237,11 +256,11 @@
 
                     if(data){
                         $('#select-responsable').select2('destroy');
-                        $('#select-responsable').append(`<option value="${data.id}">${data.nombre} ${data.apellidos}</option>`)
+                        $('#select-responsable').append(`<option value="${data.id}">${data.nombre}</option>`)
                         $('#select-responsable').select2();
 
                         $('#select-personas').select2('destroy');
-                        $('#select-personas').append(`<option value="${data.id}">${data.nombre} ${data.apellidos}</option>`)
+                        $('#select-personas').append(`<option value="${data.id}">${data.nombre}</option>`)
                         $('#select-personas').select2();
                         toastr.success('Persona agregada correctamente', 'Bien hecho!');
                         $('#modal_persona').modal('hide');
@@ -251,6 +270,16 @@
                 });
             });
         });
+
+        function hide(tipo){
+            if(tipo == 'grado académico'){
+                $('.div-grado').fadeIn('fast');
+                $('.div-inv').fadeOut('fast');
+            }else{
+                $('.div-inv').fadeIn('fast');
+                $('.div-grado').fadeOut('fast');
+            }
+        }
     </script>
 <?php $__env->stopSection(); ?>
 

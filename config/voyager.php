@@ -193,7 +193,7 @@ return [
     // Here you can specify additional assets you would like to be included in the master.blade
     'additional_css' => [
         'css/cosmo-bootstrap.min.css',
-        // 'css/cyborg-bootstrap.min.css',
+        'css/style.css',
         // 'css/darkly-bootstrap.min.css',
         // 'css/journal-bootstrap.min.css',
         // 'css/sandstone-bootstrap.min.css',

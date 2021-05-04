@@ -14,6 +14,7 @@ use App\ProyectosEstado;
 use App\Proyecto;
 use App\Area;
 use App\Entidade;
+use App\Carrera;
 use App\ProyectosDetalle;
 use App\ProyectosObservacione;
 use App\ProyectosArchivo;
@@ -27,22 +28,31 @@ class ProyectosController extends Controller
      */
     public function index()
     {
-        $registros = DB::table('proyectos as p')
-                        ->join('proyectos_estados as e', 'e.id', 'p.estado_actual')
-                        ->join('areas as a', 'a.id', 'p.area_id')
-                        ->select('p.*', 'e.nombre as estado', 'a.nombre as area', 'p.deleted_at as detalles')
-                        ->where('p.deleted_at', NULL)
-                        ->orderBy('p.id', 'DESC')->get();
-        $cont = 0;
-        foreach ($registros as $value) {
-            $registros[$cont]->detalles = ProyectosDetalle::where('proyecto_id', $value->id)->get();
-            $cont++;
+        $tipo = request('tipo');
+        if($tipo == ''){
+            $registros = DB::table('proyectos as p')
+                            ->join('proyectos_estados as e', 'e.id', 'p.estado_actual')
+                            ->join('areas as a', 'a.id', 'p.area_id')
+                            ->select('p.*', 'e.nombre as estado', 'a.nombre as area', 'p.deleted_at as detalles')
+                            ->where('p.deleted_at', NULL)
+                            ->orderBy('p.id', 'DESC')->get();
+            $cont = 0;
+            foreach ($registros as $value) {
+                $registros[$cont]->detalles = ProyectosDetalle::where('proyecto_id', $value->id)->get();
+                $cont++;
+            }
+        }else{
+            $registros = DB::table('proyectos as p')
+                            ->join('proyectos_estados as e', 'e.id', 'p.estado_actual')
+                            ->join('carreras as c', 'c.id', 'p.carrera_id')
+                            ->select('p.*', 'e.nombre as estado', 'c.nombre as carrera', 'p.deleted_at as detalles')
+                            ->where('p.deleted_at', NULL)
+                            ->orderBy('p.id', 'DESC')->get();
         }
-
-        // dd($registros);
+        $personas = Persona::all()->where('deleted_at', NULL);
 
         $estados_proyectos = ProyectosEstado::where('deleted_at', NULL)->get();
-        return view('proyectos/proyectos_index', compact('registros', 'estados_proyectos'));
+        return view('proyectos/proyectos_index', compact('registros', 'estados_proyectos', 'tipo', 'personas'));
     }
 
     /**
@@ -59,7 +69,8 @@ class ProyectosController extends Controller
         $areas = Area::all()->where('deleted_at', NULL);
         $tipos = ProyectosTipo::all()->where('deleted_at', NULL);
         $entidades = Entidade::all()->where('deleted_at', NULL);
-        return view('proyectos/proyectos_edit-add', compact('titulo', 'action', 'personas', 'cargos', 'tipos', 'areas', 'entidades'));
+        $carreras = Carrera::all()->where('deleted_at', NULL);
+        return view('proyectos/proyectos_edit-add', compact('titulo', 'action', 'personas', 'carreras', 'cargos', 'tipos', 'areas', 'entidades'));
     }
 
     /**
@@ -79,13 +90,19 @@ class ProyectosController extends Controller
             }
 
             $entidad_id = '';
-            foreach ($request->entidad_id as $item) {
-                $entidad_id .= $item.',';
+            if($request->entidad_id){
+                foreach ($request->entidad_id as $item) {
+                    $entidad_id .= $item.',';
+                }
+                $entidad_id = substr($entidad_id, 0, -1);
             }
 
             $area_id = '';
-            foreach ($request->area_id as $item) {
-                $area_id .= $item.',';
+            if($request->area_id){
+                foreach ($request->area_id as $item) {
+                    $area_id .= $item.',';
+                }
+                $area_id = substr($area_id, 0, -1);
             }
             // ===============================================
 
@@ -97,9 +114,10 @@ class ProyectosController extends Controller
                 'anio' => $request->anio,
                 'participantes' => substr($participantes, 0, -1),
                 'estado_actual' => $estado->id,
-                'area_id' => substr($area_id, 0, -1),
+                'area_id' => $area_id,
+                'carrera_id' => $request->carrera_id,
                 'proyecto_tipo_id' => $request->proyecto_tipo_id,
-                'entidad_id' => substr($entidad_id, 0, -1),
+                'entidad_id' => $entidad_id,
                 'avance' => 0,
                 'observaciones' => $request->observaciones,
                 'monto' => $request->monto,
@@ -113,6 +131,7 @@ class ProyectosController extends Controller
                 'proyectos_estado_id' => $estado->id,
                 'monto_ejecutado' => 0,
                 'avance' => 0,
+                'fecha' => $request->inicio,
                 'observaciones' => 'Inicialización del proyecto'
             ]);
 
@@ -154,12 +173,13 @@ class ProyectosController extends Controller
         $personas = Persona::all()->where('deleted_at', NULL);
         $areas = Area::all()->where('deleted_at', NULL);
         $entidades = Entidade::all()->where('deleted_at', NULL);
+        $carrera = Carrera::where('id', $proyecto->carrera_id)->first();
         $estados = ProyectosEstado::where('deleted_at', NULL)->get();
 
         $proyecto_detalles = DB::table('proyectos_detalles as pd')
                         ->join('proyectos as p', 'p.id', 'pd.proyecto_id')
                         ->join('proyectos_estados as pe', 'pe.id', 'pd.proyectos_estado_id')
-                        ->select('pd.*', 'pe.id as estado_id', 'pe.nombre as estado_nombre', 'pe.etiqueta as estado_etiqueta', 'pe.icono as estado_icono', 'pd.updated_at as detalle_observaciones', 'pd.updated_at as archivos', 'p.created_at as fecha_proyecto')
+                        ->select('pd.*', 'pe.id as estado_id', 'pe.nombre as estado_nombre', 'pe.etiqueta as estado_etiqueta', 'pe.icono as estado_icono', 'pd.updated_at as detalle_observaciones', 'pd.updated_at as archivos', 'pd.fecha as fecha_proyecto')
                         ->where('pd.proyecto_id', $id)->get();
         $cont = 0;
         foreach ($proyecto_detalles as $value) {
@@ -167,7 +187,7 @@ class ProyectosController extends Controller
             $proyecto_detalles[$cont]->archivos = ProyectosArchivo::where('proyecto_detalle_id', $value->id)->get();
             $cont++;
         }
-        return view('proyectos/proyectos_view', compact('proyecto', 'personas', 'areas', 'entidades', 'proyecto_detalles', 'estados'));
+        return view('proyectos/proyectos_view', compact('proyecto', 'personas', 'areas', 'carrera', 'entidades', 'proyecto_detalles', 'estados'));
     }
 
     /**
@@ -187,7 +207,8 @@ class ProyectosController extends Controller
         $proyecto = Proyecto::findOrFail($id);
         $tipos = ProyectosTipo::all()->where('deleted_at', NULL);
         $entidades = Entidade::all()->where('deleted_at', NULL);
-        return view('proyectos/proyectos_edit-add', compact('titulo', 'action', 'personas', 'cargos', 'estados', 'areas', 'proyecto', 'tipos', 'entidades'));
+        $carreras = Carrera::all()->where('deleted_at', NULL);
+        return view('proyectos/proyectos_edit-add', compact('titulo', 'action', 'personas', 'cargos', 'estados', 'areas', 'proyecto', 'tipos', 'entidades', 'carreras'));
     }
 
     /**
@@ -206,13 +227,19 @@ class ProyectosController extends Controller
         }
 
         $entidad_id = '';
-        foreach ($request->entidad_id as $item) {
-            $entidad_id .= $item.',';
+        if($request->entidad_id){
+            foreach ($request->entidad_id as $item) {
+                $entidad_id .= $item.',';
+            }
+            $entidad_id = substr($entidad_id, 0, -1);
         }
 
         $area_id = '';
-        foreach ($request->area_id as $item) {
-            $area_id .= $item.',';
+        if($request->area_id){
+            foreach ($request->area_id as $item) {
+                $area_id .= $item.',';
+            }
+            $area_id = substr($area_id, 0, -1);
         }
         // ===============================================
 
@@ -222,8 +249,8 @@ class ProyectosController extends Controller
         $proyecto->responsable = $request->responsable;
         $proyecto->anio = $request->anio;
         $proyecto->participantes = substr($participantes, 0, -1);
-        $proyecto->entidad_id = substr($entidad_id, 0, -1);
-        $proyecto->area_id = substr($area_id, 0, -1);
+        $proyecto->entidad_id = $entidad_id;
+        $proyecto->area_id = $area_id;
         $proyecto->observaciones = $request->observaciones;
         $proyecto->monto = $request->monto;
         $proyecto->productos = $request->productos;
@@ -251,7 +278,8 @@ class ProyectosController extends Controller
                 'proyectos_estado_id' => $request->proyectos_estado_id,
                 'monto_ejecutado' => $request->monto_ejecutado,
                 'observaciones' => $request->observaciones,
-                'avance' => $request->avance
+                'avance' => $request->avance,
+                'fecha' => $request->fecha,
             ]);
 
             if ($request->hasFile('archivo')) {
@@ -320,7 +348,6 @@ class ProyectosController extends Controller
         $persona = Persona::create([
             'cargo_id' => $request->cargo_id,
             'nombre' => $request->nombre,
-            'apellidos' => $request->apellidos,
             'ci' => $request->ci,
             'movil' => $request->movil,
             'email' => $request->email

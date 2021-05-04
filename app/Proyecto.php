@@ -15,6 +15,7 @@ class Proyecto extends Model
         'estado_actual',
         'area_id',
         'entidad_id',
+        'carrera_id',
         'avance',
         'observaciones',
         'archivo',

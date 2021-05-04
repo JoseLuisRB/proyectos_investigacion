@@ -12,11 +12,29 @@
             <div class="col-md-12">
                 <div class="panel panel-bordered">
                     <div class="panel-body">
-                        <div class="page-header">
-                            <h3><?php echo e($proyecto->nombre); ?></h3>
-                        </div>
                         <div class="row">
                             <div class="col-md-12">
+                                <div class="panel-heading" style="border-bottom:0;">
+                                    <h3 class="panel-title">Título</h3>
+                                </div>
+                                <div class="panel-body" style="padding-top:0;">
+                                    <h3><?php echo e($proyecto->nombre); ?></h3>
+                                </div>
+                                <hr style="margin:0;">
+                            </div>
+                            <div class="col-md-12">
+                                <div class="panel-heading" style="border-bottom:0;">
+                                    <h3 class="panel-title">Tipo de investigación</h3>
+                                </div>
+                                <div class="panel-body" style="padding-top:0;">
+                                    <p><b><?php echo e($proyecto->tipo); ?></b></p>
+                                </div>
+                                <hr style="margin:0;">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <?php if(empty($proyecto->carrera_id)): ?>
+                            <div class="col-md-6">
                                 <div class="panel-heading" style="border-bottom:0;">
                                     <h3 class="panel-title">Instituto(s)</h3>
                                 </div>
@@ -36,20 +54,20 @@
                                 </div>
                                 <hr style="margin:0;">
                             </div>
-                        </div>
-                        <div class="row">
+                            <?php else: ?>
                             <div class="col-md-6">
                                 <div class="panel-heading" style="border-bottom:0;">
-                                    <h3 class="panel-title">Tipo de investigación</h3>
+                                    <h3 class="panel-title">Carrera</h3>
                                 </div>
                                 <div class="panel-body" style="padding-top:0;">
-                                    <p><b><?php echo e($proyecto->tipo); ?></b></p>
+                                    <p><b><?php echo e($carrera->nombre); ?></b></p>
                                 </div>
                                 <hr style="margin:0;">
                             </div>
+                            <?php endif; ?>
                             <div class="col-md-6">
                                 <div class="panel-heading" style="border-bottom:0;">
-                                    <h3 class="panel-title">Responsable</h3>
+                                    <h3 class="panel-title">Responsable o tutor</h3>
                                 </div>
                                 <div class="panel-body" style="padding-top:0;">
                                     <p>
@@ -66,25 +84,34 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="panel-heading" style="border-bottom:0;">
+                                    <?php if(empty($proyecto->carrera_id)): ?>
                                     <h3 class="panel-title">Participantes</h3>
+                                    <?php else: ?>
+                                    <h3 class="panel-title">Autor</h3>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="panel-body" style="padding-top:0;">
                                     <p>
                                         <?php
                                             $participantes = explode(',', $proyecto->participantes);
+                                            $participantes_text = '';
+                                        
+                                            foreach($personas as $persona){
+                                                foreach($participantes as $participante){
+                                                    if(($participante == $persona->id)){
+                                                        $participantes_text .= $persona->nombre.', ';
+                                                    }
+                                                }
+                                            }
                                         ?>
-                                        <?php $__currentLoopData = $personas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $persona): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <?php $__currentLoopData = $participantes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $participante): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <?php if($participante == $persona->id): ?>
-                                                <b> <?php echo e($persona->nombre); ?> <?php echo e($persona->apellidos); ?>, </b>
-                                                <?php endif; ?>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        <b><?php echo e(substr($participantes_text, 0, -2).'.'); ?></b>
                                     </p>
                                 </div>
                                 <hr style="margin:0;">
                             </div>
                         </div>
+
+                        <?php if(empty($proyecto->carrera_id)): ?>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="panel-heading" style="border-bottom:0;">
@@ -126,7 +153,6 @@
                                 </div>
                                 <hr style="margin:0;">
                             </div>
-                            
                         </div>
                         <div class="row">
                             <div class="col-md-6">
@@ -148,16 +174,22 @@
                                 <hr style="margin:0;">
                             </div>
                         </div>
+                        <?php endif; ?>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="panel-heading" style="border-bottom:0;">
+                                    <?php if(empty($proyecto->carrera_id)): ?>
                                     <h3 class="panel-title">Fecha de inicio</h3>
+                                    <?php else: ?>
+                                    <h3 class="panel-title">Fecha</h3>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="panel-body" style="padding-top:0;">
                                     <p><b><?php echo e(date('d-m-Y', strtotime($proyecto->inicio))); ?> <br> <small><?php echo e(\Carbon\Carbon::parse($proyecto->inicio)->diffForHumans()); ?></small></b></p>
                                 </div>
                                 <hr style="margin:0;">
                             </div>
+                            <?php if(empty($proyecto->carrera_id)): ?>
                             <div class="col-md-6">
                                 <div class="panel-heading" style="border-bottom:0;">
                                     <h3 class="panel-title">Fecha de finalización</h3>
@@ -167,12 +199,17 @@
                                 </div>
                                 <hr style="margin:0;">
                             </div>
+                            <?php endif; ?>
                         </div>
                         <?php if($proyecto->observaciones): ?>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="panel-heading" style="border-bottom:0;">
+                                    <?php if(empty($proyecto->carrera_id)): ?>
                                     <h3 class="panel-title">Observaciones</h3>
+                                    <?php else: ?>
+                                    <h3 class="panel-title">Resumen</h3>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="panel-body" style="padding-top:0;">
                                     <?php echo $proyecto->observaciones; ?>
@@ -182,14 +219,20 @@
                             </div>
                         </div>
                         <?php endif; ?>
-                        <?php if($proyecto->archivo): ?>
+                        <?php if($proyecto->carrera_id): ?>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="panel-heading" style="border-bottom:0;">
-                                    <h3 class="panel-title">Documento</h3>
+                                    <h3 class="panel-title">Documento final</h3>
                                 </div>
                                 <div class="panel-body" style="padding-top:0;">
-                                    <iframe style="width:100%;height:700px" src="<?php echo e(url('storage').'/'.$proyecto->archivo); ?>"></iframe>
+                                    <?php $__currentLoopData = $proyecto_detalles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <li>
+                                            <?php $__currentLoopData = $item->archivos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $archivo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <b>Descargar <a href="<?php echo e(asset('storage/'.$archivo->archivo)); ?>" target="_blank"><?php echo e($archivo->titulo); ?></a> </b>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </li>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </div>
                                 <hr style="margin:0;">
                             </div>
@@ -199,6 +242,8 @@
                 </div>
             </div>
         </div>
+
+        <?php if(empty($proyecto->carrera_id)): ?>
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-bordered">
@@ -240,18 +285,34 @@
             </div>
         </div>
 
+        
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-bordered">
                     <div class="panel-body">
                         <div class="page-header" style="margin-top: 0px">
-                            <h3 class="text-center">Gráfico de fases</h3>
+                            <h3 class="text-center">Gráfico de tiempo de ejecución por fases</h3>
                         </div>
                         <canvas id="myChart"></canvas>
                     </div>
                 </div>
             </div>
         </div>
+
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-bordered">
+                    <div class="panel-body">
+                        <div class="page-header" style="margin-top: 0px">
+                            <h3 class="text-center">Gráfico de presopuesto por fases</h3>
+                        </div>
+                        <canvas id="myChart2"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
     </div>
 
     <div class="modal modal-success fade" id="observacionesModal" tabindex="-1" role="dialog" aria-labelledby="observacionesModalTitle" aria-hidden="true">
@@ -504,6 +565,9 @@
             let backgroundColor = [];
             let labels = [];
             let dias_diff = [];
+            let montos = [];
+
+            // Obtener días de diferencia
             estados.map((label, index) => {
                 borderColor.push(colores[index].principal);
                 backgroundColor.push(colores[index].secundario);
@@ -514,11 +578,10 @@
                     if(item.estado_id == label.id){
                         if(detalles.length <= detalles.length +1){
                             try {
-                                let a = moment(item.created_at);
-                                let b = moment(detalles[index+1].created_at);
+                                let a = moment(item.fecha_proyecto);
+                                let b = moment(detalles[index+1].fecha_proyecto);
                                 dias = b.diff(a, 'days');
                             } catch (error) {
-                                
                             }
                         }
                     }
@@ -526,10 +589,16 @@
                 dias_diff.push(dias);
             });
 
+            // Obtener monto ejecutado
+            detalles.map(item => {
+                montos.push(item.monto_ejecutado);
+            });
+                
+
             const data = {
                 labels,
                 datasets: [{
-                    label: '',
+                    label: 'Expresado en días',
                     data: dias_diff,
                     backgroundColor,
                     borderColor,
@@ -570,6 +639,29 @@
                 document.getElementById('myChart'),
                 config
             );
+
+            // ==================================
+            const data2 = {
+                labels: labels,
+                datasets: [{
+                    label: 'Expresado en Bs.',
+                    data: montos,
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            };
+
+            const config2 = {
+                type: 'line',
+                data: data2,
+            };
+
+            var myChart = new Chart(
+                document.getElementById('myChart2'),
+                config2
+            );
+
         });
     </script>
 <?php $__env->stopSection(); ?>

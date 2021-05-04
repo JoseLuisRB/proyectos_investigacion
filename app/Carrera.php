@@ -5,11 +5,11 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Persona extends Model
+class Carrera extends Model
 {
-	use SoftDeletes;
+    use SoftDeletes;
 	protected $dates = ['deleted_at'];
     protected $fillable = [
-        'cargo_id', 'nombre', 'ci', 'movil', 'email', 'foto', 'documento'
+        'nombre', 'detalle', 'facultade_id'
     ];
 }

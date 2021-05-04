@@ -1,8 +1,17 @@
-table th{
+.container-fluid, .app-container{
+    background-color: #ebebeb;
+}
+.panel-bordered{
+    border-color: #808B96 !important;    
+}
+/* table th{
     border: 1px solid #aaa !important;
     background-color:#ccc !important;
 }
 table td{
     border: 1px solid #aaa !important;
     color: #000 !important;
+} */
+.form-control, .select2-selection {
+    border-color: #B2BABB !important;
 }
