@@ -308,6 +308,7 @@
                         <div class="page-header" style="margin-top: 0px">
                             <h3 class="text-center">Gráfico de presopuesto por fases</h3>
                         </div>
+                        <div id="labels-presupuestos" style="border: 2px solid #d8d8d8; padding: 10px; border-radius: 5px"></div>
                         <canvas id="myChart2"></canvas>
                     </div>
                 </div>
@@ -641,9 +642,17 @@
                 config
             );
 
+            let label2 = '';
+
+            montos.map((item, index) => {
+                label2 += '<h4><small>'+labels[index]+' = Bs. </small> '+item+'</h4>';
+            });
+
+            $('#labels-presupuestos').html(label2)
+
             // ==================================
             const data2 = {
-                labels: labels,
+                labels,
                 datasets: [{
                     label: 'Expresado en Bs.',
                     data: montos,

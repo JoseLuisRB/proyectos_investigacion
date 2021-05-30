@@ -33,4 +33,5 @@ Route::post('admin/personas/crear', 'ProyectosController@agregar_persona')->name
 // =============Gráficos=============
 Route::get('admin/reportes/graficos/pie', 'ReportesController@pie_index')->name('pie_index');
 Route::post('admin/reportes/graficos/pie/generate', 'ReportesController@pie_generate')->name('pie_generate');
+Route::get('admin/reportes/graficos/line', 'ReportesController@line_index')->name('line_index');
 // ===================================

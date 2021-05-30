@@ -84,4 +84,8 @@ class ReportesController extends Controller
                 return response()->json(['error' => 'Error inesperado']);
         }
     }
+
+    public function line_index(){
+        return view('reportes.graficos.line_index');
+    }
 }

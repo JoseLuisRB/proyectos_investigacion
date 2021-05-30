@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 04-04-2021 a las 19:40:38
--- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.3.22
+-- Servidor: localhost
+-- Tiempo de generación: 27-05-2021 a las 04:43:56
+-- Versión del servidor: 10.4.19-MariaDB
+-- Versión de PHP: 7.4.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -76,14 +76,43 @@ CREATE TABLE `cargos` (
 --
 
 INSERT INTO `cargos` (`id`, `nombre`, `descripcion`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Ninguno', NULL, '2021-05-03 04:15:30', '2021-05-03 04:15:30', NULL),
 (2, 'Director (a)', 'Director (a) de Carrera /  Centro de Investigación', '2019-10-22 13:35:30', '2019-10-22 13:42:23', NULL),
 (3, 'Sub Director (a)', 'Instituto de Investigación Facultativo - Cargo académico - administrativo', '2019-10-22 13:41:53', '2019-10-22 13:41:53', NULL),
 (4, 'Investigador - Técnico', 'Cargo administrativo', '2019-10-22 13:43:45', '2019-10-22 13:43:45', NULL),
 (5, 'Investigador - Docente', 'Cargo Académico - Administrativo', '2019-10-22 13:44:22', '2019-10-22 13:44:22', NULL),
 (6, 'Jefe (a) Departamento / Sección', 'Cargo Administrativo', '2019-10-22 13:46:43', '2019-10-22 13:46:43', NULL),
-(7, 'Investigador - Externo', 'Investigador de convenio', '2019-10-22 13:50:35', '2019-10-22 13:50:35', NULL),
 (8, 'Investigador - Externo', 'Investigador de convenio', '2019-10-22 13:50:36', '2019-10-22 13:50:36', NULL),
-(9, 'Responsable Inst.  Inv.  de Carrera', 'Cargo Académico- Administrativo', '2019-10-22 13:58:12', '2019-10-22 13:58:12', NULL);
+(9, 'Sub-Director (a) de Inst.  de Investigación', 'Cargo Académico- Administrativo', '2019-10-22 13:58:12', '2021-05-03 16:09:24', NULL),
+(10, 'Docente', 'Educador Universitario', '2021-05-03 14:40:35', '2021-05-03 14:40:35', NULL),
+(11, 'Estudiante', 'Estudiante que cursa un nivel academico universitario', '2021-05-03 14:42:32', '2021-05-03 14:42:32', NULL),
+(12, 'Director (a) - Centro de Investigación', 'Director administrativo de centro de Investigación de la UABJB', '2021-05-03 16:07:02', '2021-05-03 16:07:02', NULL),
+(13, 'Decano (a)', 'Maxima autoridad Facultativa de una unidad académica', '2021-05-03 16:08:31', '2021-05-03 16:08:31', NULL),
+(14, 'Director de Carrera', 'Maxima autoridad dentro de una carrera academica de la UABJB', '2021-05-03 16:10:30', '2021-05-03 16:10:30', NULL),
+(15, 'Investigador Administrativo', 'Investigador tecnico administrativo de la UABJB', '2021-05-03 16:15:31', '2021-05-03 16:15:31', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `carreras`
+--
+
+CREATE TABLE `carreras` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `detalle` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `facultade_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `carreras`
+--
+
+INSERT INTO `carreras` (`id`, `nombre`, `detalle`, `facultade_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Ingeniería de sistemas', NULL, 6, '2021-05-03 01:40:56', '2021-05-03 01:40:56', NULL);
 
 -- --------------------------------------------------------
 
@@ -164,10 +193,10 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (50, 7, 'deleted_at', 'timestamp', 'Deleted At', 0, 0, 0, 0, 0, 0, '{}', 8),
 (51, 8, 'id', 'text', 'Id', 1, 1, 1, 0, 0, 0, '{}', 1),
 (52, 8, 'nombre', 'text', 'Nombre completo', 0, 1, 1, 1, 1, 1, '{\"display\":{\"width\":\"6\"},\"validation\":{\"rule\":\"required|max:100\",\"messages\":{\"required\":\"El campo :attribute es requerido.\",\"max\":\"El campo :attribute debe tener al menos :max.\"}}}', 3),
-(54, 8, 'ci', 'text', 'CI', 0, 1, 1, 1, 1, 1, '{\"display\":{\"width\":\"6\"},\"validation\":{\"rule\":\"required|max:15\",\"messages\":{\"required\":\"El campo :attribute es requerido.\",\"max\":\"El campo :attribute debe tener al menos :max.\"}}}', 6),
-(55, 8, 'movil', 'text', 'Movil', 0, 1, 1, 1, 1, 1, '{\"display\":{\"width\":\"6\"},\"validation\":{\"rule\":\"max:10\",\"messages\":{\"max\":\"El campo :attribute debe tener al menos :max.\"}}}', 7),
-(56, 8, 'email', 'text', 'Email', 0, 1, 1, 1, 1, 1, '{\"display\":{\"width\":\"6\"},\"validation\":{\"rule\":\"max:50\",\"messages\":{\"max\":\"El campo :attribute debe tener al menos :max.\"}}}', 8),
-(57, 8, 'foto', 'image', 'Fotografía', 0, 1, 1, 1, 1, 1, '{\"display\":{\"width\":\"6\"}}', 9),
+(54, 8, 'ci', 'text', 'CI', 0, 1, 1, 1, 1, 1, '{\"display\":{\"width\":\"6\"},\"validation\":{\"rule\":\"required|max:15\",\"messages\":{\"required\":\"El campo :attribute es requerido.\",\"max\":\"El campo :attribute debe tener al menos :max.\"}}}', 5),
+(55, 8, 'movil', 'text', 'Movil', 0, 1, 1, 1, 1, 1, '{\"display\":{\"width\":\"6\"},\"validation\":{\"rule\":\"max:10\",\"messages\":{\"max\":\"El campo :attribute debe tener al menos :max.\"}}}', 6),
+(56, 8, 'email', 'text', 'Email', 0, 1, 1, 1, 1, 1, '{\"display\":{\"width\":\"6\"},\"validation\":{\"rule\":\"max:50\",\"messages\":{\"max\":\"El campo :attribute debe tener al menos :max.\"}}}', 7),
+(57, 8, 'foto', 'image', 'Fotografía', 0, 1, 1, 1, 1, 1, '{\"display\":{\"width\":\"6\"}}', 8),
 (58, 8, 'created_at', 'timestamp', 'Creado', 0, 1, 1, 0, 0, 0, '{}', 10),
 (59, 8, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 11),
 (60, 8, 'deleted_at', 'timestamp', 'Deleted At', 0, 0, 0, 0, 0, 0, '{}', 12),
@@ -186,11 +215,11 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (73, 8, 'persona_belongsto_cargo_relationship', 'relationship', 'cargos', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Cargo\",\"table\":\"cargos\",\"type\":\"belongsTo\",\"column\":\"cargo_id\",\"key\":\"id\",\"label\":\"nombre\",\"pivot_table\":\"areas\",\"pivot\":\"0\",\"taggable\":\"0\"}', 2),
 (74, 4, 'direccion', 'text_area', 'Dirección', 0, 1, 1, 1, 1, 1, '{}', 5),
 (75, 12, 'id', 'text', 'Id', 1, 0, 0, 0, 0, 0, '{}', 1),
-(76, 12, 'nombre', 'text', 'Nombre', 0, 1, 1, 1, 1, 1, '{\"validation\":{\"rule\":\"required|max:100\",\"messages\":{\"required\":\"El campo :attribute es requerido.\",\"max\":\"El campo :attribute debe tener al menos :max.\"}}}', 2),
-(77, 12, 'descripcion', 'text_area', 'Descripción', 0, 1, 1, 1, 1, 1, '{}', 3),
-(78, 12, 'created_at', 'timestamp', 'Creado', 0, 1, 1, 0, 0, 0, '{}', 4),
-(79, 12, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 5),
-(80, 12, 'deleted_at', 'timestamp', 'Deleted At', 0, 0, 0, 0, 0, 0, '{}', 6),
+(76, 12, 'nombre', 'text', 'Nombre', 0, 1, 1, 1, 1, 1, '{\"display\":{\"width\":6},\"validation\":{\"rule\":\"required|max:100\",\"messages\":{\"required\":\"El campo :attribute es requerido.\",\"max\":\"El campo :attribute debe tener al menos :max.\"}}}', 2),
+(77, 12, 'descripcion', 'text_area', 'Descripción', 0, 1, 1, 1, 1, 1, '{}', 4),
+(78, 12, 'created_at', 'timestamp', 'Creado', 0, 1, 1, 0, 0, 0, '{}', 5),
+(79, 12, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 6),
+(80, 12, 'deleted_at', 'timestamp', 'Deleted At', 0, 0, 0, 0, 0, 0, '{}', 7),
 (81, 13, 'id', 'text', 'Id', 1, 1, 1, 0, 0, 0, '{}', 1),
 (82, 13, 'nombre', 'text', 'Nombre', 0, 1, 1, 1, 1, 1, '{\"validation\":{\"rule\":\"required|max:100\",\"messages\":{\"required\":\"El campo :attribute es requerido.\",\"max\":\"El campo :attribute debe tener al menos :max.\"}}}', 2),
 (83, 13, 'descripcion', 'text_area', 'Descripcion', 0, 1, 1, 1, 1, 1, '{}', 3),
@@ -202,7 +231,17 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (91, 6, 'area_belongsto_departamento_relationship', 'relationship', 'departamentos', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Departamento\",\"table\":\"departamentos\",\"type\":\"belongsTo\",\"column\":\"departamento_id\",\"key\":\"id\",\"label\":\"nombre\",\"pivot_table\":\"areas\",\"pivot\":\"0\",\"taggable\":\"0\"}', 4),
 (92, 6, 'departamento_id', 'text', 'Departamento Id', 0, 1, 1, 1, 1, 1, '{}', 8),
 (93, 7, 'detalle', 'text_area', 'Detalle', 0, 1, 1, 1, 1, 1, '{}', 6),
-(94, 7, 'icono', 'select_dropdown', 'Icono', 0, 1, 1, 1, 1, 1, '{\"options\":{\"glyphicon-check\":\"Check\",\"glyphicon-credit-card\":\"Card\",\"glyphicon-floppy-disk\":\"Save\",\"glyphicon-cog\":\"Settings\",\"glyphicon-thumbs-up\":\"Ok\",\"glyphicon-search\":\"Search\",\"glyphicon-eye-open\":\"Eye\",\"glyphicon-globe\":\"Globe\",\"glyphicon-send\":\"Send\",\"glyphicon-blackboard\":\"Blackboard\",\"glyphicon-book\":\"Book\"}}', 4);
+(94, 7, 'icono', 'select_dropdown', 'Icono', 0, 1, 1, 1, 1, 1, '{\"options\":{\"glyphicon-check\":\"Check\",\"glyphicon-credit-card\":\"Card\",\"glyphicon-floppy-disk\":\"Save\",\"glyphicon-cog\":\"Settings\",\"glyphicon-thumbs-up\":\"Ok\",\"glyphicon-search\":\"Search\",\"glyphicon-eye-open\":\"Eye\",\"glyphicon-globe\":\"Globe\",\"glyphicon-send\":\"Send\",\"glyphicon-blackboard\":\"Blackboard\",\"glyphicon-book\":\"Book\"}}', 4),
+(95, 8, 'documento', 'file', 'Documento', 0, 1, 1, 1, 1, 1, '{\"display\":{\"width\":\"6\"}}', 9),
+(96, 12, 'tipo', 'select_dropdown', 'Tipo', 0, 1, 1, 1, 1, 1, '{\"display\":{\"width\":6},\"options\":{\"investigaci\\u00f3n\":\"investigaci\\u00f3n\",\"grado acad\\u00e9mico\":\"grado acad\\u00e9mico\"}}', 3),
+(97, 14, 'id', 'text', 'Id', 1, 1, 1, 0, 0, 0, '{}', 1),
+(98, 14, 'nombre', 'text', 'Nombre', 0, 1, 1, 1, 1, 1, '{\"validation\":{\"rule\":\"required|max:100\",\"messages\":{\"required\":\"El campo :attribute es requerido.\",\"max\":\"El campo :attribute debe tener al menos :max.\"}}}', 2),
+(99, 14, 'detalle', 'text_area', 'Detalles', 0, 1, 1, 1, 1, 1, '{}', 3),
+(100, 14, 'facultade_id', 'text', 'Facultade Id', 0, 1, 1, 1, 1, 1, '{}', 4),
+(101, 14, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 0, 0, 0, '{}', 6),
+(102, 14, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 7),
+(103, 14, 'deleted_at', 'timestamp', 'Deleted At', 0, 0, 0, 0, 0, 0, '{}', 8),
+(104, 14, 'carrera_belongsto_facultade_relationship', 'relationship', 'facultades', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Facultade\",\"table\":\"facultades\",\"type\":\"belongsTo\",\"column\":\"facultade_id\",\"key\":\"id\",\"label\":\"nombre\",\"pivot_table\":\"areas\",\"pivot\":\"0\",\"taggable\":\"0\"}', 5);
 
 -- --------------------------------------------------------
 
@@ -240,11 +279,12 @@ INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `displa
 (5, 'facultades', 'facultades', 'Facultad', 'Facultades', 'voyager-shop', 'App\\Facultade', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-09-05 06:19:52', '2019-09-12 04:39:20'),
 (6, 'areas', 'areas', 'Línea de investigación', 'Líneas de investigación', 'voyager-data', 'App\\Area', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-09-05 06:27:36', '2021-03-13 00:03:11'),
 (7, 'proyectos_estados', 'proyectos-estados', 'Estado de proyecto', 'Estados de proyecto', 'voyager-params', 'App\\ProyectosEstado', NULL, NULL, NULL, 1, 0, '{\"order_column\":\"nombre\",\"order_display_column\":\"nombre\",\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-09-05 06:33:03', '2021-04-04 08:04:31'),
-(8, 'personas', 'personas', 'Persona', 'Personas', 'voyager-person', 'App\\Persona', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-09-05 06:42:11', '2021-03-13 00:06:29'),
+(8, 'personas', 'personas', 'Persona', 'Personas', 'voyager-person', 'App\\Persona', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-09-05 06:42:11', '2021-05-03 00:28:45'),
 (10, 'permissions', 'permissions', 'Permission', 'Permissions', 'voyager-certificate', 'App\\Permission', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-09-12 05:11:22', '2019-09-12 05:29:11'),
 (11, 'cargos', 'cargos', 'Cargo', 'Cargos', 'voyager-certificate', 'App\\Cargo', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2019-10-04 16:32:45', '2019-10-04 16:32:45'),
-(12, 'proyectos_tipos', 'proyectos-tipos', 'Tipo de Proyecto', 'Tipos de Proyecto', 'voyager-list', 'App\\ProyectosTipo', NULL, NULL, NULL, 1, 1, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-10-23 13:49:45', '2021-03-17 01:32:45'),
-(13, 'departamentos', 'departamentos', 'Departamento', 'Departamentos', 'voyager-group', 'App\\Departamento', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2021-03-12 23:54:15', '2021-03-13 00:04:40');
+(12, 'proyectos_tipos', 'proyectos-tipos', 'Tipo de Proyecto', 'Tipos de Proyecto', 'voyager-list', 'App\\ProyectosTipo', NULL, NULL, NULL, 1, 1, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-10-23 13:49:45', '2021-05-03 00:59:44'),
+(13, 'departamentos', 'departamentos', 'Departamento', 'Departamentos', 'voyager-group', 'App\\Departamento', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2021-03-12 23:54:15', '2021-03-13 00:04:40'),
+(14, 'carreras', 'carreras', 'Carrera', 'Carreras', 'voyager-trophy', 'App\\Carrera', NULL, NULL, NULL, 1, 1, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2021-05-03 01:36:29', '2021-05-03 01:48:51');
 
 -- --------------------------------------------------------
 
@@ -267,7 +307,7 @@ CREATE TABLE `departamentos` (
 --
 
 INSERT INTO `departamentos` (`id`, `nombre`, `descripcion`, `persona_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Tecnología', NULL, 14, '2021-03-13 00:01:02', '2021-03-13 00:01:02', NULL);
+(1, 'Investigación Cientifica', 'Jefatura de Investigación de Pregrado de la Universidad Autonoma del Beni', 7, '2021-03-13 00:01:02', '2021-05-03 15:34:35', NULL);
 
 -- --------------------------------------------------------
 
@@ -387,27 +427,29 @@ INSERT INTO `menu_items` (`id`, `menu_id`, `title`, `url`, `target`, `icon_class
 (2, 1, 'Media', '', '_self', 'voyager-images', NULL, 5, 2, '2019-09-04 20:57:34', '2019-09-05 05:39:37', 'voyager.media.index', NULL),
 (3, 1, 'Users', '', '_self', 'voyager-person', NULL, 12, 1, '2019-09-04 20:57:34', '2019-09-05 05:39:33', 'voyager.users.index', NULL),
 (4, 1, 'Roles', '', '_self', 'voyager-lock', NULL, 12, 2, '2019-09-04 20:57:34', '2019-09-05 05:39:33', 'voyager.roles.index', NULL),
-(5, 1, 'Herramientas', '', '_self', 'voyager-tools', '#000000', NULL, 4, '2019-09-04 20:57:34', '2019-10-23 22:47:50', NULL, ''),
+(5, 1, 'Herramientas', '', '_self', 'voyager-tools', '#000000', NULL, 6, '2019-09-04 20:57:34', '2021-05-03 01:38:14', NULL, ''),
 (6, 1, 'Constructor de Menú', '', '_self', 'voyager-list', '#000000', 5, 1, '2019-09-04 20:57:34', '2019-09-05 05:41:02', 'voyager.menus.index', 'null'),
 (7, 1, 'Base de datos', '', '_self', 'voyager-data', '#000000', 5, 3, '2019-09-04 20:57:34', '2021-03-12 23:56:04', 'voyager.database.index', 'null'),
 (8, 1, 'Complementos', '', '_self', 'voyager-compass', '#000000', 5, 5, '2019-09-04 20:57:34', '2021-03-12 23:56:04', 'voyager.compass.index', 'null'),
 (9, 1, 'Formularios', '', '_self', 'voyager-bread', '#000000', 5, 4, '2019-09-04 20:57:34', '2021-03-12 23:56:04', 'voyager.bread.index', 'null'),
-(10, 1, 'Configuraciones', '', '_self', 'voyager-settings', '#000000', NULL, 7, '2019-09-04 20:57:34', '2019-10-23 22:48:17', 'voyager.settings.index', 'null'),
-(12, 1, 'Seguridad', '', '_self', 'voyager-lock', '#000000', NULL, 6, '2019-09-05 05:39:16', '2019-10-23 22:48:17', NULL, ''),
+(10, 1, 'Configuraciones', '', '_self', 'voyager-settings', '#000000', NULL, 7, '2019-09-04 20:57:34', '2021-05-03 01:38:14', 'voyager.settings.index', 'null'),
+(12, 1, 'Seguridad', '', '_self', 'voyager-lock', '#000000', NULL, 5, '2019-09-05 05:39:16', '2021-05-03 01:37:58', NULL, ''),
 (13, 1, 'Institutos de Investigación', '', '_self', 'voyager-home', '#000000', 21, 2, '2019-09-05 06:13:46', '2019-10-04 16:51:24', 'voyager.entidades.index', 'null'),
 (14, 1, 'Facultades', '', '_self', 'voyager-shop', NULL, 21, 1, '2019-09-05 06:19:52', '2019-10-04 16:37:57', 'voyager.facultades.index', NULL),
 (15, 1, 'Líneas de investigación', '', '_self', 'voyager-data', '#000000', 21, 4, '2019-09-05 06:27:36', '2021-03-12 23:56:04', 'voyager.areas.index', 'null'),
-(16, 1, 'Estados de proyecto', '', '_self', 'voyager-params', NULL, 21, 7, '2019-09-05 06:33:04', '2021-03-12 23:56:04', 'voyager.proyectos-estados.index', NULL),
+(16, 1, 'Estados de proyecto', '', '_self', 'voyager-params', NULL, 21, 8, '2019-09-05 06:33:04', '2021-05-03 01:37:49', 'voyager.proyectos-estados.index', NULL),
 (17, 1, 'Personas', '', '_self', 'voyager-person', NULL, 22, 2, '2019-09-05 06:42:13', '2019-10-23 13:50:18', 'voyager.personas.index', NULL),
 (18, 1, 'Investigaciones', '', '_self', 'voyager-browser', '#000000', 22, 1, '2019-09-12 04:34:13', '2019-10-23 13:50:18', 'proyectos.index', 'null'),
 (19, 1, 'Permissions', '', '_self', 'voyager-certificate', '#000000', 12, 3, '2019-09-12 05:11:23', '2019-10-23 22:48:17', 'voyager.permissions.index', 'null'),
-(20, 1, 'Cargos', '', '_self', 'voyager-certificate', NULL, 21, 6, '2019-10-04 16:32:45', '2021-03-12 23:56:04', 'voyager.cargos.index', NULL),
+(20, 1, 'Cargos', '', '_self', 'voyager-certificate', NULL, 21, 7, '2019-10-04 16:32:45', '2021-05-03 01:37:49', 'voyager.cargos.index', NULL),
 (21, 1, 'Parámetros', '', '_self', 'voyager-puzzle', '#000000', NULL, 3, '2019-10-04 16:35:25', '2019-10-04 16:37:47', NULL, ''),
 (22, 1, 'Administración', '', '_self', 'voyager-dashboard', '#000000', NULL, 2, '2019-10-04 16:37:05', '2019-10-04 16:37:46', NULL, ''),
-(23, 1, 'Tipos de investigaciones', '', '_self', 'voyager-list', '#000000', 21, 5, '2019-10-23 13:49:46', '2021-03-12 23:56:04', 'voyager.proyectos-tipos.index', 'null'),
-(24, 1, 'Gráficos', '', '_self', 'voyager-calendar', '#000000', NULL, 5, '2019-10-23 16:04:02', '2019-10-23 22:48:17', NULL, ''),
-(25, 1, 'Torta', '', '_self', 'voyager-pie-graph', '#000000', 24, 1, '2019-10-23 16:06:43', '2019-10-23 16:06:48', 'pie_index', NULL),
-(26, 1, 'Departamentos', '', '_self', 'voyager-group', NULL, 21, 3, '2021-03-12 23:54:15', '2021-03-12 23:56:04', 'voyager.departamentos.index', NULL);
+(23, 1, 'Tipos de investigaciones', '', '_self', 'voyager-list', '#000000', 21, 6, '2019-10-23 13:49:46', '2021-05-03 01:37:49', 'voyager.proyectos-tipos.index', 'null'),
+(24, 1, 'Gráficos', '', '_self', 'voyager-calendar', '#000000', NULL, 4, '2019-10-23 16:04:02', '2021-05-03 01:37:54', NULL, ''),
+(25, 1, 'Proyectos', '', '_self', 'voyager-pie-graph', '#000000', 24, 1, '2019-10-23 16:06:43', '2021-05-27 00:45:10', 'pie_index', 'null'),
+(26, 1, 'Departamentos', '', '_self', 'voyager-group', NULL, 21, 3, '2021-03-12 23:54:15', '2021-03-12 23:56:04', 'voyager.departamentos.index', NULL),
+(27, 1, 'Carreras', '', '_self', 'voyager-trophy', '#000000', 21, 5, '2021-05-03 01:36:29', '2021-05-03 01:43:53', 'voyager.carreras.index', 'null'),
+(28, 1, 'Presupuestos', '', '_self', 'voyager-bar-chart', '#000000', 24, 2, '2021-05-27 00:43:05', '2021-05-27 00:43:18', 'line_index', NULL);
 
 -- --------------------------------------------------------
 
@@ -555,7 +597,12 @@ INSERT INTO `permissions` (`id`, `key`, `table_name`, `created_at`, `updated_at`
 (73, 'read_departamentos', 'departamentos', '2021-03-12 23:54:15', '2021-03-12 23:54:15'),
 (74, 'edit_departamentos', 'departamentos', '2021-03-12 23:54:15', '2021-03-12 23:54:15'),
 (75, 'add_departamentos', 'departamentos', '2021-03-12 23:54:15', '2021-03-12 23:54:15'),
-(76, 'delete_departamentos', 'departamentos', '2021-03-12 23:54:15', '2021-03-12 23:54:15');
+(76, 'delete_departamentos', 'departamentos', '2021-03-12 23:54:15', '2021-03-12 23:54:15'),
+(77, 'browse_carreras', 'carreras', '2021-05-03 01:36:29', '2021-05-03 01:36:29'),
+(78, 'read_carreras', 'carreras', '2021-05-03 01:36:29', '2021-05-03 01:36:29'),
+(79, 'edit_carreras', 'carreras', '2021-05-03 01:36:29', '2021-05-03 01:36:29'),
+(80, 'add_carreras', 'carreras', '2021-05-03 01:36:29', '2021-05-03 01:36:29'),
+(81, 'delete_carreras', 'carreras', '2021-05-03 01:36:29', '2021-05-03 01:36:29');
 
 -- --------------------------------------------------------
 
@@ -656,7 +703,12 @@ INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
 (73, 1),
 (74, 1),
 (75, 1),
-(76, 1);
+(76, 1),
+(77, 1),
+(78, 1),
+(79, 1),
+(80, 1),
+(81, 1);
 
 -- --------------------------------------------------------
 
@@ -672,6 +724,7 @@ CREATE TABLE `personas` (
   `movil` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `foto` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `documento` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -681,24 +734,17 @@ CREATE TABLE `personas` (
 -- Volcado de datos para la tabla `personas`
 --
 
-INSERT INTO `personas` (`id`, `cargo_id`, `nombre`, `ci`, `movil`, `email`, `foto`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, NULL, 'Juan', '3453454', '7565755', NULL, NULL, '2019-09-12 07:09:23', '2019-10-22 13:26:15', '2019-10-22 13:26:15'),
-(2, NULL, 'Jose', '465464', '45654', NULL, NULL, '2019-09-12 07:09:42', '2019-10-22 13:26:10', '2019-10-22 13:26:10'),
-(3, NULL, 'Maria', '67575675', NULL, NULL, NULL, '2019-09-12 07:09:57', '2019-10-22 13:26:07', '2019-10-22 13:26:07'),
-(4, NULL, 'Marcelo', '1343434', NULL, NULL, NULL, '2019-09-20 13:10:47', '2019-10-22 13:26:02', '2019-10-22 13:26:02'),
-(5, NULL, 'PErsona de prueba', '3456345345454', NULL, NULL, 'personas/September2019/vg6WQhjcZAAdh53Em7EU.jpeg', '2019-09-20 13:13:07', '2019-09-20 13:13:23', '2019-09-20 13:13:23'),
-(6, NULL, 'dfgdfddfg', '46546456', NULL, NULL, 'personas/September2019/pADOp4SlHXtcXbZ83trt.jpg', '2019-09-20 13:14:35', '2019-09-26 14:31:45', '2019-09-26 14:31:45'),
-(7, NULL, 'Alejandro', '55466bn', '789798', 'aleja@gmail.com', 'personas/September2019/jzsz8zWa4KxYOSHLh5tN.png', '2019-09-20 13:16:34', '2019-09-26 13:22:54', '2019-09-26 13:22:54'),
-(8, NULL, 'Marcelo', '6546546', NULL, NULL, NULL, '2019-10-05 05:07:37', '2019-10-22 13:25:57', '2019-10-22 13:25:57'),
-(9, NULL, 'Maria', '567567', '756756756', NULL, NULL, '2019-10-05 05:15:15', '2019-10-22 13:25:52', '2019-10-22 13:25:52'),
-(10, NULL, 'Jose manuel', '465464645', '75675675', 'administrador@loginweb.net', NULL, '2019-10-05 05:20:16', '2019-10-22 13:25:46', '2019-10-22 13:25:46'),
-(11, NULL, 'dfgdfgdgdfg', '75675675', NULL, NULL, NULL, '2019-10-05 05:22:13', '2019-10-22 13:25:22', '2019-10-22 13:25:22'),
-(12, NULL, 'Jorge', '67567675', NULL, NULL, NULL, '2019-10-05 05:27:58', '2019-10-22 13:25:15', '2019-10-22 13:25:15'),
-(13, 1, 'yrtyrty', '7567567', '6867867867', 'cajero@admin.com', NULL, '2019-10-05 05:44:02', '2019-10-22 13:25:10', '2019-10-22 13:25:10'),
-(14, 2, 'Rebeca', '44444', '777777', 'rebeca@gmail.com', NULL, '2019-10-22 16:36:03', '2019-10-22 16:36:03', NULL),
-(15, 2, 'Federico', '33333', '666666', 'federico@gmail.com', NULL, '2019-10-22 16:45:52', '2019-10-22 16:45:52', NULL),
-(16, 2, 'Luis Fernando', '22222', '77777777', 'luis@gmail.com', NULL, '2019-10-22 16:55:20', '2019-10-22 16:55:20', NULL),
-(17, 4, 'Daniel dfgdfgg', '1111', '265', 'zubieta@gmail.com', NULL, '2019-10-22 17:05:52', '2021-03-13 00:07:01', NULL);
+INSERT INTO `personas` (`id`, `cargo_id`, `nombre`, `ci`, `movil`, `email`, `foto`, `documento`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 3, 'Leticia Balcázar Rodal', '4256984', '72815785', 'lbalcazarr@uabjb.edu.bo', 'personas/May2021/qF5A7z4SzybrRhRPGkNZ.png', '[]', '2021-05-03 04:14:51', '2021-05-03 16:45:10', NULL),
+(2, 1, 'Ramiro Chavez', '65456464 LP', NULL, NULL, NULL, NULL, '2021-05-03 04:18:27', '2021-05-03 04:18:27', NULL),
+(3, 1, 'Felipe Quispe', '76575676', '753423434', NULL, NULL, NULL, '2021-05-03 04:52:34', '2021-05-03 04:52:34', NULL),
+(4, 1, 'Mariela Merubia', '4256984  bn', NULL, NULL, NULL, NULL, '2021-05-03 04:53:50', '2021-05-03 04:53:50', NULL),
+(5, 1, 'Juan Perez', NULL, NULL, NULL, NULL, NULL, '2021-05-03 05:46:37', '2021-05-03 05:46:37', NULL),
+(6, 1, 'Pedro Sanchez', NULL, NULL, NULL, NULL, NULL, '2021-05-03 05:47:02', '2021-05-03 05:47:02', NULL),
+(7, 6, 'Alfonso Salas Russo', '1700496 be', '76872210', 'asalasr@uabjb.edu.bo', 'personas/May2021/famnG3g99nyPuUy3Fgcj.jpg', '[{\"download_link\":\"personas\\/May2021\\/ooXLDc4N5yvLIHIeeydO.pdf\",\"original_name\":\"CURRIC VITAE ASR abril 2020.pdf\"}]', '2021-05-03 15:32:44', '2021-05-03 15:32:44', NULL),
+(8, 5, 'Armelinda Zonta', '3352152', '76866653', NULL, 'personas/May2021/FHOPcH5jImNacIMS6gsW.png', '[]', '2021-05-03 15:38:42', '2021-05-03 15:38:42', NULL),
+(9, 1, 'Betzalele Paredes', '555555', '777777', 'bparedes@ubajb.du.bo', 'personas/May2021/35RD9XRSE82fpwG6WOgh.png', '[]', '2021-05-03 17:36:06', '2021-05-03 17:36:06', NULL),
+(10, 1, 'Mariely Camacho', '444444', '666666', 'mcamacho@uabjb.edu.bo', 'personas/May2021/QjEcghH07duTsvmHaNk7.png', '[]', '2021-05-03 17:38:08', '2021-05-03 17:38:08', NULL);
 
 -- --------------------------------------------------------
 
@@ -715,6 +761,7 @@ CREATE TABLE `proyectos` (
   `participantes` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `estado_actual` int(11) DEFAULT NULL,
   `area_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `carrera_id` int(11) DEFAULT NULL,
   `entidad_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `avance` int(11) DEFAULT NULL,
   `observaciones` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -732,23 +779,12 @@ CREATE TABLE `proyectos` (
 -- Volcado de datos para la tabla `proyectos`
 --
 
-INSERT INTO `proyectos` (`id`, `proyecto_tipo_id`, `nombre`, `responsable`, `anio`, `participantes`, `estado_actual`, `area_id`, `entidad_id`, `avance`, `observaciones`, `archivo`, `monto`, `productos`, `inicio`, `fin`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(4, 1, 'Titulo del poyecto', 1, 2019, '2,3', 1, '1', NULL, NULL, '<h1 style=\"text-align: center;\">Observaciones</h1>', NULL, NULL, NULL, NULL, NULL, '2019-09-12 15:00:14', '2019-09-19 16:00:20', '2019-09-19 16:00:20'),
-(5, 1, 'Proyecto de prueba 2', 1, 2018, '2,3', 1, '2', NULL, NULL, '<h1>Observaciones de prueba</h1>', NULL, NULL, NULL, NULL, NULL, '2019-09-12 15:14:28', '2019-09-19 16:03:01', '2019-09-19 16:03:01'),
-(6, 1, 'Proyecto de pueba', 1, 2015, '1,2', 1, '2', NULL, 10, NULL, NULL, NULL, NULL, NULL, NULL, '2019-09-13 04:50:48', '2019-09-20 05:05:55', '2019-09-20 05:05:55'),
-(7, 1, 'Proyecto de prueba 3', 3, 2019, '1,2', 2, '2', NULL, 20, NULL, 'proyectos/September2019/b1WE4gprt9vqeUcOSpW3.pdf', NULL, NULL, NULL, NULL, '2019-09-13 05:33:56', '2019-10-22 13:22:38', '2019-10-22 13:22:38'),
-(8, 1, 'Proyecto de prueba 3', 2, 2018, '3', 2, '1', NULL, 25, NULL, 'proyectos/September2019/GYkrawO5A5qC5nZRXkMz.pdf', NULL, NULL, NULL, NULL, '2019-09-13 05:36:29', '2019-10-22 13:22:33', '2019-10-22 13:22:33'),
-(9, 1, 'proyecto de prueba', 1, 2019, '1,2', 1, '2', NULL, 12, '<p>actually you can use raw form like your question. but i dont recomended it. dan itulah salah satu alasan agan belajar framework, simple, dan cepat. so kenapa pake raw form kalo ada yang lebih mudah. hehe. proud to be indonesian.</p>\r\n<p>reference (laravel blade form)[<a href=\"http://laravel-recipes.com/recipes/124/opening-a-new-html-form]\" rel=\"nofollow\">http://laravel-recipes.com/recipes/124/opening-a-new-html-form]</a></p>', 'proyectos/September2019/LmH4iHNO1ZyqbzXbATyt.pdf', NULL, NULL, NULL, NULL, '2019-09-19 06:39:21', '2019-10-22 13:21:48', '2019-10-22 13:21:48'),
-(10, 1, 'Arroz rojo', 3, 2019, '3,4', 1, '1', NULL, 10, '<p>Se pretende llevar acabo bajo riego</p>', 'proyectos/September2019/nPzvTVLxe79qRmxksIi2.jpeg', NULL, NULL, NULL, NULL, '2019-09-25 11:16:12', '2019-10-22 13:21:43', '2019-10-22 13:21:43'),
-(11, 1, 'Contribución del Área Protegida Municipal IbareMamoré y del Municipio de Trinidad a la Meta Aichi 1', 14, 2019, '17', 7, '7', NULL, 100, '<p><strong>RECONOCIMIENTOS</strong></p>\r\n<p><strong>Menci&oacute;n especial - III Congreso Nacional de Bot&aacute;nica, Sucre&nbsp; 2015</strong></p>', '', NULL, NULL, NULL, NULL, '2019-10-22 17:08:11', '2019-10-22 17:08:11', NULL),
-(12, 1, 'Línea base estudio forestal Área Protegida Municipal IbareMamoré   CIBIOMA UABJB, WWF.', 14, 2019, '17', 7, '6', NULL, 100, '<p><strong>RECONOCIMIENTO</strong></p>\r\n<p><strong>Ganador Fexpo Ciencia 2015- UABJB, Trinidad</strong></p>', '', NULL, NULL, NULL, NULL, '2019-10-22 17:14:44', '2019-10-22 17:14:44', NULL),
-(13, 1, 'Línea base estudio Agroforestal Área Protegida Municipal IbareMamoré  CIBIOMA UABJB, WWF.', 14, 2019, '17', 7, '6', NULL, 100, '<p><strong>RECONOCIMIENTO</strong></p>\r\n<p><strong>Ganador Feria Nacional Cient&iacute;fica Buenas Ideas- CEUB, 2018, Cochabamba</strong></p>', '', NULL, NULL, NULL, NULL, '2019-10-22 17:30:46', '2019-10-22 17:30:46', NULL),
-(14, 1, 'Flavours, Culture and Biodiversity: Past and Present in Amazonian Wetlands and Forests” WCS- CIBIOMA UABJB. The consortium integrates European and Bolivian leaders in archaeology, sociology, anthropology, botany, ecology/paleoecology, remote sensing and vegetation dynamics of lowland South America', 14, 2019, '17', 7, '7', NULL, 100, '<p><strong>Reconocimiento</strong></p>\r\n<p><strong>Ganador Fexpo Ciencia 2019- UABJB, Trinidad</strong></p>', '', NULL, NULL, NULL, NULL, '2019-10-22 17:40:43', '2019-10-22 17:40:43', NULL),
-(15, 1, 'Contribución económica y ambiental de los sistemas agro-forestales a la economía familiar de indígenas en las comunidades de la provincia mojos, Beni.   CIBIOMA UABJB-CIPCA.', 14, 2018, '17', 7, '6', NULL, 100, '<p><strong>Modalidad de graduaci&oacute;n:</strong></p>\r\n<p>Trabajo Dirigido</p>', '', NULL, NULL, NULL, NULL, '2019-10-22 17:45:08', '2019-10-22 17:45:08', NULL),
-(16, 1, 'Prácticas agroecológicas para mejorar los rendimiento y calidad del grano de cacao (Theobroma cacao L.) silvestre y cultivado en la provincia Mojos- Beni.  CIBIOMA UABJB-', 14, NULL, '17', 4, '8', '3', 10, NULL, '', '545455.00', 'Productos de prueba', '2021-03-17', '2021-04-11', '2019-10-22 17:56:10', '2021-04-04 06:09:56', NULL),
-(17, 1, 'Título de prueba nn', 14, NULL, '15,16', 7, '6', '2', 30, NULL, '', '120000.00', 'Productos de prueba', '2019-10-01', '2021-03-18', '2021-03-17 01:19:43', '2021-04-04 06:49:02', NULL),
-(18, 1, 'investigación de prueba !!!!', 15, NULL, '15,16', 4, '5', '2', 10, NULL, NULL, '20000.00', 'ninguna', '2021-04-04', '2021-09-26', '2021-04-04 06:51:39', '2021-04-04 07:02:27', NULL),
-(19, 2, 'proyecto de grado n1', 16, NULL, '17', 5, '6', '5', 15, NULL, NULL, '20000.00', 'Productos de prueba', '2021-05-01', '2022-01-01', '2021-04-04 15:37:43', '2021-04-04 17:39:14', NULL);
+INSERT INTO `proyectos` (`id`, `proyecto_tipo_id`, `nombre`, `responsable`, `anio`, `participantes`, `estado_actual`, `area_id`, `carrera_id`, `entidad_id`, `avance`, `observaciones`, `archivo`, `monto`, `productos`, `inicio`, `fin`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 3, 'Sistema de apoyo al turismo de municipio de Trinidad', 1, NULL, '2', 6, '11', NULL, '8', 40, NULL, NULL, '200000.00', 'Software', '2020-12-01', '2023-06-01', '2021-05-03 04:20:48', '2021-05-03 05:33:05', NULL),
+(2, 2, 'Modelo de pronostico electoral', 3, NULL, '4', 3, '', 1, '', 0, '<h2 style=\"margin: 0px 0px 10px; padding: 0px; font-weight: 400; font-family: DauphinPlain; font-size: 24px; line-height: 24px; color: #000000;\">What is Lorem Ipsum?</h2>\r\n<p style=\"margin: 0px 0px 15px; padding: 0px; text-align: justify; color: #000000; font-family: \'Open Sans\', Arial, sans-serif; font-size: 14px; font-weight: 400;\"><strong style=\"margin: 0px; padding: 0px;\">Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>\r\n<h3 style=\"margin: 15px 0px; padding: 0px; font-size: 14px; color: #000000; font-family: \'Open Sans\', Arial, sans-serif;\">1914 translation by H. Rackham</h3>\r\n<p style=\"margin: 0px 0px 15px; padding: 0px; text-align: justify; color: #000000; font-family: \'Open Sans\', Arial, sans-serif; font-size: 14px; font-weight: 400;\">\"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?\"</p>', NULL, NULL, NULL, '2008-01-30', NULL, '2021-05-03 04:54:13', '2021-05-03 05:28:32', NULL),
+(3, 2, 'Sistema informático de seguimiento a los titulados de la carrera de ingeniería de sistemas', 5, NULL, '6', 3, '', 1, '', 0, '<p>&nbsp;</p>\r\n<figure class=\"page-section__image g12-xs g3-md\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-sizing: border-box; margin: 8rem 0px 0px; padding: 0px 1rem; position: relative; flex: 0 1 auto; width: 339.75px; max-width: 25%; z-index: 1; color: #000000; font-family: sans-serif; font-size: medium; background-color: #556271;\">\r\n<figcaption style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-sizing: border-box;\">\r\n<div class=\"page-section__squiggle\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-sizing: border-box; overflow: hidden; position: relative; width: 64px; height: 32px;\">\r\n<div class=\"page-section__squiggle-two\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-sizing: border-box; position: absolute; width: 64px; height: 16px; background: radial-gradient(12px, transparent, transparent 2px, #d3dbe4 2px, #d3dbe4 5px, transparent 5px) 0px -16px / 14px 32px; top: 16px; left: 7px;\">&nbsp;</div>\r\n</div>\r\n<h4 class=\"page-section__caption f5 cl-gray-1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-sizing: border-box; margin: 0px; position: relative; width: calc(33.3333% - 1em); z-index: 1; color: #7b8898; font-size: 0.875em; font-family: \'Gotham SSm A\', \'Gotham SSm B\', \'Helvetica Neue\', Helvetica, Arial, sans-serif; line-height: 1.28571; letter-spacing: 0.075em; text-transform: uppercase;\">CICERO</h4>\r\n</figcaption>\r\n</figure>\r\n<div class=\"page-section__block g12-xs g9-md g6-xl\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-sizing: border-box; position: relative; flex: 0 1 auto; width: 679.5px; max-width: 50%; padding-left: 1rem; padding-right: 1rem; margin-top: 8rem; z-index: 2; color: #000000; font-family: sans-serif; font-size: medium; background-color: #556271;\">\r\n<h3 class=\"f5 cl-orange mb16\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-sizing: border-box; margin: 0px 0px 1em; color: #ff6a67; font-size: 0.875em; font-family: \'Gotham SSm A\', \'Gotham SSm B\', \'Helvetica Neue\', Helvetica, Arial, sans-serif; line-height: 1.28571; letter-spacing: 0.075em; text-transform: uppercase;\">RA&Iacute;CES HEDONISTAS</h3>\r\n<p class=\"f4 cl-white mt0\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-sizing: border-box; margin-top: 0px; margin-bottom: 1.5em; color: #ffffff; font-size: 1.1875em; font-family: \'Mercury SSm A\', \'Mercury SSm B\', Georgia, Times, \'Times New Roman\', \'Microsoft YaHei New\', \'Microsoft Yahei\', 微软雅黑, 宋体, SimSun, STXihei, 华文细黑, serif; line-height: 1.5;\">El paso cl&aacute;sico&nbsp;<em style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-sizing: border-box;\">&ldquo;Lorem ipsum dolor sit amet&hellip;&rdquo;</em>&nbsp;se atribuye a una remixaci&oacute;n del texto de&nbsp;<em style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-sizing: border-box;\">De Finibus Bonorum et Malorum (&ldquo;En los extremos del bien y del mal&rdquo;)</em>, del fil&oacute;sofo romano&nbsp;<a style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-sizing: border-box; background-color: transparent; text-decoration-line: none; border-bottom: 1px solid #d3dbe4; transition: all 400ms cubic-bezier(0.16, 0.68, 0.43, 0.99) 0s;\" title=\"Marcus Tullius Cicero on Wikipedia\" href=\"https://en.wikipedia.org/wiki/Cicero\" target=\"_blank\" rel=\"noopener\">Cicer&oacute;n</a>, de 45 aC. M&aacute;s espec&iacute;ficamente, se piensa que el pasaje proviene de las secciones 1.10.32 - 33 de su texto, con la parte m&aacute;s notable extra&iacute;da a continuaci&oacute;n:</p>\r\n<blockquote class=\"page-section__blockquote\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-sizing: border-box; margin-left: -1rem; margin-right: 0px; padding-left: 1.375em; border-left: 0.375em solid #7b8898; color: #d3dbe4; font-size: 1.1875em; font-style: italic; font-family: \'Mercury SSm A\', \'Mercury SSm B\', Georgia, Times, \'Times New Roman\', \'Microsoft YaHei New\', \'Microsoft Yahei\', 微软雅黑, 宋体, SimSun, STXihei, 华文细黑, serif; line-height: 1.5;\">&ldquo;Neque porro quisquam est, qui&nbsp;<em style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-sizing: border-box; font-weight: bold;\">dolorem ipsum</em>&nbsp;quia&nbsp;<em style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-sizing: border-box; font-weight: bold;\">dolor sit amet, consectetur, adipisci velit, sed</em>&nbsp;quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.&rdquo;</blockquote>\r\n<p class=\"f4 cl-white\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-sizing: border-box; margin-top: 1.5em; margin-bottom: 1.5em; color: #ffffff; font-size: 1.1875em; font-family: \'Mercury SSm A\', \'Mercury SSm B\', Georgia, Times, \'Times New Roman\', \'Microsoft YaHei New\', \'Microsoft Yahei\', 微软雅黑, 宋体, SimSun, STXihei, 华文细黑, serif; line-height: 1.5;\">Una traducci&oacute;n inglesa de 1914 por&nbsp;<a style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-sizing: border-box; background-color: transparent; text-decoration-line: none; border-bottom: 1px solid #d3dbe4; transition: all 400ms cubic-bezier(0.16, 0.68, 0.43, 0.99) 0s;\" title=\"Lorem Ipsum English Translation on Wikipedia\" href=\"https://en.wikipedia.org/wiki/Lorem_ipsum#English_translation\" target=\"_blank\" rel=\"noopener\">Harris Rackham</a>&nbsp;lee:</p>\r\n</div>', NULL, NULL, NULL, '2020-11-02', NULL, '2021-05-03 05:48:00', '2021-05-03 05:48:00', NULL);
+INSERT INTO `proyectos` (`id`, `proyecto_tipo_id`, `nombre`, `responsable`, `anio`, `participantes`, `estado_actual`, `area_id`, `carrera_id`, `entidad_id`, `avance`, `observaciones`, `archivo`, `monto`, `productos`, `inicio`, `fin`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(4, 3, 'Optimizar el uso de cal dolomita en la recuperación de diferentes tipos de suelos degradados en la provincia Vaca Diez', 8, NULL, '8', 3, '6', NULL, '12', 0, '<p class=\"MsoListParagraph\" style=\"text-align: justify; text-indent: -18.0pt; mso-list: l0 level1 lfo1; margin: 0cm 0cm 8.0pt 36.0pt;\"><span lang=\"ES\" style=\"font-family: \'Arial\',sans-serif;\">Optimizar el uso del cal dolomita en la correcci&oacute;n de la acidez de suelos degradados de tierra firme con <span style=\"mso-spacerun: yes;\">&nbsp;</span>laboreo mec&aacute;nico y sin uso de quema, en condiciones clim&aacute;ticas naturales en<span style=\"mso-spacerun: yes;\">&nbsp; </span>la Provincia Vaca Diez </span></p>\r\n<p class=\"MsoListParagraph\" style=\"text-align: justify; text-indent: -18.0pt; mso-list: l0 level1 lfo1; margin: 0cm 0cm 8.0pt 36.0pt;\"><span lang=\"ES\" style=\"font-family: \'Arial\',sans-serif;\">Evaluar la productividad del arroz, ma&iacute;z y pl&aacute;tano<span style=\"mso-spacerun: yes;\">&nbsp; </span>en suelos de tierra firme degradados con y sin aplicaci&oacute;n de cal dolomita en la provincia Vaca Diez.</span></p>\r\n<p class=\"MsoListParagraph\" style=\"text-align: justify; text-indent: -18.0pt; mso-list: l0 level1 lfo1; margin: 0cm 0cm 8.0pt 36.0pt;\"><span lang=\"ES\" style=\"font-family: \'Arial\',sans-serif;\">Fortalecer las capacidades de productores y productoras l&iacute;deres de comunidades para el uso adecuado de cal dolomita en suelos de tierra firme <span style=\"mso-spacerun: yes;\">&nbsp;</span>degradados en la Provincia Vaca Diez. </span></p>\r\n<p><!-- [if gte mso 9]><xml>\r\n <o:OfficeDocumentSettings>\r\n  <o:RelyOnVML/>\r\n  <o:AllowPNG/>\r\n </o:OfficeDocumentSettings>\r\n</xml><![endif]--><!-- [if gte mso 9]><xml>\r\n <w:WordDocument>\r\n  <w:View>Normal</w:View>\r\n  <w:Zoom>0</w:Zoom>\r\n  <w:TrackMoves/>\r\n  <w:TrackFormatting/>\r\n  <w:HyphenationZone>21</w:HyphenationZone>\r\n  <w:PunctuationKerning/>\r\n  <w:ValidateAgainstSchemas/>\r\n  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>\r\n  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>\r\n  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>\r\n  <w:DoNotPromoteQF/>\r\n  <w:LidThemeOther>EN-US</w:LidThemeOther>\r\n  <w:LidThemeAsian>X-NONE</w:LidThemeAsian>\r\n  <w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript>\r\n  <w:Compatibility>\r\n   <w:BreakWrappedTables/>\r\n   <w:SnapToGridInCell/>\r\n   <w:WrapTextWithPunct/>\r\n   <w:UseAsianBreakRules/>\r\n   <w:DontGrowAutofit/>\r\n   <w:SplitPgBreakAndParaMark/>\r\n   <w:EnableOpenTypeKerning/>\r\n   <w:DontFlipMirrorIndents/>\r\n   <w:OverrideTableStyleHps/>\r\n  </w:Compatibility>\r\n  <m:mathPr>\r\n   <m:mathFont m:val=\"Cambria Math\"/>\r\n   <m:brkBin m:val=\"before\"/>\r\n   <m:brkBinSub m:val=\"&#45;-\"/>\r\n   <m:smallFrac m:val=\"off\"/>\r\n   <m:dispDef/>\r\n   <m:lMargin m:val=\"0\"/>\r\n   <m:rMargin m:val=\"0\"/>\r\n   <m:defJc m:val=\"centerGroup\"/>\r\n   <m:wrapIndent m:val=\"1440\"/>\r\n   <m:intLim m:val=\"subSup\"/>\r\n   <m:naryLim m:val=\"undOvr\"/>\r\n  </m:mathPr></w:WordDocument>\r\n</xml><![endif]--><!-- [if gte mso 9]><xml>\r\n <w:LatentStyles DefLockedState=\"false\" DefUnhideWhenUsed=\"false\"\r\n  DefSemiHidden=\"false\" DefQFormat=\"false\" DefPriority=\"99\"\r\n  LatentStyleCount=\"371\">\r\n  <w:LsdException Locked=\"false\" Priority=\"0\" QFormat=\"true\" Name=\"Normal\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"9\" QFormat=\"true\" Name=\"heading 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"9\" SemiHidden=\"true\"\r\n   UnhideWhenUsed=\"true\" QFormat=\"true\" Name=\"heading 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"9\" SemiHidden=\"true\"\r\n   UnhideWhenUsed=\"true\" QFormat=\"true\" Name=\"heading 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"9\" SemiHidden=\"true\"\r\n   UnhideWhenUsed=\"true\" QFormat=\"true\" Name=\"heading 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"9\" SemiHidden=\"true\"\r\n   UnhideWhenUsed=\"true\" QFormat=\"true\" Name=\"heading 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"9\" SemiHidden=\"true\"\r\n   UnhideWhenUsed=\"true\" QFormat=\"true\" Name=\"heading 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"9\" SemiHidden=\"true\"\r\n   UnhideWhenUsed=\"true\" QFormat=\"true\" Name=\"heading 7\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"9\" SemiHidden=\"true\"\r\n   UnhideWhenUsed=\"true\" QFormat=\"true\" Name=\"heading 8\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"9\" SemiHidden=\"true\"\r\n   UnhideWhenUsed=\"true\" QFormat=\"true\" Name=\"heading 9\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"index 1\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"index 2\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"index 3\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"index 4\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"index 5\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"index 6\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"index 7\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"index 8\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"index 9\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"39\" SemiHidden=\"true\"\r\n   UnhideWhenUsed=\"true\" Name=\"toc 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"39\" SemiHidden=\"true\"\r\n   UnhideWhenUsed=\"true\" Name=\"toc 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"39\" SemiHidden=\"true\"\r\n   UnhideWhenUsed=\"true\" Name=\"toc 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"39\" SemiHidden=\"true\"\r\n   UnhideWhenUsed=\"true\" Name=\"toc 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"39\" SemiHidden=\"true\"\r\n   UnhideWhenUsed=\"true\" Name=\"toc 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"39\" SemiHidden=\"true\"\r\n   UnhideWhenUsed=\"true\" Name=\"toc 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"39\" SemiHidden=\"true\"\r\n   UnhideWhenUsed=\"true\" Name=\"toc 7\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"39\" SemiHidden=\"true\"\r\n   UnhideWhenUsed=\"true\" Name=\"toc 8\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"39\" SemiHidden=\"true\"\r\n   UnhideWhenUsed=\"true\" Name=\"toc 9\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Normal Indent\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"footnote text\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"annotation text\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"header\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"footer\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"index heading\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"35\" SemiHidden=\"true\"\r\n   UnhideWhenUsed=\"true\" QFormat=\"true\" Name=\"caption\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"table of figures\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"envelope address\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"envelope return\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"footnote reference\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"annotation reference\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"line number\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"page number\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"endnote reference\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"endnote text\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"table of authorities\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"macro\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"toa heading\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"List\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"List Bullet\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"List Number\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"List 2\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"List 3\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"List 4\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"List 5\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"List Bullet 2\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"List Bullet 3\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"List Bullet 4\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"List Bullet 5\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"List Number 2\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"List Number 3\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"List Number 4\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"List Number 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"10\" QFormat=\"true\" Name=\"Title\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Closing\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Signature\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"1\" SemiHidden=\"true\"\r\n   UnhideWhenUsed=\"true\" Name=\"Default Paragraph Font\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Body Text\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Body Text Indent\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"List Continue\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"List Continue 2\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"List Continue 3\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"List Continue 4\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"List Continue 5\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Message Header\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"11\" QFormat=\"true\" Name=\"Subtitle\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Salutation\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Date\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Body Text First Indent\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Body Text First Indent 2\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Note Heading\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Body Text 2\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Body Text 3\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Body Text Indent 2\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Body Text Indent 3\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Block Text\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Hyperlink\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"FollowedHyperlink\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"22\" QFormat=\"true\" Name=\"Strong\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"20\" QFormat=\"true\" Name=\"Emphasis\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Document Map\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Plain Text\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"E-mail Signature\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"HTML Top of Form\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"HTML Bottom of Form\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Normal (Web)\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"HTML Acronym\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"HTML Address\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"HTML Cite\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"HTML Code\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"HTML Definition\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"HTML Keyboard\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"HTML Preformatted\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"HTML Sample\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"HTML Typewriter\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"HTML Variable\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Normal Table\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"annotation subject\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"No List\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Outline List 1\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Outline List 2\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Outline List 3\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Simple 1\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Simple 2\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Simple 3\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Classic 1\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Classic 2\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Classic 3\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Classic 4\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Colorful 1\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Colorful 2\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Colorful 3\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Columns 1\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Columns 2\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Columns 3\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Columns 4\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Columns 5\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Grid 1\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Grid 2\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Grid 3\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Grid 4\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Grid 5\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Grid 6\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Grid 7\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Grid 8\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table List 1\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table List 2\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table List 3\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table List 4\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table List 5\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table List 6\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table List 7\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table List 8\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table 3D effects 1\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table 3D effects 2\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table 3D effects 3\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Contemporary\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Elegant\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Professional\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Subtle 1\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Subtle 2\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Web 1\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Web 2\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Web 3\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Balloon Text\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"39\" Name=\"Table Grid\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" UnhideWhenUsed=\"true\"\r\n   Name=\"Table Theme\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" Name=\"Placeholder Text\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"1\" QFormat=\"true\" Name=\"No Spacing\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"60\" Name=\"Light Shading\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"61\" Name=\"Light List\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"62\" Name=\"Light Grid\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"63\" Name=\"Medium Shading 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"64\" Name=\"Medium Shading 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"65\" Name=\"Medium List 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"66\" Name=\"Medium List 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"67\" Name=\"Medium Grid 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"68\" Name=\"Medium Grid 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"69\" Name=\"Medium Grid 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"70\" Name=\"Dark List\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"71\" Name=\"Colorful Shading\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"72\" Name=\"Colorful List\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"73\" Name=\"Colorful Grid\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"60\" Name=\"Light Shading Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"61\" Name=\"Light List Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"62\" Name=\"Light Grid Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"63\" Name=\"Medium Shading 1 Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"64\" Name=\"Medium Shading 2 Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"65\" Name=\"Medium List 1 Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" SemiHidden=\"true\" Name=\"Revision\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"34\" QFormat=\"true\"\r\n   Name=\"List Paragraph\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"29\" QFormat=\"true\" Name=\"Quote\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"30\" QFormat=\"true\"\r\n   Name=\"Intense Quote\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"66\" Name=\"Medium List 2 Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"67\" Name=\"Medium Grid 1 Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"68\" Name=\"Medium Grid 2 Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"69\" Name=\"Medium Grid 3 Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"70\" Name=\"Dark List Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"71\" Name=\"Colorful Shading Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"72\" Name=\"Colorful List Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"73\" Name=\"Colorful Grid Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"60\" Name=\"Light Shading Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"61\" Name=\"Light List Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"62\" Name=\"Light Grid Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"63\" Name=\"Medium Shading 1 Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"64\" Name=\"Medium Shading 2 Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"65\" Name=\"Medium List 1 Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"66\" Name=\"Medium List 2 Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"67\" Name=\"Medium Grid 1 Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"68\" Name=\"Medium Grid 2 Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"69\" Name=\"Medium Grid 3 Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"70\" Name=\"Dark List Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"71\" Name=\"Colorful Shading Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"72\" Name=\"Colorful List Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"73\" Name=\"Colorful Grid Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"60\" Name=\"Light Shading Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"61\" Name=\"Light List Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"62\" Name=\"Light Grid Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"63\" Name=\"Medium Shading 1 Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"64\" Name=\"Medium Shading 2 Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"65\" Name=\"Medium List 1 Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"66\" Name=\"Medium List 2 Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"67\" Name=\"Medium Grid 1 Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"68\" Name=\"Medium Grid 2 Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"69\" Name=\"Medium Grid 3 Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"70\" Name=\"Dark List Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"71\" Name=\"Colorful Shading Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"72\" Name=\"Colorful List Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"73\" Name=\"Colorful Grid Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"60\" Name=\"Light Shading Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"61\" Name=\"Light List Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"62\" Name=\"Light Grid Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"63\" Name=\"Medium Shading 1 Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"64\" Name=\"Medium Shading 2 Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"65\" Name=\"Medium List 1 Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"66\" Name=\"Medium List 2 Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"67\" Name=\"Medium Grid 1 Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"68\" Name=\"Medium Grid 2 Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"69\" Name=\"Medium Grid 3 Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"70\" Name=\"Dark List Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"71\" Name=\"Colorful Shading Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"72\" Name=\"Colorful List Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"73\" Name=\"Colorful Grid Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"60\" Name=\"Light Shading Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"61\" Name=\"Light List Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"62\" Name=\"Light Grid Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"63\" Name=\"Medium Shading 1 Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"64\" Name=\"Medium Shading 2 Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"65\" Name=\"Medium List 1 Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"66\" Name=\"Medium List 2 Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"67\" Name=\"Medium Grid 1 Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"68\" Name=\"Medium Grid 2 Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"69\" Name=\"Medium Grid 3 Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"70\" Name=\"Dark List Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"71\" Name=\"Colorful Shading Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"72\" Name=\"Colorful List Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"73\" Name=\"Colorful Grid Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"60\" Name=\"Light Shading Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"61\" Name=\"Light List Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"62\" Name=\"Light Grid Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"63\" Name=\"Medium Shading 1 Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"64\" Name=\"Medium Shading 2 Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"65\" Name=\"Medium List 1 Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"66\" Name=\"Medium List 2 Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"67\" Name=\"Medium Grid 1 Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"68\" Name=\"Medium Grid 2 Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"69\" Name=\"Medium Grid 3 Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"70\" Name=\"Dark List Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"71\" Name=\"Colorful Shading Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"72\" Name=\"Colorful List Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"73\" Name=\"Colorful Grid Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"19\" QFormat=\"true\"\r\n   Name=\"Subtle Emphasis\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"21\" QFormat=\"true\"\r\n   Name=\"Intense Emphasis\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"31\" QFormat=\"true\"\r\n   Name=\"Subtle Reference\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"32\" QFormat=\"true\"\r\n   Name=\"Intense Reference\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"33\" QFormat=\"true\" Name=\"Book Title\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"37\" SemiHidden=\"true\"\r\n   UnhideWhenUsed=\"true\" Name=\"Bibliography\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"39\" SemiHidden=\"true\"\r\n   UnhideWhenUsed=\"true\" QFormat=\"true\" Name=\"TOC Heading\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"41\" Name=\"Plain Table 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"42\" Name=\"Plain Table 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"43\" Name=\"Plain Table 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"44\" Name=\"Plain Table 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"45\" Name=\"Plain Table 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"40\" Name=\"Grid Table Light\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"46\" Name=\"Grid Table 1 Light\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"47\" Name=\"Grid Table 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"48\" Name=\"Grid Table 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"49\" Name=\"Grid Table 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"50\" Name=\"Grid Table 5 Dark\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"51\" Name=\"Grid Table 6 Colorful\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"52\" Name=\"Grid Table 7 Colorful\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"46\"\r\n   Name=\"Grid Table 1 Light Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"47\" Name=\"Grid Table 2 Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"48\" Name=\"Grid Table 3 Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"49\" Name=\"Grid Table 4 Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"50\" Name=\"Grid Table 5 Dark Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"51\"\r\n   Name=\"Grid Table 6 Colorful Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"52\"\r\n   Name=\"Grid Table 7 Colorful Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"46\"\r\n   Name=\"Grid Table 1 Light Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"47\" Name=\"Grid Table 2 Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"48\" Name=\"Grid Table 3 Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"49\" Name=\"Grid Table 4 Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"50\" Name=\"Grid Table 5 Dark Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"51\"\r\n   Name=\"Grid Table 6 Colorful Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"52\"\r\n   Name=\"Grid Table 7 Colorful Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"46\"\r\n   Name=\"Grid Table 1 Light Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"47\" Name=\"Grid Table 2 Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"48\" Name=\"Grid Table 3 Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"49\" Name=\"Grid Table 4 Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"50\" Name=\"Grid Table 5 Dark Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"51\"\r\n   Name=\"Grid Table 6 Colorful Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"52\"\r\n   Name=\"Grid Table 7 Colorful Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"46\"\r\n   Name=\"Grid Table 1 Light Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"47\" Name=\"Grid Table 2 Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"48\" Name=\"Grid Table 3 Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"49\" Name=\"Grid Table 4 Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"50\" Name=\"Grid Table 5 Dark Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"51\"\r\n   Name=\"Grid Table 6 Colorful Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"52\"\r\n   Name=\"Grid Table 7 Colorful Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"46\"\r\n   Name=\"Grid Table 1 Light Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"47\" Name=\"Grid Table 2 Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"48\" Name=\"Grid Table 3 Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"49\" Name=\"Grid Table 4 Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"50\" Name=\"Grid Table 5 Dark Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"51\"\r\n   Name=\"Grid Table 6 Colorful Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"52\"\r\n   Name=\"Grid Table 7 Colorful Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"46\"\r\n   Name=\"Grid Table 1 Light Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"47\" Name=\"Grid Table 2 Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"48\" Name=\"Grid Table 3 Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"49\" Name=\"Grid Table 4 Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"50\" Name=\"Grid Table 5 Dark Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"51\"\r\n   Name=\"Grid Table 6 Colorful Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"52\"\r\n   Name=\"Grid Table 7 Colorful Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"46\" Name=\"List Table 1 Light\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"47\" Name=\"List Table 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"48\" Name=\"List Table 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"49\" Name=\"List Table 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"50\" Name=\"List Table 5 Dark\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"51\" Name=\"List Table 6 Colorful\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"52\" Name=\"List Table 7 Colorful\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"46\"\r\n   Name=\"List Table 1 Light Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"47\" Name=\"List Table 2 Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"48\" Name=\"List Table 3 Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"49\" Name=\"List Table 4 Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"50\" Name=\"List Table 5 Dark Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"51\"\r\n   Name=\"List Table 6 Colorful Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"52\"\r\n   Name=\"List Table 7 Colorful Accent 1\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"46\"\r\n   Name=\"List Table 1 Light Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"47\" Name=\"List Table 2 Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"48\" Name=\"List Table 3 Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"49\" Name=\"List Table 4 Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"50\" Name=\"List Table 5 Dark Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"51\"\r\n   Name=\"List Table 6 Colorful Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"52\"\r\n   Name=\"List Table 7 Colorful Accent 2\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"46\"\r\n   Name=\"List Table 1 Light Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"47\" Name=\"List Table 2 Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"48\" Name=\"List Table 3 Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"49\" Name=\"List Table 4 Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"50\" Name=\"List Table 5 Dark Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"51\"\r\n   Name=\"List Table 6 Colorful Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"52\"\r\n   Name=\"List Table 7 Colorful Accent 3\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"46\"\r\n   Name=\"List Table 1 Light Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"47\" Name=\"List Table 2 Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"48\" Name=\"List Table 3 Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"49\" Name=\"List Table 4 Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"50\" Name=\"List Table 5 Dark Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"51\"\r\n   Name=\"List Table 6 Colorful Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"52\"\r\n   Name=\"List Table 7 Colorful Accent 4\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"46\"\r\n   Name=\"List Table 1 Light Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"47\" Name=\"List Table 2 Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"48\" Name=\"List Table 3 Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"49\" Name=\"List Table 4 Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"50\" Name=\"List Table 5 Dark Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"51\"\r\n   Name=\"List Table 6 Colorful Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"52\"\r\n   Name=\"List Table 7 Colorful Accent 5\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"46\"\r\n   Name=\"List Table 1 Light Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"47\" Name=\"List Table 2 Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"48\" Name=\"List Table 3 Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"49\" Name=\"List Table 4 Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"50\" Name=\"List Table 5 Dark Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"51\"\r\n   Name=\"List Table 6 Colorful Accent 6\"/>\r\n  <w:LsdException Locked=\"false\" Priority=\"52\"\r\n   Name=\"List Table 7 Colorful Accent 6\"/>\r\n </w:LatentStyles>\r\n</xml><![endif]--><!-- [if gte mso 10]>\r\n<style>\r\n /* Style Definitions */\r\n table.MsoNormalTable\r\n	{mso-style-name:\"Tabla normal\";\r\n	mso-tstyle-rowband-size:0;\r\n	mso-tstyle-colband-size:0;\r\n	mso-style-noshow:yes;\r\n	mso-style-priority:99;\r\n	mso-style-parent:\"\";\r\n	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;\r\n	mso-para-margin-top:0cm;\r\n	mso-para-margin-right:0cm;\r\n	mso-para-margin-bottom:10.0pt;\r\n	mso-para-margin-left:0cm;\r\n	line-height:115%;\r\n	mso-pagination:widow-orphan;\r\n	font-size:11.0pt;\r\n	font-family:\"Calibri\",sans-serif;\r\n	mso-ascii-font-family:Calibri;\r\n	mso-ascii-theme-font:minor-latin;\r\n	mso-hansi-font-family:Calibri;\r\n	mso-hansi-theme-font:minor-latin;\r\n	mso-ansi-language:EN-US;\r\n	mso-fareast-language:EN-US;}\r\n</style>\r\n<![endif]--></p>', NULL, '46109.00', 'Desarrollar tecnologías para la recuperación de suelos degradados en condiciones de tierra firme con el propósito de producir alimentos.', '2021-06-03', '2022-04-29', '2021-05-03 17:19:18', '2021-05-03 17:19:18', NULL);
 
 -- --------------------------------------------------------
 
@@ -772,11 +808,11 @@ CREATE TABLE `proyectos_archivos` (
 --
 
 INSERT INTO `proyectos_archivos` (`id`, `proyecto_detalle_id`, `titulo`, `tipo`, `archivo`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 5, 'c4611_sample_explain.pdf', 'pdf', 'proyectos/April2021/cJNrmI04Fl8iKpJRM6EC.pdf', '2021-04-04 06:49:02', '2021-04-04 06:49:02', NULL),
-(2, 6, 'c4611_sample_explain.pdf', 'pdf', 'proyectos/April2021/QE9sutVogZB6cWlVh8Qu.pdf', '2021-04-04 06:51:39', '2021-04-04 06:51:39', NULL),
-(3, 8, 'Factura(1).pdf', 'pdf', 'proyectos/April2021/pHmEx9TYXS6iIG8ERUYp.pdf', '2021-04-04 15:37:43', '2021-04-04 15:37:43', NULL),
-(4, 9, 'TESIS - ANÁLISIS DE LOS FACTORES QUE INCIDEN EN LOS ACCIDENTES DE TRÁNSITO DEL SERVICIO DE TRANSPORTACIÓN PÚBLICA INTERPROVINCIAL EN EL ECUADOR.pdf', 'pdf', 'proyectos/April2021/IDMOjD9zflNFGi3EtEkY.pdf', '2021-04-04 15:40:18', '2021-04-04 15:40:18', NULL),
-(5, 10, 'planillacalificaciones(1).pdf', 'pdf', 'proyectos/April2021/ljuGSypANFPxU7f1FPl4.pdf', '2021-04-04 17:39:14', '2021-04-04 17:39:14', NULL);
+(1, 1, 'CONTENIDOS DE 4to.A-B pdf.pdf', 'pdf', 'proyectos/May2021/9NDeJcwcBbUYwCkFRevP.pdf', '2021-05-03 04:20:48', '2021-05-03 04:20:48', NULL),
+(2, 2, 'planillacalificaciones(1).pdf', 'pdf', 'proyectos/May2021/O4lQNmre1FKQSycFGOvT.pdf', '2021-05-03 04:30:49', '2021-05-03 04:30:49', NULL),
+(3, 5, 'CV-BFC.pdf', 'pdf', 'proyectos/May2021/t4FGLFXLYYL2CCK5oVBA.pdf', '2021-05-03 04:54:13', '2021-05-03 04:54:13', NULL),
+(4, 6, 'pedido.pdf', 'pdf', 'proyectos/May2021/ypSuauZhd0vBU9N6yTQb.pdf', '2021-05-03 05:48:00', '2021-05-03 05:48:00', NULL),
+(5, 7, 'optimizacion del uso de cal dolomita.pdf', 'pdf', 'proyectos/May2021/5YjOKvpq3kJWaL1fisg4.pdf', '2021-05-03 17:19:19', '2021-05-03 17:19:19', NULL);
 
 -- --------------------------------------------------------
 
@@ -791,6 +827,7 @@ CREATE TABLE `proyectos_detalles` (
   `monto_ejecutado` decimal(10,2) DEFAULT NULL,
   `avance` int(11) DEFAULT NULL,
   `observaciones` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -799,17 +836,14 @@ CREATE TABLE `proyectos_detalles` (
 -- Volcado de datos para la tabla `proyectos_detalles`
 --
 
-INSERT INTO `proyectos_detalles` (`id`, `proyecto_id`, `proyectos_estado_id`, `monto_ejecutado`, `avance`, `observaciones`, `created_at`, `updated_at`) VALUES
-(1, 17, 7, '12.00', 21, 'nn', '2021-04-04 06:08:49', '2021-04-04 06:08:49'),
-(2, 16, 4, '1000.00', 10, 'nn', '2021-04-04 06:09:56', '2021-04-04 06:09:56'),
-(3, 17, 5, '40.00', 20, 'nnnnnn', '2021-04-04 06:46:53', '2021-04-04 06:46:53'),
-(4, 17, 6, '30.00', 40, 'bnbnbnbnbnbn', '2021-04-04 06:48:15', '2021-04-04 06:48:15'),
-(5, 17, 7, '1200.00', 30, 'nbnbnbnbnbn', '2021-04-04 06:49:02', '2021-04-04 06:49:02'),
-(6, 18, 3, '0.00', 0, 'Inicialización del proyecto', '2021-04-04 06:51:39', '2021-04-04 06:51:39'),
-(7, 18, 4, '1000.00', 10, 'ninguna', '2021-04-04 07:02:27', '2021-04-04 07:02:27'),
-(8, 19, 3, '0.00', 0, 'Inicialización del proyecto', '2021-04-04 15:37:43', '2021-04-04 15:37:43'),
-(9, 19, 4, '1000.00', 12, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', '2021-04-04 15:40:18', '2021-04-04 15:40:18'),
-(10, 19, 5, '2000.00', 15, 'Prácticas agroecológicas para mejorar los rendimiento y calidad del grano de cacao (Theobroma cacao L.) silvestre y cultivado en la provincia Mojos- Beni. CIBIOMA UABJB-', '2021-04-04 17:39:14', '2021-04-04 17:39:14');
+INSERT INTO `proyectos_detalles` (`id`, `proyecto_id`, `proyectos_estado_id`, `monto_ejecutado`, `avance`, `observaciones`, `fecha`, `created_at`, `updated_at`) VALUES
+(1, 1, 3, '0.00', 0, 'Inicialización del proyecto', '2020-11-01', '2021-05-03 04:20:48', '2021-05-03 04:20:48'),
+(2, 1, 4, '20000.00', 10, 'ninguna', '2021-01-31', '2021-05-03 04:30:49', '2021-05-03 04:30:49'),
+(3, 1, 5, '10000.00', 12, NULL, '2021-02-19', '2021-05-03 04:45:06', '2021-05-03 04:45:06'),
+(4, 1, 6, '50000.00', 40, NULL, '2021-05-03', '2021-05-03 04:46:22', '2021-05-03 04:46:22'),
+(5, 2, 3, '0.00', 0, 'Inicialización del proyecto', '2008-01-30', '2021-05-03 04:54:13', '2021-05-03 04:54:13'),
+(6, 3, 3, '0.00', 0, 'Inicialización del proyecto', '2020-11-02', '2021-05-03 05:48:00', '2021-05-03 05:48:00'),
+(7, 4, 3, '0.00', 0, 'Inicialización del proyecto', '2021-06-03', '2021-05-03 17:19:18', '2021-05-03 17:19:18');
 
 -- --------------------------------------------------------
 
@@ -859,22 +893,6 @@ CREATE TABLE `proyectos_observaciones` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `proyectos_observaciones`
---
-
-INSERT INTO `proyectos_observaciones` (`id`, `proyecto_id`, `proyectos_detalle_id`, `user_id`, `titulo`, `detalle`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 17, NULL, 1, NULL, 'nnn', '2021-04-04 06:22:55', '2021-04-04 06:22:55', NULL),
-(2, 17, NULL, 1, NULL, 'nnnnnn', '2021-04-04 06:23:17', '2021-04-04 06:23:17', NULL),
-(3, 17, NULL, 1, 'título', 'nnnnnn', '2021-04-04 06:23:54', '2021-04-04 06:23:54', NULL),
-(4, 18, NULL, 1, 'título', 'mmmmmmmmmmm', '2021-04-04 06:55:30', '2021-04-04 06:55:30', NULL),
-(5, 19, NULL, 1, 'titulo', 'descripción', '2021-04-04 15:38:16', '2021-04-04 15:38:16', NULL),
-(6, 19, NULL, 1, 'titulo', 'sfsfdfsfdfsd', '2021-04-04 15:56:16', '2021-04-04 15:56:16', NULL),
-(7, 19, 9, 1, 'titulo', 'nbbvnvnvnv', '2021-04-04 15:58:00', '2021-04-04 15:58:00', NULL),
-(8, 19, 9, 1, 'titulo 2', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic.', '2021-04-04 17:11:58', '2021-04-04 17:11:58', NULL),
-(9, 19, 9, 1, 'Lorem Ipsum is simply dummy text of', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an', '2021-04-04 17:12:29', '2021-04-04 17:12:29', NULL),
-(10, 19, 10, 1, 'titulo 2', 'Prácticas agroecológicas para mejorar los rendimiento y calidad del grano de cacao (Theobroma cacao L.) silvestre y cultivado en la provincia Mojos- Beni. CIBIOMA UABJB-', '2021-04-04 17:39:53', '2021-04-04 17:39:53', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -885,6 +903,7 @@ CREATE TABLE `proyectos_tipos` (
   `id` int(10) UNSIGNED NOT NULL,
   `nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `descripcion` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tipo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -894,9 +913,10 @@ CREATE TABLE `proyectos_tipos` (
 -- Volcado de datos para la tabla `proyectos_tipos`
 --
 
-INSERT INTO `proyectos_tipos` (`id`, `nombre`, `descripcion`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Proyecto de grado', NULL, '2019-10-23 14:06:13', '2019-10-23 14:06:13', NULL),
-(2, 'Tesis', NULL, '2019-10-23 14:06:25', '2019-10-23 14:06:25', NULL);
+INSERT INTO `proyectos_tipos` (`id`, `nombre`, `descripcion`, `tipo`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Proyecto de grado', NULL, 'grado académico', '2019-10-23 14:06:13', '2021-05-03 01:00:08', NULL),
+(2, 'Tesis', NULL, 'grado académico', '2019-10-23 14:06:25', '2021-05-03 01:00:01', NULL),
+(3, 'Proyecto de investigación', NULL, 'investigación', '2021-05-03 01:29:02', '2021-05-03 01:29:02', NULL);
 
 -- --------------------------------------------------------
 
@@ -1023,6 +1043,12 @@ ALTER TABLE `areas`
 -- Indices de la tabla `cargos`
 --
 ALTER TABLE `cargos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `carreras`
+--
+ALTER TABLE `carreras`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1192,19 +1218,25 @@ ALTER TABLE `areas`
 -- AUTO_INCREMENT de la tabla `cargos`
 --
 ALTER TABLE `cargos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT de la tabla `carreras`
+--
+ALTER TABLE `carreras`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `data_rows`
 --
 ALTER TABLE `data_rows`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
 -- AUTO_INCREMENT de la tabla `data_types`
 --
 ALTER TABLE `data_types`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `departamentos`
@@ -1234,7 +1266,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT de la tabla `menu_items`
 --
 ALTER TABLE `menu_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de la tabla `migrations`
@@ -1246,19 +1278,19 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT de la tabla `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `proyectos`
 --
 ALTER TABLE `proyectos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `proyectos_archivos`
@@ -1270,7 +1302,7 @@ ALTER TABLE `proyectos_archivos`
 -- AUTO_INCREMENT de la tabla `proyectos_detalles`
 --
 ALTER TABLE `proyectos_detalles`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `proyectos_estados`
@@ -1282,13 +1314,13 @@ ALTER TABLE `proyectos_estados`
 -- AUTO_INCREMENT de la tabla `proyectos_observaciones`
 --
 ALTER TABLE `proyectos_observaciones`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `proyectos_tipos`
 --
 ALTER TABLE `proyectos_tipos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`

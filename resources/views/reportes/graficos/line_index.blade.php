@@ -1,11 +1,11 @@
 @extends('voyager::master')
 
-@section('page_title', 'Proyectos')
+@section('page_title', 'Presupuestos')
 
 @section('page_header')
     <div class="container-fluid">
         <h1 class="page-title">
-            <i class="voyager-pie-graph"></i> Proyectos
+            <i class="voyager-bar-chart"></i> Presupuestos
         </h1>
     </div>
 @stop
@@ -30,6 +30,7 @@
 												<option value="3">Instituto de investigación</option>
 											</select>
 											<span class="input-group-btn">
+                                            <input type="number" name="periodo" step="1" min="2015" value="{{ date('Y') }}" class="form-control" style="height: 34px" require />
 												<button class="btn btn-primary" type="submit" style="margin-top:0px">
 												<span class="voyager-settings" aria-hidden="true"></span> Generar</button>
 											</span>
