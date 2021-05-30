@@ -45,17 +45,24 @@
                                     </thead>
                                     <tbody>
                                         @forelse($registros as $item)
+                                            @php
+                                                $direccion = '';
+                                                if(count($item->seguimiento)>0){
+                                                    $direccion = $item->seguimiento[count($item->seguimiento)-1]->destino;
+                                                }
+                                            @endphp
                                         <tr>
                                             <td>{{ $item->id }}</td>
                                             <td style="max-width:150px">{{ $item->area }}</td>
                                             <td style="max-width:250px">{{ $item->nombre }}</td>
-                                            <td style="max-width:100px">{{ $item->estado }} <br> <b>{{ $item->avance }}%</b> </td>
+                                            <td style="max-width:100px">{{ $item->estado }} <br> <b>{{ $item->avance }}%</b> @if(!empty($direccion)) <br> <label class="label label-primary">{{ $direccion }}</label> @endif </td>
                                             <td class="no-sort no-click text-right" id="bread-actions">
                                                 <div class="dropdown pull-right" style="margin-left: 10px">
                                                     <button class="btn btn-success dropdown-toggle btn-sm" type="button" data-toggle="dropdown"><i class="voyager-plus"></i> <span class="hidden-xs hidden-sm">Más</span> <span class="caret"></span></button>
                                                     <ul class="dropdown-menu">
                                                         <li><a href="#" class="btn-fase view" data-toggle="modal" data-target="#fasesModal" data-id="{{ $item->id }}" data-detalles="{{ $item->detalles }}" data-monto="{{ $item->monto }}" data-monto="{{ $item->monto }}"> Fases</a></li>
                                                         <li><a href="#" class="btn-observaciones view" data-toggle="modal" data-target="#detallesModal" data-id="{{ $item->id }}"> Observaciones</a></li>
+                                                        <li><a href="#" class="btn-seguimientos view" data-toggle="modal" data-target="#seguimientoModal" data-id="{{ $item->id }}" data-origen="{{ $direccion }}"> Seguimiento</a></li>
                                                     </ul>
                                                 </div>
                                                 <a href="{{ route('proyectos.show', ['id' => $item->id]) }}" class="btn btn-sm btn-warning view"> <i class="voyager-eye"></i> <span class="hidden-xs hidden-sm">Ver</span> </a>
@@ -213,6 +220,55 @@
         </div>
     </form>
 
+    {{-- Modal de observaciones --}}
+    <form id="form-seguimientos" action="{{ route('store_seguimientos') }}" method="post">
+        <div class="modal modal-info fade" id="seguimientoModal" tabindex="-1" role="dialog" aria-labelledby="seguimientoModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title"><i class="voyager-list"></i> Agregar Seguimiento</h4>
+                </div>
+                <div class="modal-body">
+                    @csrf
+                    <input type="hidden" name="id">
+                    <div class="form-group">
+                        <label>Origen</label>
+                        <input type="text" name="origen" class="form-control" placeholder="Dirección de finanzas" required>
+                        {{-- <div class="form-control"></div> --}}
+                    </div>
+                    <div class="form-group">
+                        <label>Destinatario</label>
+                        <input type="text" name="destino" class="form-control" placeholder="Dirección de finanzas" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Fecha</label>
+                                <input type="date" name="fecha" class="form-control" value="{{ date('Y-m-d') }}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Hora</label>
+                                <input type="time" name="hora" class="form-control" value="{{ date('H:i') }}" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Detalle</label>
+                        <textarea name="detalle" class="form-control" rows="5" placeholder="Describe los detalles del envío..." required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-dark">Aceptar</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    </form>
+
     {{-- Single delete modal --}}
     <div class="modal modal-danger fade" tabindex="-1" id="modal_delete" role="dialog">
         <div class="modal-dialog">
@@ -283,6 +339,11 @@
 
             $('.btn-observaciones').click(function(){
                 $('#form-observaciones input[name="id"]').val($(this).data('id'));
+            });
+
+            $('.btn-seguimientos').click(function(){
+                $('#form-seguimientos input[name="id"]').val($(this).data('id'));
+                $('#form-seguimientos input[name="origen"]').val($(this).data('origen'));
             });
 
             $('.delete').click(function(){

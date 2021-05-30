@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 27-05-2021 a las 04:43:56
--- Versión del servidor: 10.4.19-MariaDB
--- Versión de PHP: 7.4.19
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 30-05-2021 a las 23:48:56
+-- Versión del servidor: 10.4.14-MariaDB
+-- Versión de PHP: 7.3.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -943,6 +943,34 @@ INSERT INTO `roles` (`id`, `name`, `display_name`, `created_at`, `updated_at`) V
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `seguimientos`
+--
+
+CREATE TABLE `seguimientos` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `proyecto_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `origen` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `destino` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
+  `hora` time DEFAULT NULL,
+  `detalle` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `seguimientos`
+--
+
+INSERT INTO `seguimientos` (`id`, `proyecto_id`, `user_id`, `origen`, `destino`, `fecha`, `hora`, `detalle`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(2, 4, 1, 'Dirección de finanzas', 'Dirección de RRHH', '2021-05-30', '17:39:00', 'nnn', '2021-05-30 21:39:15', '2021-05-30 21:39:15', NULL),
+(3, 4, 1, 'Dirección de RRHH', 'Rectorado', '2021-05-30', '17:44:00', 'xzcgbdfbgfddgdfgdgdggsdgfdsgdgdgdfg', '2021-05-30 21:47:31', '2021-05-30 21:47:31', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `settings`
 --
 
@@ -971,7 +999,8 @@ INSERT INTO `settings` (`id`, `key`, `display_name`, `value`, `details`, `type`,
 (7, 'admin.description', 'Admin Description', 'Administración de proyectos UAB', '', 'text', 2, 'Admin'),
 (8, 'admin.loader', 'Admin Loader', 'settings/September2019/vnqQYRC30quOTaPpzfQN.png', '', 'image', 3, 'Admin'),
 (9, 'admin.icon_image', 'Admin Icon Image', 'settings/September2019/lmBU9mYecqHo53exmiiD.png', '', 'image', 4, 'Admin'),
-(10, 'admin.google_analytics_client_id', 'Google Analytics Client ID (used for admin dashboard)', NULL, '', 'text', 1, 'Admin');
+(10, 'admin.google_analytics_client_id', 'Google Analytics Client ID (used for admin dashboard)', NULL, '', 'text', 1, 'Admin'),
+(11, 'plantillas.seguimiento', 'Seguimiento', '<table style=\"width: 100%; height: 100hv; border-collapse: collapse;\" border=\"0\">\r\n<tbody>\r\n<tr>\r\n<td style=\"width: 33.9074%;\"><img src=\"/img/docs/logo.png\" alt=\"\" width=\"100\" height=\"100\" /></td>\r\n<td style=\"width: 36.4909%; text-align: right;\">\r\n<h1 style=\"font-size: 30px;\">PROFORMA</h1>\r\n<p>Fecha: #fecha#</p>\r\n</td>\r\n</tr>\r\n<tr>\r\n<td style=\"width: 33.9074%;\">\r\n<p>&nbsp;</p>\r\n<p><span style=\"font-size: 18px; font-weight: bold;\">Server la Estrella</span> <br />4168207017 <br />71142010 - 60202107 <br />C/ 9 de abril casi Esq. Felix Pinto Nro 215 <br />Sant&iacute;sima Trinidad - Beni - Bolivia</p>\r\n</td>\r\n<td style=\"width: 36.4909%; text-align: right;\">\r\n<p><strong>Cliente:</strong> #razon_social#</p>\r\n<p><strong>NIT:</strong> #nit#</p>\r\n<p><strong>Cel:</strong> #celular#</p>\r\n</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<p>&nbsp;</p>\r\n<p>#detalles#</p>\r\n<p>&nbsp;</p>\r\n<div style=\"position: fixed; bottom: 0px; width: 100%;\"><hr style=\"background-color: #770a0a;\" size=\"2\" />\r\n<table style=\"height: 39px; width: 98.6058%; border-collapse: collapse;\" border=\"0\" cellpadding=\"5\">\r\n<tbody>\r\n<tr style=\"height: 13px;\">\r\n<td style=\"width: 33.3333%; height: 13px;\">&nbsp;</td>\r\n<td style=\"width: 33.1217%; height: 13px;\"><strong>Total neto Bs.</strong></td>\r\n<td style=\"width: 33.4392%; height: 13px; text-align: right;\"><span style=\"font-size: 13px;\"><strong>#monto#</strong></span></td>\r\n</tr>\r\n<tr style=\"height: 13px;\">\r\n<td style=\"width: 33.3333%; height: 13px;\">&nbsp;</td>\r\n<td style=\"width: 33.1217%; height: 13px;\">Total IVA (13%)</td>\r\n<td style=\"width: 33.4392%; height: 13px; text-align: right;\">0.00</td>\r\n</tr>\r\n<tr style=\"height: 13px;\">\r\n<td style=\"width: 33.3333%; height: 13px;\">&nbsp;</td>\r\n<td style=\"width: 33.1217%; height: 13px;\"><strong>Total Proforma Bs.</strong></td>\r\n<td style=\"width: 33.4392%; height: 13px; text-align: right;\"><span style=\"font-size: 15px;\"><strong>#monto#</strong></span></td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<hr style=\"background-color: #770a0a;\" size=\"6\" />\r\n<p>&Eacute;sta proforma tiene un periodo de valides de 15 d&iacute;as a partir de la fecha de emisi&oacute;n</p>\r\n</div>', NULL, 'rich_text_box', 6, 'Plantillas');
 
 -- --------------------------------------------------------
 
@@ -1175,6 +1204,12 @@ ALTER TABLE `roles`
   ADD UNIQUE KEY `roles_name_unique` (`name`);
 
 --
+-- Indices de la tabla `seguimientos`
+--
+ALTER TABLE `seguimientos`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `settings`
 --
 ALTER TABLE `settings`
@@ -1329,10 +1364,16 @@ ALTER TABLE `roles`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT de la tabla `seguimientos`
+--
+ALTER TABLE `seguimientos`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT de la tabla `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `translations`

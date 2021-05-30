@@ -18,6 +18,7 @@ use App\Carrera;
 use App\ProyectosDetalle;
 use App\ProyectosObservacione;
 use App\ProyectosArchivo;
+use App\Seguimiento;
 
 class ProyectosController extends Controller
 {
@@ -33,12 +34,13 @@ class ProyectosController extends Controller
             $registros = DB::table('proyectos as p')
                             ->join('proyectos_estados as e', 'e.id', 'p.estado_actual')
                             ->join('areas as a', 'a.id', 'p.area_id')
-                            ->select('p.*', 'e.nombre as estado', 'a.nombre as area', 'p.deleted_at as detalles')
+                            ->select('p.*', 'e.nombre as estado', 'a.nombre as area', 'p.deleted_at as detalles', 'p.deleted_at as seguimiento')
                             ->where('p.deleted_at', NULL)
                             ->orderBy('p.id', 'DESC')->get();
             $cont = 0;
             foreach ($registros as $value) {
                 $registros[$cont]->detalles = ProyectosDetalle::where('proyecto_id', $value->id)->get();
+                $registros[$cont]->seguimiento = Seguimiento::where('proyecto_id', $value->id)->get();
                 $cont++;
             }
         }else{
@@ -322,6 +324,25 @@ class ProyectosController extends Controller
             return redirect()->route('proyectos.index')->with(['message' => 'Ocurrio un error al guardar la observación.', 'alert-type' => 'error']);
         }
 
+    }
+
+    public function store_seguimientos(Request $request){
+        try {
+            Seguimiento::create([
+                'user_id' => Auth::user()->id,
+                'proyecto_id' => $request->id,
+                'origen' => $request->origen,
+                'destino' => $request->destino,
+                'fecha' => $request->fecha,
+                'hora' => $request->hora,
+                'detalle' => $request->detalle
+            ]);
+            DB::commit();
+            return redirect()->route('proyectos.index')->with(['message' => 'Seguimiento guardado exitosamente.', 'alert-type' => 'success']);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->route('proyectos.index')->with(['message' => 'Ocurrio un error al guardar el seguimiento.', 'alert-type' => 'error']);
+        }
     }
 
     /**

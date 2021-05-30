@@ -26,6 +26,7 @@ Route::resources([
 ]);
 Route::post('admin/proyectos/detalle/store', 'ProyectosController@store_detalle')->name('store_detalle');
 Route::post('admin/proyectos/observaciones/store', 'ProyectosController@store_observaciones')->name('store_observaciones');
+Route::post('admin/proyectos/seguimientos/store', 'ProyectosController@store_seguimientos')->name('store_seguimientos');
 
 Route::post('admin/personas/crear', 'ProyectosController@agregar_persona')->name('agregar_persona');
 
