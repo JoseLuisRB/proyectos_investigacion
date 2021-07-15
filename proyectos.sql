@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-05-2021 a las 23:48:56
+-- Tiempo de generación: 15-07-2021 a las 06:15:18
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.3.22
 
@@ -233,7 +233,7 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (93, 7, 'detalle', 'text_area', 'Detalle', 0, 1, 1, 1, 1, 1, '{}', 6),
 (94, 7, 'icono', 'select_dropdown', 'Icono', 0, 1, 1, 1, 1, 1, '{\"options\":{\"glyphicon-check\":\"Check\",\"glyphicon-credit-card\":\"Card\",\"glyphicon-floppy-disk\":\"Save\",\"glyphicon-cog\":\"Settings\",\"glyphicon-thumbs-up\":\"Ok\",\"glyphicon-search\":\"Search\",\"glyphicon-eye-open\":\"Eye\",\"glyphicon-globe\":\"Globe\",\"glyphicon-send\":\"Send\",\"glyphicon-blackboard\":\"Blackboard\",\"glyphicon-book\":\"Book\"}}', 4),
 (95, 8, 'documento', 'file', 'Documento', 0, 1, 1, 1, 1, 1, '{\"display\":{\"width\":\"6\"}}', 9),
-(96, 12, 'tipo', 'select_dropdown', 'Tipo', 0, 1, 1, 1, 1, 1, '{\"display\":{\"width\":6},\"options\":{\"investigaci\\u00f3n\":\"investigaci\\u00f3n\",\"grado acad\\u00e9mico\":\"grado acad\\u00e9mico\"}}', 3),
+(96, 12, 'tipo', 'select_dropdown', 'Tipo', 0, 1, 1, 1, 1, 1, '{\"display\":{\"width\":6},\"options\":{\"investigaci\\u00f3n\":\"investigaci\\u00f3n\",\"acad\\u00e9mico\":\"acad\\u00e9mico\"}}', 3),
 (97, 14, 'id', 'text', 'Id', 1, 1, 1, 0, 0, 0, '{}', 1),
 (98, 14, 'nombre', 'text', 'Nombre', 0, 1, 1, 1, 1, 1, '{\"validation\":{\"rule\":\"required|max:100\",\"messages\":{\"required\":\"El campo :attribute es requerido.\",\"max\":\"El campo :attribute debe tener al menos :max.\"}}}', 2),
 (99, 14, 'detalle', 'text_area', 'Detalles', 0, 1, 1, 1, 1, 1, '{}', 3),
@@ -282,7 +282,7 @@ INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `displa
 (8, 'personas', 'personas', 'Persona', 'Personas', 'voyager-person', 'App\\Persona', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-09-05 06:42:11', '2021-05-03 00:28:45'),
 (10, 'permissions', 'permissions', 'Permission', 'Permissions', 'voyager-certificate', 'App\\Permission', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-09-12 05:11:22', '2019-09-12 05:29:11'),
 (11, 'cargos', 'cargos', 'Cargo', 'Cargos', 'voyager-certificate', 'App\\Cargo', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2019-10-04 16:32:45', '2019-10-04 16:32:45'),
-(12, 'proyectos_tipos', 'proyectos-tipos', 'Tipo de Proyecto', 'Tipos de Proyecto', 'voyager-list', 'App\\ProyectosTipo', NULL, NULL, NULL, 1, 1, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-10-23 13:49:45', '2021-05-03 00:59:44'),
+(12, 'proyectos_tipos', 'proyectos-tipos', 'Tipo de Proyecto', 'Tipos de Proyecto', 'voyager-list', 'App\\ProyectosTipo', NULL, NULL, NULL, 1, 1, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2019-10-23 13:49:45', '2021-07-15 02:17:14'),
 (13, 'departamentos', 'departamentos', 'Departamento', 'Departamentos', 'voyager-group', 'App\\Departamento', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2021-03-12 23:54:15', '2021-03-13 00:04:40'),
 (14, 'carreras', 'carreras', 'Carrera', 'Carreras', 'voyager-trophy', 'App\\Carrera', NULL, NULL, NULL, 1, 1, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2021-05-03 01:36:29', '2021-05-03 01:48:51');
 
@@ -754,7 +754,7 @@ INSERT INTO `personas` (`id`, `cargo_id`, `nombre`, `ci`, `movil`, `email`, `fot
 
 CREATE TABLE `proyectos` (
   `id` int(10) UNSIGNED NOT NULL,
-  `proyecto_tipo_id` int(11) DEFAULT NULL,
+  `proyecto_tipo_id` int(10) DEFAULT NULL,
   `nombre` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `responsable` int(11) DEFAULT NULL,
   `anio` int(11) DEFAULT NULL,
@@ -914,9 +914,11 @@ CREATE TABLE `proyectos_tipos` (
 --
 
 INSERT INTO `proyectos_tipos` (`id`, `nombre`, `descripcion`, `tipo`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Proyecto de grado', NULL, 'grado académico', '2019-10-23 14:06:13', '2021-05-03 01:00:08', NULL),
-(2, 'Tesis', NULL, 'grado académico', '2019-10-23 14:06:25', '2021-05-03 01:00:01', NULL),
-(3, 'Proyecto de investigación', NULL, 'investigación', '2021-05-03 01:29:02', '2021-05-03 01:29:02', NULL);
+(1, 'Proyecto de grado', NULL, 'académico', '2019-10-23 14:06:13', '2021-07-15 02:19:08', NULL),
+(2, 'Tesis', NULL, 'académico', '2019-10-23 14:06:25', '2021-07-15 02:19:03', NULL),
+(3, 'Proyecto de investigación', NULL, 'investigación', '2021-05-03 01:29:02', '2021-05-03 01:29:02', NULL),
+(5, 'Mongrafía', NULL, 'académico', '2021-07-15 02:03:04', '2021-07-15 02:18:55', NULL),
+(6, 'Artículos', NULL, 'académico', '2021-07-15 02:14:29', '2021-07-15 02:18:47', NULL);
 
 -- --------------------------------------------------------
 
@@ -1044,7 +1046,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `avatar`, `email_verified_at`, `password`, `remember_token`, `settings`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Admin', 'admin@admin.com', 'users/September2019/tGPq1JWyfykhderoLXcR.png', NULL, '$2y$10$XSdrEQn5ouVs9dFOCiu05uadzKG3Nm/fTkEktMdJrir1ialqSAPuy', 'qprAW0KUUGh0Wj4rivRTNsdbKl42lksrHKcDuiLb8uyYNB6s6hDp1tfTjYCX', '{\"locale\":\"es\"}', '2019-09-04 21:06:04', '2019-09-26 13:12:43'),
+(1, 1, 'Admin', 'admin@admin.com', 'users/September2019/tGPq1JWyfykhderoLXcR.png', NULL, '$2y$10$XSdrEQn5ouVs9dFOCiu05uadzKG3Nm/fTkEktMdJrir1ialqSAPuy', 'VpMkGRxnj7OMIjkXA16oWd9oe04ZorBqjqPpaHf75Du2aJHVVeHpvDXCNQ8q', '{\"locale\":\"es\"}', '2019-09-04 21:06:04', '2019-09-26 13:12:43'),
 (2, 2, 'usuario', 'usuario@usuario.com', 'users/default.png', NULL, '$2y$10$a6AYUFGewHo5ZqyFdizi4OLNwvrZM30xXEm5qRgcOzq9Gr1EdNmVW', NULL, '{\"locale\":\"es\"}', '2020-01-12 22:27:41', '2020-01-12 22:27:41');
 
 -- --------------------------------------------------------
@@ -1164,7 +1166,8 @@ ALTER TABLE `personas`
 -- Indices de la tabla `proyectos`
 --
 ALTER TABLE `proyectos`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `proyecto_tipo_id` (`proyecto_tipo_id`);
 
 --
 -- Indices de la tabla `proyectos_archivos`
@@ -1355,7 +1358,7 @@ ALTER TABLE `proyectos_observaciones`
 -- AUTO_INCREMENT de la tabla `proyectos_tipos`
 --
 ALTER TABLE `proyectos_tipos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`

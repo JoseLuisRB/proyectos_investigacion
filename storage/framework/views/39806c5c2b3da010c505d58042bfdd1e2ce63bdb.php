@@ -1,9 +1,9 @@
-<?php $__env->startSection('page_title', 'Gráficos'); ?>
+<?php $__env->startSection('page_title', 'Proyectos'); ?>
 
 <?php $__env->startSection('page_header'); ?>
     <div class="container-fluid">
         <h1 class="page-title">
-            <i class="voyager-pie-graph"></i> Gráficos
+            <i class="voyager-pie-graph"></i> Proyectos
         </h1>
     </div>
 <?php $__env->stopSection(); ?>
